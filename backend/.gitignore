@@ -2,6 +2,9 @@ node_modules
 .env
 .env.local
 .env.example
+.env.test
+src/__tests__
+jest.config.js
 dist
 build
 *.log
