@@ -95,15 +95,15 @@ export async function calculateCSRDEmissions(reportingPeriodId, companyMetrics =
     // Query all calculations for this reporting period grouped by scope
     const query = `
       SELECT 
-        cr.activity_type as activity_category,
-        cr.reporting_standard as emission_scope,
-        SUM(cr.total_co2e_mt) as total_co2e,
-        SUM(cr.biomass_co2_mt) as total_biogenic_co2,
+        c.emission_scope,
+        c.activity_category,
+        SUM(c.co2e_total) as total_co2e,
+        SUM(c.biogenic_co2) as total_biogenic_co2,
         COUNT(*) as activity_count
-      FROM calculation_results cr
-      WHERE cr.reporting_period_id = $1
-      GROUP BY cr.activity_type, cr.reporting_standard
-      ORDER BY cr.reporting_standard, cr.activity_type
+      FROM calculations c
+      WHERE c.reporting_period_id = $1
+      GROUP BY c.emission_scope, c.activity_category
+      ORDER BY c.emission_scope, c.activity_category
     `;
     
     const result = await pool.query(query, [reportingPeriodId]);
@@ -440,8 +440,8 @@ export async function validateCSRDCompliance(reportingPeriodId) {
     
     // Check 1: All three scopes calculated
     const scopeQuery = `
-      SELECT DISTINCT reporting_standard as emission_scope
-      FROM calculation_results
+      SELECT DISTINCT emission_scope
+      FROM calculations
       WHERE reporting_period_id = $1
     `;
     
@@ -464,8 +464,8 @@ export async function validateCSRDCompliance(reportingPeriodId) {
     
     // Check 2: Biogenic CO2 separated
     const biogenicQuery = `
-      SELECT SUM(biomass_co2_mt) as total_biogenic
-      FROM calculation_results
+      SELECT SUM(biogenic_co2) as total_biogenic
+      FROM calculations
       WHERE reporting_period_id = $1
     `;
     

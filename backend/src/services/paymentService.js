@@ -389,37 +389,10 @@ export async function createRefund(paymentId, reason = 'requested_by_customer') 
   }
 }
 
-/**
- * Get payment status by ID
- * @param {string} paymentId - Payment ID
- * @returns {Promise<object>} Payment details
- */
-export async function getPaymentStatusById(paymentId) {
-  try {
-    const query = await pool.query(
-      `SELECT id, company_id, reporting_period_id, amount_cents, currency, 
-              status, description, paid_at, failed_at, refunded_at, created_at
-       FROM payments
-       WHERE id = $1`,
-      [paymentId]
-    );
-
-    if (query.rows.length === 0) {
-      throw new Error('Payment not found');
-    }
-
-    return query.rows[0];
-  } catch (error) {
-    console.error('[PaymentService] Error getting payment status:', error);
-    throw error;
-  }
-}
-
 export default {
   createCheckoutSession,
   processWebhookEvent,
   verifyPaymentStatus,
   getPaymentHistory,
-  createRefund,
-  getPaymentStatusById
+  createRefund
 };

@@ -27,15 +27,7 @@ const CACHE_TTL_MS = 60 * 60 * 1000; // 1 hour
  * @returns {Promise<Object>} Emission factors
  */
 async function getStationaryFuelFactors(fuelType, standard = 'GHG_PROTOCOL', version = 'latest') {
-  // Normalize fuel type: convert hyphens to spaces and title case
-  const normalizedFuelType = fuelType
-    .toLowerCase()
-    .replace(/-/g, ' ')
-    .split(' ')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
-  
-  const cacheKey = `stationary:${normalizedFuelType}:${standard}:${version}`;
+  const cacheKey = `stationary:${fuelType}:${standard}:${version}`;
   
   // Check cache first
   const cached = getFromCache(cacheKey);
@@ -62,7 +54,7 @@ async function getStationaryFuelFactors(fuelType, standard = 'GHG_PROTOCOL', ver
       LIMIT 1
     `;
     
-    const result = await pool.query(query, [normalizedFuelType, standard, version]);
+    const result = await pool.query(query, [fuelType, standard, version]);
     
     if (result.rows.length === 0) {
       throw new Error(`Emission factors not found for fuel: ${fuelType} (${standard})`);

@@ -67,12 +67,12 @@ export async function calculateTrafficLightScore(reportingPeriodId, companyMetri
     // Get total emissions and scope breakdown
     const emissionsQuery = await pool.query(
       `SELECT 
-         SUM(cr.total_co2e_mt) as total_emissions,
-         cr.activity_type,
-         cr.reporting_standard as scope
-       FROM calculation_results cr
-       WHERE cr.reporting_period_id = $1
-       GROUP BY cr.activity_type, cr.reporting_standard`,
+         SUM((calculation_result->>'total_co2e_mt')::numeric) as total_emissions,
+         activity_type,
+         scope
+       FROM calculation_results
+       WHERE reporting_period_id = $1 AND is_latest = true
+       GROUP BY activity_type, scope`,
       [reportingPeriodId]
     );
 
@@ -83,16 +83,7 @@ export async function calculateTrafficLightScore(reportingPeriodId, companyMetri
         scope1: 'yellow',
         scope2: 'yellow',
         scope3: 'yellow',
-        recommendations: ['Complete activity data entry and calculate emissions'],
-        intensityMetrics: [],
-        improvements: [],
-        totalEmissions: 0,
-        scopeTotals: { scope_1: 0, scope_2: 0, scope_3: 0 },
-        scopeDistribution: {},
-        trendScore: 'neutral',
-        distributionScore: 'neutral',
-        industry: 'Default',
-        calculatedAt: new Date().toISOString()
+        recommendations: ['Complete activity data entry and calculate emissions']
       };
     }
 
