@@ -9,6 +9,7 @@
     "dev": "nodemon src/server.js",
     "db:init": "psql -U postgres -d aurixon_db -f db/schema.sql",
     "db:reset": "psql -U postgres -d aurixon_db -c \"DROP SCHEMA public CASCADE; CREATE SCHEMA public;\" && npm run db:init",
+    "db:load-eea": "psql -U postgres -d aurixon_db -f db/eea_emission_factors_2024.sql",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch"
   },
@@ -24,10 +25,15 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
+    "csv-writer": "^1.6.0",
     "dotenv": "^16.3.1",
+    "exceljs": "^4.4.0",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
+    "nodemailer": "^7.0.12",
+    "pdfkit": "^0.17.2",
     "pg": "^8.11.3",
+    "stripe": "^14.25.0",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
