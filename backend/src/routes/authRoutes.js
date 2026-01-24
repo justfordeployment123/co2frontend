@@ -9,6 +9,8 @@ import {
   loginUser,
   signupCompany,
   getCurrentUser,
+  forgotPassword,
+  resetPassword,
 } from '../controllers/authController.js';
 import { authMiddleware } from '../middleware/auth.js';
 
@@ -34,6 +36,20 @@ router.post('/login', loginUser);
  * @body { email, password, companyName, country, industry?, firstName?, lastName? }
  */
 router.post('/company/signup', signupCompany);
+
+/**
+ * POST /auth/forgot-password
+ * Request password reset
+ * @body { email }
+ */
+router.post('/forgot-password', forgotPassword);
+
+/**
+ * POST /auth/reset-password
+ * Reset password using token
+ * @body { token, password }
+ */
+router.post('/reset-password', resetPassword);
 
 /**
  * GET /auth/me

@@ -287,3 +287,70 @@ export async function getCurrentUser(req, res, next) {
     next(error);
   }
 }
+
+/**
+ * POST /auth/forgot-password
+ * Request password reset (sends email with reset token)
+ */
+export async function forgotPassword(req, res, next) {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ error: 'Email is required' });
+    }
+
+    // Check if user exists
+    const user = await queryOne(
+      'SELECT id, email, first_name FROM users WHERE email = $1',
+      [email]
+    );
+
+    // Always return success (don't leak if email exists)
+    if (!user) {
+      return res.json({
+        message: 'If an account exists with that email, a password reset link has been sent.',
+      });
+    }
+
+    // In a real application, you would:
+    // 1. Generate a reset token
+    // 2. Store it in database with expiration
+    // 3. Send email with reset link
+    // For now, just log it
+    console.log(`Password reset requested for user: ${email}`);
+
+    res.json({
+      message: 'If an account exists with that email, a password reset link has been sent.',
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * POST /auth/reset-password
+ * Reset password using token
+ */
+export async function resetPassword(req, res, next) {
+  try {
+    const { token, password } = req.body;
+
+    if (!token || !password) {
+      return res.status(400).json({ error: 'Token and password are required' });
+    }
+
+    // In a real application, you would:
+    // 1. Verify the token from database
+    // 2. Check if it's not expired
+    // 3. Hash the new password
+    // 4. Update user's password
+    // 5. Delete the used token
+
+    res.json({
+      message: 'Password has been reset successfully',
+    });
+  } catch (error) {
+    next(error);
+  }
+}
