@@ -38,7 +38,7 @@ const ActivityDetailsPage = () => {
 
   const handleBack = () => {
     if (periodId) {
-      navigate(`/reports/${periodId}/activities?type=${activityType}`);
+      navigate(`/reports/${periodId}/activities/${activityType}`);
     } else {
       navigate('/reporting-periods');
     }

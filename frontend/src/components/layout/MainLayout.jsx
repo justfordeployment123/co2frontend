@@ -17,17 +17,17 @@ const MainLayout = ({ children }) => {
       {/* Header - always at top */}
       <Header onMenuClick={() => setSidebarOpen(!sidebarOpen)} showMenuButton={isAuthenticated} />
       
-      {/* Sidebar for authenticated users */}
-      {isAuthenticated && <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />}
-      
-      {/* Main content area - shifts right when sidebar is present on desktop */}
-      <div className={`flex flex-col flex-1 transition-all duration-300 ${
-        isAuthenticated ? 'lg:ml-64' : ''
-      }`}>
-        <main className="flex-1 pt-16">
-          {children}
-        </main>
-        <Footer />
+      <div className="flex flex-1">
+        {/* Sidebar for authenticated users */}
+        {isAuthenticated && <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />}
+        
+        {/* Main content area */}
+        <div className="flex-1 flex flex-col min-w-0">
+          <main className="flex-1">
+            {children}
+          </main>
+          <Footer />
+        </div>
       </div>
     </div>
   );

@@ -37,7 +37,8 @@ const ActivitiesListPage = () => {
   const { user, hasPermission } = useAuth();
   const { success, error } = useToast();
   const { periodId, activityType: urlActivityType } = useParams();
-  const [selectedType, setSelectedType] = useState(urlActivityType || 'stationary_combustion');
+  const normalizedUrlType = urlActivityType?.replace(/-/g, '_');
+  const [selectedType, setSelectedType] = useState(normalizedUrlType || 'stationary_combustion');
   const [activities, setActivities] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sortBy, setSortBy] = useState('created_at');
@@ -115,7 +116,7 @@ const ActivitiesListPage = () => {
   // Sync selectedType with URL if it changes
   useEffect(() => {
     if (urlActivityType) {
-      setSelectedType(urlActivityType);
+      setSelectedType(urlActivityType.replace(/-/g, '_'));
     }
   }, [urlActivityType]);
 
@@ -866,13 +867,12 @@ const ActivitiesListPage = () => {
           )}
         </div>
 
-        {/* Back Navigation */}
         <div className="mb-6">
           <button
-            onClick={() => periodId ? navigate('/reporting-periods') : navigate('/dashboard')}
+            onClick={() => periodId ? navigate(`/reports/${periodId}/activities`) : navigate('/dashboard')}
             className="text-cyan-mist hover:text-growth-green flex items-center gap-2 transition-colors text-sm"
           >
-            ← {periodId ? 'Back to Active Reports' : 'Back to Dashboard'}
+            ← {periodId ? 'Back to Activities Checklist' : 'Back to Dashboard'}
           </button>
         </div>
 

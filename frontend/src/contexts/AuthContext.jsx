@@ -158,7 +158,32 @@ export const AuthProvider = ({ children }) => {
     updateUser,
     hasRole,
     hasAnyRole,
-    hasPermission: () => true, // MVP: Allow all actions for now until granular permissions are implemented
+    hasPermission: (permission) => {
+      if (!user || !user.role) return false;
+      
+      const role = user.role;
+      if (role === 'internal_admin' || role === 'company_admin') return true;
+      
+      if (role === 'editor') {
+        const allowed = [
+          'activities.view', 'activities.create', 'activities.edit', 'activities.delete',
+          'reports.view', 'reports.create',
+          'boundary.view', 'boundary.edit'
+        ];
+        return allowed.includes(permission) || permission.startsWith('activities.') || permission.startsWith('reports.');
+      }
+      
+      if (role === 'viewer') {
+        const allowed = [
+          'activities.view',
+          'reports.view',
+          'boundary.view'
+        ];
+        return allowed.includes(permission);
+      }
+      
+      return false;
+    },
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -175,20 +175,26 @@ const ActivitiesChecklistPage = () => {
           </p>
         </div>
         <div className="flex gap-3">
-          <Link
-            to={`/settings/boundary/${periodId}`}
-            className="flex items-center gap-2 px-4 py-2 border border-carbon-gray rounded-lg text-off-white hover:bg-midnight-navy transition-colors"
-          >
-            <PencilSquareIcon className="h-5 w-5" />
-            {t('boundary.editQuestions', 'Edit Questions')}
-          </Link>
-          <Link
-            to={`/reports/generate?periodId=${periodId}`}
-            className="flex items-center gap-2 px-6 py-2 bg-growth-green text-midnight-navy font-bold rounded-lg hover:bg-opacity-90 transition-all shadow-lg"
-          >
-            <ClipboardDocumentCheckIcon className="h-5 w-5" />
-            {t('reports.generate', 'Generate Report')}
-          </Link>
+          {['company_admin', 'editor', 'internal_admin'].includes(user?.role) && (
+            <>
+              <Link
+                to={`/settings/boundary/${periodId}`}
+                className="flex items-center gap-2 px-4 py-2 border border-carbon-gray rounded-lg text-off-white hover:bg-midnight-navy transition-colors"
+                title={t('boundary.editQuestions', 'Edit Questions')}
+              >
+                <PencilSquareIcon className="h-5 w-5" />
+                <span className="hidden sm:inline">{t('boundary.editQuestions', 'Edit Questions')}</span>
+              </Link>
+              <Link
+                to={`/reports/generate?periodId=${periodId}`}
+                className="flex items-center gap-2 px-6 py-2 bg-growth-green text-midnight-navy font-bold rounded-lg hover:bg-opacity-90 transition-all shadow-lg"
+                title={t('reports.generate', 'Generate Report')}
+              >
+                <ClipboardDocumentCheckIcon className="h-5 w-5" />
+                <span className="hidden sm:inline">{t('reports.generate', 'Generate Report')}</span>
+              </Link>
+            </>
+          )}
         </div>
       </div>
 

@@ -732,7 +732,8 @@ const AddActivityPage = () => {
         success(t('activities.createSuccess'));
       }
       if (activePeriodId) {
-        navigate(`/reports/${activePeriodId}/activities`);
+        // Redirect back to the specific activity type list
+        navigate(`/reports/${activePeriodId}/activities/${activityType.replace(/-/g, '_')}`);
       } else {
         navigate(`/activities`);
       }
@@ -896,8 +897,12 @@ const AddActivityPage = () => {
   const [searchParams] = useSearchParams();
 
   const handleReturn = () => {
-    if (activePeriodId) {
-      navigate(`/reports/${activePeriodId}/activities?type=${activityType}`);
+    if (activePeriodId && activityType) {
+      // Go back to the specific activity type list
+      navigate(`/reports/${activePeriodId}/activities/${activityType.replace(/-/g, '_')}`);
+    } else if (activePeriodId) {
+      // Fallback to checklist
+      navigate(`/reports/${activePeriodId}/activities`);
     } else {
       navigate('/reporting-periods');
     }

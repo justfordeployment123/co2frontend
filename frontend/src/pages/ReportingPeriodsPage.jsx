@@ -187,9 +187,13 @@ const ReportingPeriodsPage = () => {
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => handleViewReport(period.id)}
-                      className="px-3 py-1.5 bg-cyan-mist/10 text-cyan-mist text-xs font-medium rounded-lg hover:bg-cyan-mist hover:text-midnight-navy transition-all"
+                      className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all ${
+                        canEdit 
+                          ? 'bg-cyan-mist/10 text-cyan-mist hover:bg-cyan-mist hover:text-midnight-navy' 
+                          : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white'
+                      }`}
                     >
-                      Edit Report
+                      {canEdit ? 'Edit Report' : 'View Details'}
                     </button>
                     {canEdit && (
                       <>

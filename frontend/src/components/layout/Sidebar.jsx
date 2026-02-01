@@ -82,10 +82,10 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
       {/* Sidebar */}
       <aside
         className={`
-          fixed top-16 left-0 h-[calc(100vh-4rem)] bg-midnight-navy border-r border-cyan-mist/20
-          transition-transform duration-300 ease-in-out z-[45]
-          ${isOpen ? 'translate-x-0' : '-translate-x-full'}
-          w-64 lg:translate-x-0
+          fixed lg:sticky top-16 left-0 h-[calc(100vh-4rem)] bg-midnight-navy border-r border-cyan-mist/20
+          transition-all duration-300 ease-in-out z-[45]
+          ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+          w-64 flex-shrink-0
         `}
       >
         <nav className="h-full overflow-y-auto py-6 px-4 scrollbar-custom">

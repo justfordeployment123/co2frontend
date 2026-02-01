@@ -37,7 +37,7 @@ const Header = ({ onMenuClick, showMenuButton }) => {
               <img 
                 src="/aurixon_logo.png" 
                 alt="AURIXON" 
-                className="h-8 sm:h-10 w-auto"
+                className="h-12 sm:h-14 md:h-16 w-auto object-contain py-1"
                 onError={(e) => {
                   e.target.style.display = 'none';
                 }}
