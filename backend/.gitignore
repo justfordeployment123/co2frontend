@@ -1,0 +1,21 @@
+node_modules
+# ENV
+.env
+.env.local
+.env.test
+!/.env.example
+
+# Source
+src/__tests__
+jest.config.js
+dist
+build
+*.log
+.DS_Store
+.vscode
+.idea
+test_api.js
+tests/
+db/
+scripts/
+final_db/

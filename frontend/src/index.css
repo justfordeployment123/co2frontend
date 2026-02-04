@@ -1,0 +1,259 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 
+  AURIXON Custom Global Styles 
+  Note: This project uses Tailwind CSS. IDE warnings about "@tailwind" or "@apply" 
+  are false positives and can be ignored as they are processed during build.
+*/
+
+@layer base {
+  body {
+    @apply bg-midnight-navy text-white font-sans antialiased;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading text-white;
+  }
+
+  h1 {
+    @apply text-4xl md:text-5xl font-bold;
+  }
+
+  h2 {
+    @apply text-3xl md:text-4xl font-bold;
+  }
+
+  h3 {
+    @apply text-2xl md:text-3xl font-semibold;
+  }
+
+  h4 {
+    @apply text-xl md:text-2xl font-semibold;
+  }
+
+  h5 {
+    @apply text-lg md:text-xl font-medium;
+  }
+
+  h6 {
+    @apply text-base md:text-lg font-medium;
+  }
+}
+
+@layer components {
+
+  /* Button Styles */
+  .btn {
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-primary {
+    @apply btn bg-cyan-mist text-midnight-navy hover:bg-growth-green focus:ring-cyan-mist shadow-md hover:shadow-lg;
+  }
+
+  .btn-secondary {
+    @apply btn bg-white/10 text-white border border-cyan-mist/50 hover:bg-white/20 focus:ring-cyan-mist shadow-md hover:shadow-lg;
+  }
+
+  .btn-outline {
+    @apply btn border-2 border-cyan-mist text-cyan-mist hover:bg-cyan-mist hover:text-midnight-navy focus:ring-cyan-mist;
+  }
+
+  .btn-ghost {
+    @apply btn bg-transparent text-cyan-mist hover:bg-cyan-mist/10 focus:ring-cyan-mist;
+  }
+
+  /* Card Styles */
+  .card {
+    @apply bg-white/10 backdrop-blur-sm border border-cyan-mist/30 rounded-lg shadow-xl p-6 transition-shadow hover:shadow-2xl;
+  }
+
+  .card-header {
+    @apply mb-4 pb-4 border-b border-cyan-mist/20;
+  }
+
+  /* Input Styles */
+  .input {
+    @apply block w-full px-4 py-2.5 bg-primary-light border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-mist focus:border-cyan-mist transition-colors;
+  }
+
+  .input-error {
+    @apply input border-red-500 focus:ring-red-500;
+  }
+
+  /* Select Styles */
+  .select {
+    @apply input appearance-none bg-primary-light cursor-pointer;
+  }
+
+  /* Label Styles */
+  .label {
+    @apply block text-sm font-medium text-white mb-2;
+  }
+
+  /* Link Styles */
+  .link {
+    @apply text-compliance-blue hover:text-secondary-dark transition-colors underline-offset-4 hover:underline;
+  }
+
+  /* Badge Styles */
+  .badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium;
+  }
+
+  .badge-success {
+    @apply badge bg-success/10 text-success;
+  }
+
+  .badge-warning {
+    @apply badge bg-yellow-100 text-yellow-800;
+  }
+
+  .badge-error {
+    @apply badge bg-red-100 text-red-800;
+  }
+
+  .badge-info {
+    @apply badge bg-secondary/10 text-secondary-dark;
+  }
+
+  /* Alert Styles */
+  .alert {
+    @apply p-4 rounded-lg border;
+  }
+
+  .alert-success {
+    @apply alert bg-success/5 border-success text-success-dark;
+  }
+
+  .alert-error {
+    @apply alert bg-red-50 border-red-300 text-red-800;
+  }
+
+  .alert-warning {
+    @apply alert bg-yellow-50 border-yellow-300 text-yellow-800;
+  }
+
+  .alert-info {
+    @apply alert bg-secondary/5 border-secondary text-secondary-dark;
+  }
+
+  /* Table Styles */
+  .table {
+    @apply w-full border-collapse;
+  }
+
+  .table thead {
+    @apply bg-primary-light border-b-2 border-cyan-mist/20;
+  }
+
+  .table th {
+    @apply px-4 py-3 text-left text-sm font-semibold text-cyan-mist;
+  }
+
+  .table td {
+    @apply px-4 py-3 text-sm text-gray-300 border-b border-gray-700;
+  }
+
+  .table tbody tr:hover {
+    @apply bg-white/5;
+  }
+
+  /* Container */
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Traffic Light Indicators */
+  .traffic-light-green {
+    @apply bg-success text-white;
+  }
+
+  .traffic-light-yellow {
+    @apply bg-yellow-500 text-white;
+  }
+
+  .traffic-light-red {
+    @apply bg-red-500 text-white;
+  }
+}
+
+@layer utilities {
+
+  /* Custom scrollbar */
+  .scrollbar-custom::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-thumb {
+    background: rgba(133, 198, 234, 0.3);
+    border-radius: 4px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-thumb:hover {
+    background: rgba(133, 198, 234, 0.5);
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+
+  /* Text utilities */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Gradient backgrounds */
+  .gradient-primary {
+    background: linear-gradient(135deg, #102035 0%, #1a3552 100%);
+  }
+
+  .gradient-success {
+    background: linear-gradient(135deg, #41B549 0%, #1E6B38 100%);
+  }
+
+  .gradient-accent {
+    background: linear-gradient(135deg, #85C6EA 0%, #BCE6F7 100%);
+  }
+}
+
+/* Loading animations */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Focus visible for accessibility */
+.focus-visible-ring:focus-visible {
+  @apply outline-none ring-2 ring-success ring-offset-2;
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    @apply text-black bg-white;
+  }
+}

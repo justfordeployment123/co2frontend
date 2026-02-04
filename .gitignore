@@ -1,0 +1,12 @@
+info/
+FRONTEND.md
+PHASE1_SUMMARY.md
+node_modules/
+.env
+.env.local
+.DS_Store
+dist/
+build/
+.vscode/
+.idea/
+*.log

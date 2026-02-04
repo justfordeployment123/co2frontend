@@ -1,0 +1,408 @@
+{
+  "en": {
+    "standards": {
+      "csrd": {
+        "name": "CSRD (Corporate Sustainability Reporting Directive)",
+        "description": "European Union directive requiring companies to report on sustainability matters",
+        "longDescription": "The Corporate Sustainability Reporting Directive (CSRD) is an EU directive that modernizes and extends the scope of sustainability reporting requirements. It applies to all large companies and all companies listed on regulated markets (except listed micro-enterprises).",
+        "whoMustComply": [
+          "All EU large companies (>250 employees, >€40M turnover, or >€20M balance sheet)",
+          "All listed SMEs (except micro-enterprises)",
+          "Non-EU companies with significant EU operations"
+        ],
+        "keyRequirements": [
+          "Report on environmental, social, and governance (ESG) matters",
+          "Follow European Sustainability Reporting Standards (ESRS)",
+          "Include scope 1, 2, and 3 greenhouse gas emissions",
+          "Get independent assurance of reported information",
+          "Report using digital, machine-readable format (XHTML)"
+        ],
+        "timeline": "Phased implementation from 2024 to 2028 depending on company size"
+      },
+      "ghgProtocol": {
+        "name": "GHG Protocol",
+        "description": "Global standard for measuring and managing greenhouse gas emissions",
+        "longDescription": "The Greenhouse Gas Protocol (GHG Protocol) is the most widely used international accounting tool for government and business leaders to understand, quantify, and manage greenhouse gas emissions.",
+        "keyPrinciples": [
+          "Relevance: Ensure the GHG inventory appropriately reflects emissions",
+          "Completeness: Account for all emission sources and activities",
+          "Consistency: Use consistent methodologies to allow comparisons",
+          "Transparency: Address all relevant issues in a factual way",
+          "Accuracy: Reduce uncertainties as far as practicable"
+        ]
+      },
+      "iso14064": {
+        "name": "ISO 14064",
+        "description": "International standard for greenhouse gas accounting and verification",
+        "longDescription": "ISO 14064 is an international standard that provides clarity and consistency for quantifying, monitoring, reporting and verifying greenhouse gas (GHG) emissions."
+      }
+    },
+    "scopes": {
+      "scope1": {
+        "name": "Scope 1: Direct Emissions",
+        "description": "Direct GHG emissions from sources owned or controlled by the company",
+        "categories": [
+          "Stationary combustion (boilers, furnaces)",
+          "Mobile combustion (company vehicles)",
+          "Fugitive emissions (refrigerants, AC)",
+          "Process emissions (industrial processes)"
+        ],
+        "examples": [
+          "Natural gas used in office heating",
+          "Diesel fuel for company delivery trucks",
+          "Refrigerant leaks from air conditioning",
+          "Emissions from on-site manufacturing"
+        ],
+        "whyImportant": "These are emissions you have direct control over and can most easily reduce through operational changes."
+      },
+      "scope2": {
+        "name": "Scope 2: Energy Indirect Emissions",
+        "description": "Indirect GHG emissions from purchased electricity, steam, heating, and cooling",
+        "categories": [
+          "Purchased electricity",
+          "Purchased steam",
+          "Purchased heating",
+          "Purchased cooling"
+        ],
+        "examples": [
+          "Electricity for office lighting and computers",
+          "Electricity for manufacturing equipment",
+          "District heating for office building",
+          "Purchased cooling for data centers"
+        ],
+        "whyImportant": "While you don't directly create these emissions, you can reduce them by improving energy efficiency and switching to renewable energy sources."
+      },
+      "scope3": {
+        "name": "Scope 3: Other Indirect Emissions",
+        "description": "All other indirect emissions in your value chain",
+        "categories": [
+          "Business travel",
+          "Employee commuting",
+          "Transportation and distribution",
+          "Waste disposal",
+          "Purchased goods and services",
+          "Use of sold products"
+        ],
+        "examples": [
+          "Employee flights for business meetings",
+          "Employees driving to work",
+          "Shipping products to customers",
+          "Waste sent to landfill",
+          "Materials and services purchased",
+          "Emissions from products you sell"
+        ],
+        "whyImportant": "Often the largest source of emissions but also the most challenging to measure and influence. CSRD requires reporting on material Scope 3 categories."
+      }
+    },
+    "terms": {
+      "co2e": {
+        "term": "CO2e (Carbon Dioxide Equivalent)",
+        "definition": "A metric used to compare emissions from various greenhouse gases based on their global warming potential (GWP)",
+        "explanation": "Different greenhouse gases have different warming effects. CO2e allows us to express all emissions in terms of the equivalent amount of CO2. For example, 1 ton of methane (CH4) equals 28 tons of CO2e because methane is 28 times more potent than CO2 over 100 years."
+      },
+      "gwp": {
+        "term": "GWP (Global Warming Potential)",
+        "definition": "A measure of how much heat a greenhouse gas traps in the atmosphere compared to CO2",
+        "explanation": "The GWP is calculated over a specific time period (usually 100 years). CO2 has a GWP of 1. Methane (CH4) has a GWP of 28, meaning it traps 28 times more heat than CO2. Nitrous oxide (N2O) has a GWP of 265.",
+        "values": {
+          "CO2": 1,
+          "CH4": 28,
+          "N2O": 265,
+          "HFCs": "Variable (12 to 14,800)",
+          "PFCs": "Variable (7,390 to 12,200)",
+          "SF6": 22800
+        }
+      },
+      "emissionFactor": {
+        "term": "Emission Factor",
+        "definition": "A coefficient that quantifies the emissions per unit of activity",
+        "explanation": "For example, burning 1 gallon of gasoline produces approximately 8.89 kg of CO2. This '8.89 kg CO2 per gallon' is an emission factor. We use emission factors from trusted sources like EPA and EEA to calculate your emissions.",
+        "sources": [
+          "EPA (US Environmental Protection Agency)",
+          "EEA/EMEP (European Environment Agency)",
+          "DEFRA (UK Department for Environment)",
+          "IPCC (Intergovernmental Panel on Climate Change)"
+        ]
+      },
+      "materialityAssessment": {
+        "term": "Materiality Assessment",
+        "definition": "Process of identifying which sustainability topics are most relevant to your business",
+        "explanation": "Under CSRD, you must conduct a double materiality assessment: (1) Impact materiality - how your business affects people and environment, and (2) Financial materiality - how sustainability issues affect your business financially."
+      },
+      "baselineYear": {
+        "term": "Baseline Year",
+        "definition": "A historical reference year against which emissions are tracked over time",
+        "explanation": "Your baseline year is typically your first year of comprehensive emissions reporting. All future emissions are compared against this baseline to measure progress toward reduction targets."
+      },
+      "carbonNeutral": {
+        "term": "Carbon Neutral",
+        "definition": "Achieving net zero carbon dioxide emissions",
+        "explanation": "Carbon neutrality is achieved by balancing carbon emissions with carbon removal or simply eliminating carbon emissions altogether. This can be done through carbon offsetting or by reducing emissions to zero."
+      },
+      "netZero": {
+        "term": "Net Zero",
+        "definition": "Reducing greenhouse gas emissions as close to zero as possible, with remaining emissions absorbed",
+        "explanation": "Net zero means cutting emissions by 90-95% and only neutralizing the small remainder that's extremely difficult to eliminate. It's more ambitious than carbon neutral because it requires actual deep decarbonization, not just offsetting."
+      }
+    },
+    "activityTypes": {
+      "stationaryCombustion": {
+        "name": "Stationary Combustion",
+        "scope": "Scope 1",
+        "description": "Burning fuels in fixed equipment like boilers, furnaces, and generators",
+        "dataNeeded": [
+          "Fuel type (natural gas, diesel, coal, etc.)",
+          "Amount of fuel consumed (in volume or weight)",
+          "Time period"
+        ],
+        "tips": [
+          "Check utility bills for natural gas consumption",
+          "Review fuel delivery receipts for oil or propane",
+          "Check generator fuel logs"
+        ]
+      },
+      "mobileSources": {
+        "name": "Mobile Sources",
+        "scope": "Scope 1",
+        "description": "Company-owned or leased vehicles and mobile equipment",
+        "dataNeeded": [
+          "Vehicle type and fuel type",
+          "Fuel consumed OR distance traveled",
+          "Number of vehicles"
+        ],
+        "tips": [
+          "Use fuel card records",
+          "Track odometer readings",
+          "Include forklifts, construction equipment, etc."
+        ]
+      },
+      "electricity": {
+        "name": "Purchased Electricity",
+        "scope": "Scope 2",
+        "description": "Electricity purchased from the grid",
+        "dataNeeded": [
+          "Electricity consumption (kWh)",
+          "Grid region or country",
+          "Green energy certificates (if applicable)"
+        ],
+        "tips": [
+          "Check monthly electricity bills",
+          "Request annual summary from utility provider",
+          "Note if you purchase renewable energy"
+        ]
+      },
+      "businessTravel": {
+        "name": "Business Travel",
+        "scope": "Scope 3",
+        "description": "Employee travel in vehicles not owned by the company",
+        "dataNeeded": [
+          "Mode of travel (air, rail, taxi, rental car)",
+          "Distance or duration",
+          "Number of trips"
+        ],
+        "tips": [
+          "Review corporate travel bookings",
+          "Check expense reports",
+          "Use travel agency reports"
+        ]
+      }
+    },
+    "dataQuality": {
+      "title": "Data Quality Guidance",
+      "description": "Tips for collecting high-quality emissions data",
+      "levels": {
+        "primary": {
+          "name": "Primary Data",
+          "description": "Direct measurements specific to your operations",
+          "quality": "Highest",
+          "examples": [
+            "Actual fuel consumption from invoices",
+            "Meter readings",
+            "Fuel logs"
+          ]
+        },
+        "secondary": {
+          "name": "Secondary Data",
+          "description": "Industry averages or estimates",
+          "quality": "Medium",
+          "examples": [
+            "Industry average fuel efficiency",
+            "Estimated travel distances",
+            "Typical consumption rates"
+          ]
+        },
+        "estimated": {
+          "name": "Estimates",
+          "description": "Rough calculations or proxies",
+          "quality": "Lowest",
+          "examples": [
+            "Guessed values",
+            "Extrapolations",
+            "Proxies from similar activities"
+          ]
+        }
+      },
+      "improvementTips": [
+        "Always use primary data when available",
+        "Keep detailed records throughout the reporting period",
+        "Document data sources and assumptions",
+        "Set up systems to automatically track key metrics",
+        "Review and validate data regularly"
+      ]
+    }
+  },
+  "de": {
+    "standards": {
+      "csrd": {
+        "name": "CSRD (Richtlinie zur Nachhaltigkeitsberichterstattung)",
+        "description": "EU-Richtlinie zur Nachhaltigkeitsberichterstattung von Unternehmen",
+        "longDescription": "Die Corporate Sustainability Reporting Directive (CSRD) ist eine EU-Richtlinie, die die Anforderungen an die Nachhaltigkeitsberichterstattung modernisiert und erweitert.",
+        "whoMustComply": [
+          "Alle großen EU-Unternehmen (>250 Mitarbeiter, >40 Mio. € Umsatz oder >20 Mio. € Bilanzsumme)",
+          "Alle börsennotierten KMU (außer Kleinstunternehmen)",
+          "Nicht-EU-Unternehmen mit bedeutenden EU-Aktivitäten"
+        ],
+        "keyRequirements": [
+          "Berichterstattung über Umwelt-, Sozial- und Governance-Themen (ESG)",
+          "Einhaltung der European Sustainability Reporting Standards (ESRS)",
+          "Einbeziehung der Scope 1, 2 und 3 Treibhausgasemissionen",
+          "Unabhängige Prüfung der berichteten Informationen",
+          "Berichterstattung in digitalem, maschinenlesbarem Format (XHTML)"
+        ],
+        "timeline": "Schrittweise Einführung von 2024 bis 2028 je nach Unternehmensgröße"
+      }
+    },
+    "scopes": {
+      "scope1": {
+        "name": "Scope 1: Direkte Emissionen",
+        "description": "Direkte THG-Emissionen aus unternehmenseigenen oder kontrollierten Quellen",
+        "whyImportant": "Dies sind Emissionen, die Sie direkt kontrollieren können und am einfachsten durch betriebliche Änderungen reduzieren können."
+      },
+      "scope2": {
+        "name": "Scope 2: Indirekte Energieemissionen",
+        "description": "Indirekte THG-Emissionen aus eingekauftem Strom, Dampf, Wärme und Kühlung",
+        "whyImportant": "Obwohl Sie diese Emissionen nicht direkt erzeugen, können Sie sie durch Verbesserung der Energieeffizienz und Umstellung auf erneuerbare Energien reduzieren."
+      },
+      "scope3": {
+        "name": "Scope 3: Sonstige indirekte Emissionen",
+        "description": "Alle anderen indirekten Emissionen in Ihrer Wertschöpfungskette",
+        "whyImportant": "Oft die größte Emissionsquelle, aber auch am schwierigsten zu messen und zu beeinflussen. CSRD erfordert Berichterstattung über wesentliche Scope 3-Kategorien."
+      }
+    },
+    "terms": {
+      "co2e": {
+        "term": "CO2e (Kohlendioxid-Äquivalent)",
+        "definition": "Metrik zum Vergleich von Emissionen verschiedener Treibhausgase basierend auf ihrem Erderwärmungspotenzial"
+      },
+      "gwp": {
+        "term": "GWP (Erderwärmungspotenzial)",
+        "definition": "Maß dafür, wie viel Wärme ein Treibhausgas im Vergleich zu CO2 in der Atmosphäre speichert"
+      }
+    },
+    "activityTypes": {
+      "stationaryCombustion": {
+        "name": "Stationäre Verbrennung",
+        "scope": "Scope 1",
+        "description": "Verbrennung von Brennstoffen in stationären Anlagen wie Kesseln, Öfen und Generatoren",
+        "dataNeeded": [
+          "Brennstoffart (Erdgas, Diesel, Kohle, etc.)",
+          "Menge des verbrauchten Brennstoffs (Volumen oder Gewicht)",
+          "Zeitraum"
+        ],
+        "tips": [
+          "Prüfen Sie Versorgerrechnungen für Erdgasverbrauch",
+          "Lieferbelege für Öl oder Propan prüfen",
+          "Treibstoffprotokolle für Generatoren prüfen"
+        ]
+      },
+      "mobileSources": {
+        "name": "Mobile Quellen",
+        "scope": "Scope 1",
+        "description": "Unternehmenseigene oder geleaste Fahrzeuge und mobile Geräte",
+        "dataNeeded": [
+          "Fahrzeugtyp und Kraftstoffart",
+          "Kraftstoffverbrauch ODER zurückgelegte Distanz",
+          "Anzahl der Fahrzeuge"
+        ],
+        "tips": [
+          "Tankkartenabrechnungen verwenden",
+          "Kilometerstände erfassen",
+          "Gabelstapler, Baumaschinen usw. einbeziehen"
+        ]
+      },
+      "electricity": {
+        "name": "Gekaufter Strom",
+        "scope": "Scope 2",
+        "description": "Aus dem Netz bezogener Strom",
+        "dataNeeded": [
+          "Stromverbrauch (kWh)",
+          "Netzregion oder Land",
+          "Grünstromzertifikate (falls vorhanden)"
+        ],
+        "tips": [
+          "Monatliche Stromrechnungen prüfen",
+          "Jahresübersicht vom Versorger anfordern",
+          "Notieren, ob Sie erneuerbare Energie beziehen"
+        ]
+      },
+      "businessTravel": {
+        "name": "Geschäftsreisen",
+        "scope": "Scope 3",
+        "description": "Mitarbeiterreisen in nicht unternehmenseigenen Fahrzeugen",
+        "dataNeeded": [
+          "Reiseart (Flug, Bahn, Taxi, Mietwagen)",
+          "Distanz oder Dauer",
+          "Anzahl der Reisen"
+        ],
+        "tips": [
+          "Reisebuchungen prüfen",
+          "Spesenabrechnungen prüfen",
+          "Berichte von Reisebüros nutzen"
+        ]
+      }
+    },
+    "dataQuality": {
+      "title": "Leitfaden zur Datenqualität",
+      "description": "Tipps zur Erhebung hochwertiger Emissionsdaten",
+      "levels": {
+        "primary": {
+          "name": "Primärdaten",
+          "description": "Direkte Messungen spezifisch für Ihren Betrieb",
+          "quality": "Höchste",
+          "examples": [
+            "Tatsächlicher Kraftstoffverbrauch aus Rechnungen",
+            "Zählerstände",
+            "Tankprotokolle"
+          ]
+        },
+        "secondary": {
+          "name": "Sekundärdaten",
+          "description": "Branchendurchschnitte oder Schätzungen",
+          "quality": "Mittel",
+          "examples": [
+            "Durchschnittliche Kraftstoffeffizienz",
+            "Geschätzte Reisedistanzen",
+            "Typische Verbrauchsraten"
+          ]
+        },
+        "estimated": {
+          "name": "Schätzungen",
+          "description": "Grobe Berechnungen oder Näherungswerte",
+          "quality": "Niedrigste",
+          "examples": [
+            "Geschätzte Werte",
+            "Extrapolationen",
+            "Näherungswerte aus ähnlichen Aktivitäten"
+          ]
+        }
+      },
+      "improvementTips": [
+        "Verwenden Sie immer Primärdaten, wenn verfügbar",
+        "Führen Sie detaillierte Aufzeichnungen während des gesamten Berichtszeitraums",
+        "Dokumentieren Sie Datenquellen und Annahmen",
+        "Richten Sie Systeme zur automatischen Erfassung wichtiger Kennzahlen ein",
+        "Überprüfen und validieren Sie Daten regelmäßig"
+      ]
+    }
+  }
+}
