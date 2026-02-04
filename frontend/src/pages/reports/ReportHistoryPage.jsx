@@ -24,7 +24,7 @@ const ReportHistoryPage = () => {
       const companyId = localStorage.getItem('selectedCompanyId');
 
       const response = await fetch(
-        `http://localhost:5001/api/reports/history/${companyId}`,
+        `/api/reports/history/${companyId}`,
         {
           headers: {
             'Authorization': `Bearer ${token}`
@@ -52,7 +52,7 @@ const ReportHistoryPage = () => {
       const companyId = localStorage.getItem('selectedCompanyId');
 
       const response = await fetch(
-        `http://localhost:5001/api/companies/${companyId}/reporting-periods`,
+        `/api/companies/${companyId}/reporting-periods`,
         {
           headers: {
             'Authorization': `Bearer ${token}`
@@ -74,7 +74,7 @@ const ReportHistoryPage = () => {
       const token = localStorage.getItem('token');
       
       const response = await fetch(
-        `http://localhost:5001/api/reports/download/${reportId}`,
+        `/api/reports/download/${reportId}`,
         {
           headers: {
             'Authorization': `Bearer ${token}`
@@ -113,7 +113,7 @@ const ReportHistoryPage = () => {
       const token = localStorage.getItem('token');
       
       const response = await fetch(
-        `http://localhost:5001/api/reports/${reportId}`,
+        `/api/reports/${reportId}`,
         {
           method: 'DELETE',
           headers: {
