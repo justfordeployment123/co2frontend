@@ -191,7 +191,7 @@ const BoundaryQuestionsWizard = () => {
       const companyId = localStorage.getItem('selectedCompanyId');
       
       const response = await fetch(
-        `http://localhost:5001/api/companies/${companyId}/reporting-periods/${periodId}/boundary-questions`,
+        `/api/companies/${companyId}/reporting-periods/${periodId}/boundary-questions`,
         {
           headers: {
             'Authorization': `Bearer ${token}`
@@ -248,7 +248,7 @@ const BoundaryQuestionsWizard = () => {
       const companyId = localStorage.getItem('selectedCompanyId');
 
       const response = await fetch(
-        `http://localhost:5001/api/companies/${companyId}/reporting-periods/${periodId}/boundary-questions`,
+        `/api/companies/${companyId}/reporting-periods/${periodId}/boundary-questions`,
         {
           method: 'POST',
           headers: {
