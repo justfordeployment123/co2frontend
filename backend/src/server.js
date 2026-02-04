@@ -104,6 +104,7 @@ app.use('/api/companies/:companyId/activities', activityRoutes);
 app.use('/api/boundaries', boundaryRoutes);
 app.use('/api/reference', referenceRoutes);
 app.use('/api/calculations', calculationRoutes);
+app.use('/api/reports/history', reportHistoryRoutes);
 app.use('/api/reports', reportingRoutes);
 app.use('/api/exports', exportRoutes);
 app.use('/api/approvals', approvalRoutes);
@@ -111,7 +112,6 @@ app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/translations', translationRoutes);
 app.use('/api/csrd', csrdRoutes);
-app.use('/api/reports/history', reportHistoryRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/reviews', reviewRoutes);
 
