@@ -103,7 +103,7 @@ const RegisterPage = () => {
 
         <div className="relative z-10 flex flex-col justify-center px-16 w-full">
           <Link to="/" className="mb-12">
-            <img src="/CO2_logo.png" alt="Aurixon" className="h-14 w-auto" />
+            <img src="/CO2_logo.png" alt="Aurixon" className="h-24 md:h-28 lg:h-32 w-auto" />
           </Link>
 
           <h1 className="text-4xl font-bold text-white mb-4">
@@ -132,7 +132,7 @@ const RegisterPage = () => {
           {/* Mobile Logo */}
           <div className="lg:hidden text-center mb-8">
             <Link to="/">
-              <img src="/CO2_logo.png" alt="Aurixon" className="h-12 w-auto mx-auto mb-4" />
+              <img src="/CO2_logo.png" alt="Aurixon" className="h-20 md:h-24 w-auto mx-auto mb-4" />
             </Link>
           </div>
 

@@ -8,6 +8,7 @@ import LoginPage from './pages/auth/LoginPage';
 import RegisterPage from './pages/auth/RegisterPage';
 import ForgotPasswordPage from './pages/auth/ForgotPasswordPage';
 import LandingPage from './pages/LandingPage';
+import ImpressumPage from './pages/ImpressumPage';
 import DashboardPage from './pages/dashboard/DashboardPage';
 import ActivitiesListPage from './pages/ActivitiesListPage';
 import AddActivityPage from './pages/AddActivityPage';
@@ -328,6 +329,16 @@ function AnimatedRoutes() {
               element={
                 <PublicRoute>
                   <LandingPage />
+                </PublicRoute>
+              }
+            />
+
+            {/* Impressum Page (German Legal Requirement) */}
+            <Route
+              path="/impressum"
+              element={
+                <PublicRoute>
+                  <ImpressumPage />
                 </PublicRoute>
               }
             />

@@ -31,7 +31,7 @@ const LandingPage = () => {
               <img
                 src="/CO2_logo.png"
                 alt="Aurixon"
-                className="h-10 w-auto transition-transform group-hover:scale-105"
+                className="h-20 md:h-24 lg:h-28 xl:h-32 w-auto transition-transform group-hover:scale-105"
               />
             </Link>
 
@@ -399,8 +399,43 @@ const LandingPage = () => {
             </div>
           </div>
 
-          <div className="mt-8 pt-8 border-t border-white/5 text-center text-sm text-gray-500">
-            © {new Date().getFullYear()} Aurixon. All rights reserved.
+          <div className="mt-8 pt-8 border-t border-white/5">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+              {/* Copyright */}
+              <div className="text-center md:text-left text-sm text-gray-500">
+                <p>© {new Date().getFullYear()} Aurixon. All rights reserved.</p>
+                <p className="mt-2 text-xs">Dr. Slim Ben-Hassine • Am Bödinger Hof 15 • 53773 Hennef • Deutschland</p>
+              </div>
+
+              {/* Legal Links and SSL */}
+              <div className="flex flex-col md:flex-row items-center gap-4">
+                <div className="flex items-center gap-4 text-sm text-gray-400">
+                  <Link to="/impressum" className="hover:text-white transition-colors">
+                    Impressum
+                  </Link>
+                  <span className="text-gray-600">•</span>
+                  <a href="mailto:support@calculateco2.eu" className="hover:text-white transition-colors">
+                    support@calculateco2.eu
+                  </a>
+                  <span className="text-gray-600">•</span>
+                  <a href="tel:+491732727287" className="hover:text-white transition-colors">
+                    +49 173 2727287
+                  </a>
+                </div>
+                <a 
+                  href="https://www.checkdomain.de/unternehmen/garantie/ssl/popup/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="hover:opacity-80 transition-opacity"
+                >
+                  <img 
+                    src="/image.png" 
+                    alt="SSL-Zertifikat" 
+                    className="h-20 w-20 object-contain"
+                  />
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </footer>
