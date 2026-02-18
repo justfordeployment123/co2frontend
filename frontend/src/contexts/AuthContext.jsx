@@ -72,14 +72,30 @@ export const AuthProvider = ({ children }) => {
   const register = async (registrationData) => {
     try {
       const response = await authAPI.register(registrationData);
-      const { token, user: userData } = response;
+      
+      // Handle different response structures
+      if (!response) {
+        throw new Error('No response received from server');
+      }
+
+      // Log response for debugging
+      console.log('Registration response:', response);
+
+      const token = response.token;
+      const userData = response.user;
+
+      // Check if userData exists
+      if (!userData) {
+        console.error('Registration response missing user data:', response);
+        throw new Error('Registration response missing user data. Please try again.');
+      }
 
       // Transform user data - company/signup returns 'company' (singular), not 'companies' (array)
       const transformedUser = {
         ...userData,
         role: userData.company?.role || 'company_admin',
         companyId: userData.company?.id,
-        companyName: userData.company?.name,
+        companyName: userData.company?.name || registrationData.companyName,
         // Also create companies array for consistency with login response
         companies: userData.company ? [{
           companyId: userData.company.id,
@@ -89,11 +105,15 @@ export const AuthProvider = ({ children }) => {
       };
 
       // Store token and user data
-      localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(transformedUser));
+      if (token) {
+        localStorage.setItem('token', token);
+        localStorage.setItem('user', JSON.stringify(transformedUser));
 
-      setUser(transformedUser);
-      setIsAuthenticated(true);
+        setUser(transformedUser);
+        setIsAuthenticated(true);
+      } else {
+        console.warn('Registration succeeded but no token received');
+      }
 
       return { success: true, data: transformedUser };
     } catch (error) {
@@ -106,10 +126,12 @@ export const AuthProvider = ({ children }) => {
         errorMessage = error.response.data.message;
       } else if (error.response?.data?.error) {
         errorMessage = error.response.data.error;
+      } else if (error.message) {
+        errorMessage = error.message;
       } else if (error.response?.status === 409) {
         errorMessage = 'Email or company name already exists. Please use a different one.';
       } else if (error.response?.status === 400) {
-        errorMessage = 'Invalid registration data. Please check all fields.';
+        errorMessage = error.response?.data?.error || 'Invalid registration data. Please check all fields.';
       }
       
       return {

@@ -29,7 +29,7 @@ const LandingPage = () => {
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-3 group">
               <img
-                src="/aurixon_logo.png"
+                src="/CO2_logo.png"
                 alt="Aurixon"
                 className="h-10 w-auto transition-transform group-hover:scale-105"
               />
@@ -380,7 +380,7 @@ const LandingPage = () => {
         <div className="container-custom mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="flex items-center gap-3">
-              <img src="/aurixon_logo.png" alt="Aurixon" className="h-8 w-auto" />
+              <img src="/CO2_logo.png" alt="Aurixon" className="h-8 w-auto" />
             </div>
 
             <div className="flex items-center gap-8 text-sm text-gray-400">

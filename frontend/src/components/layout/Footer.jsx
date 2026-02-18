@@ -17,7 +17,7 @@ const Footer = () => {
           {/* Logo & Brand Name */}
           <div className="flex items-center gap-3">
             <img 
-              src="/aurixon_logo.png" 
+              src="/CO2_logo.png" 
               alt="AURIXON" 
               className="h-10 w-auto object-contain brightness-110"
             />

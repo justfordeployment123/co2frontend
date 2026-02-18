@@ -52,7 +52,7 @@ const LoginPage = () => {
 
         <div className="relative z-10 flex flex-col justify-center px-16 w-full">
           <Link to="/" className="mb-12">
-            <img src="/aurixon_logo.png" alt="Aurixon" className="h-14 w-auto" />
+            <img src="/CO2_logo.png" alt="Aurixon" className="h-14 w-auto" />
           </Link>
 
           <h1 className="text-4xl font-bold text-white mb-4">
@@ -80,7 +80,7 @@ const LoginPage = () => {
           {/* Mobile Logo */}
           <div className="lg:hidden text-center mb-8">
             <Link to="/">
-              <img src="/aurixon_logo.png" alt="Aurixon" className="h-12 w-auto mx-auto mb-4" />
+              <img src="/CO2_logo.png" alt="Aurixon" className="h-12 w-auto mx-auto mb-4" />
             </Link>
           </div>
 

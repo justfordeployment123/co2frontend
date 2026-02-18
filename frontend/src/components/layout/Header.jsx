@@ -31,7 +31,7 @@ const Header = ({ onMenuClick, showMenuButton }) => {
             {/* Logo */}
             <Link to="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
               <img
-                src="/aurixon_logo.png"
+                src="/CO2_logo.png"
                 alt="AURIXON"
                 className="h-10 sm:h-12 w-auto object-contain"
                 onError={(e) => {
