@@ -52,7 +52,7 @@ const CompanySettingsPage = () => {
         reporting_standards: data.reporting_standards || [],
       });
     } catch (err) {
-      error(err.response?.data?.message || 'Failed to load company data');
+      error(err.response?.data?.message || t('settings.loadError'));
     } finally {
       setLoading(false);
     }
@@ -82,7 +82,7 @@ const CompanySettingsPage = () => {
       success(t('settings.updateSuccess'));
       fetchCompanyData();
     } catch (err) {
-      error(err.response?.data?.message || 'Failed to update company');
+      error(err.response?.data?.message || t('settings.updateError'));
     } finally {
       setSaving(false);
     }
@@ -142,15 +142,15 @@ const CompanySettingsPage = () => {
                   disabled={!canEdit}
                   className="w-full px-4 py-2 bg-midnight-navy border border-carbon-gray rounded-lg text-off-white focus:outline-none focus:border-cyan-mist disabled:opacity-50"
                 >
-                  <option value="">Select Industry</option>
-                  <option value="manufacturing">Manufacturing</option>
-                  <option value="technology">Technology</option>
-                  <option value="retail">Retail</option>
-                  <option value="healthcare">Healthcare</option>
-                  <option value="finance">Finance</option>
-                  <option value="energy">Energy</option>
-                  <option value="transportation">Transportation</option>
-                  <option value="other">Other</option>
+                  <option value="">{t('settings.selectIndustry')}</option>
+                  <option value="manufacturing">{t('settings.industryManufacturing')}</option>
+                  <option value="technology">{t('settings.industryTechnology')}</option>
+                  <option value="retail">{t('settings.industryRetail')}</option>
+                  <option value="healthcare">{t('settings.industryHealthcare')}</option>
+                  <option value="finance">{t('settings.industryFinance')}</option>
+                  <option value="energy">{t('settings.industryEnergy')}</option>
+                  <option value="transportation">{t('settings.industryTransportation')}</option>
+                  <option value="other">{t('settings.industryOther')}</option>
                 </select>
               </div>
 

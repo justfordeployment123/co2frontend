@@ -1,11 +1,14 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
+import LanguageSwitcher from '../../components/common/LanguageSwitcher';
 import { Mail, Lock, ArrowRight, Eye, EyeOff } from 'lucide-react';
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -36,7 +39,7 @@ const LoginPage = () => {
         setError(result.error);
       }
     } catch (err) {
-      setError('An unexpected error occurred. Please try again.');
+      setError(t('auth.unexpectedError'));
     } finally {
       setLoading(false);
     }
@@ -52,24 +55,24 @@ const LoginPage = () => {
 
         <div className="relative z-10 flex flex-col justify-center px-16 w-full">
           <Link to="/" className="mb-12">
-            <img src="/CO2_logo.png" alt="Aurixon" className="h-24 md:h-28 lg:h-32 w-auto" />
+            <img src={import.meta.env.BASE_URL + 'aurixon_logo.png'} alt="CalculateCO2" className="h-14 w-auto" />
           </Link>
 
           <h1 className="text-4xl font-bold text-white mb-4">
-            Welcome to Your
+            {t('auth.welcomeTitle')}
             <span className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-mist to-growth-green">
-              ESG Command Center
+              {t('auth.esgCommandCenter')}
             </span>
           </h1>
 
           <p className="text-gray-400 text-lg mb-8 max-w-md">
-            Track, measure, and reduce your carbon footprint with precision. CSRD compliance made simple.
+            {t('auth.welcomeSubtitle')}
           </p>
 
           <div className="space-y-4">
-            <FeatureItem text="Automated emission calculations" />
-            <FeatureItem text="CSRD-compliant reporting" />
-            <FeatureItem text="Real-time sustainability insights" />
+            <FeatureItem text={t('auth.automatedCalcs')} />
+            <FeatureItem text={t('auth.csrdReporting')} />
+            <FeatureItem text={t('auth.realtimeInsights')} />
           </div>
         </div>
       </div>
@@ -77,19 +80,23 @@ const LoginPage = () => {
       {/* Right Panel - Login Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
         <div className="w-full max-w-md">
+          {/* Language Switcher */}
+          <div className="flex justify-end mb-4">
+            <LanguageSwitcher />
+          </div>
           {/* Mobile Logo */}
           <div className="lg:hidden text-center mb-8">
             <Link to="/">
-              <img src="/CO2_logo.png" alt="Aurixon" className="h-20 md:h-24 w-auto mx-auto mb-4" />
+              <img src={import.meta.env.BASE_URL + 'aurixon_logo.png'} alt="CalculateCO2" className="h-12 w-auto mx-auto mb-4" />
             </Link>
           </div>
 
           <div className="text-center lg:text-left mb-8">
-            <h2 className="text-2xl font-bold text-white mb-2">Sign in to your account</h2>
+            <h2 className="text-2xl font-bold text-white mb-2">{t('auth.signInTitle')}</h2>
             <p className="text-gray-400">
-              Don't have an account?{' '}
+              {t('auth.noAccount')}{' '}
               <Link to="/register" className="text-cyan-mist hover:text-growth-green transition-colors font-medium">
-                Get started
+                {t('auth.register')}
               </Link>
             </p>
           </div>
@@ -103,7 +110,7 @@ const LoginPage = () => {
 
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-2">
-                Email Address
+                {t('auth.email')}
               </label>
               <div className="relative">
                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
@@ -121,7 +128,7 @@ const LoginPage = () => {
 
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-2">
-                Password
+                {t('auth.password')}
               </label>
               <div className="relative">
                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
@@ -150,13 +157,13 @@ const LoginPage = () => {
                   type="checkbox"
                   className="w-4 h-4 rounded border-gray-600 bg-white/5 text-growth-green focus:ring-growth-green/50"
                 />
-                <span className="text-sm text-gray-400">Remember me</span>
+                <span className="text-sm text-gray-400">{t('auth.rememberMe')}</span>
               </label>
               <Link
                 to="/forgot-password"
                 className="text-sm text-cyan-mist hover:text-growth-green transition-colors"
               >
-                Forgot password?
+                {t('auth.forgotPassword')}
               </Link>
             </div>
 
@@ -166,10 +173,10 @@ const LoginPage = () => {
               className="w-full py-3.5 bg-gradient-to-r from-cyan-mist to-growth-green text-midnight-navy font-semibold rounded-xl hover:shadow-lg hover:shadow-growth-green/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {loading ? (
-                <span>Signing in...</span>
+                <span>{t('auth.signingIn')}</span>
               ) : (
                 <>
-                  <span>Sign In</span>
+                  <span>{t('auth.signInButton')}</span>
                   <ArrowRight className="w-5 h-5" />
                 </>
               )}
@@ -178,7 +185,7 @@ const LoginPage = () => {
 
           <div className="mt-8 text-center">
             <Link to="/" className="text-sm text-gray-500 hover:text-gray-300 transition-colors">
-              ← Back to Home
+              ΓåÉ {t('auth.backToHome')}
             </Link>
           </div>
         </div>

@@ -11,7 +11,7 @@ export default function StandardsComparisonModal({ isOpen, onClose }) {
   const [activeTab, setActiveTab] = useState('comparison');
 
   useEffect(() => {
-    fetch('/standards-help.json')
+    fetch(import.meta.env.BASE_URL + 'standards-help.json')
       .then(res => res.json())
       .then(data => setStandardsData(data[i18n.language] || data.en))
       .catch(err => console.error('Failed to load standards help:', err));
@@ -127,13 +127,14 @@ export default function StandardsComparisonModal({ isOpen, onClose }) {
 }
 
 function ComparisonTable({ standards }) {
+  const { t } = useTranslation();
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full divide-y divide-gray-200">
         <thead className="bg-gray-50">
           <tr>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Feature
+              {t('standards.comparison.feature')}
             </th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               CSRD
@@ -148,45 +149,45 @@ function ComparisonTable({ standards }) {
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
           <tr>
-            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Region</td>
-            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">EU</td>
-            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Global</td>
-            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Global</td>
+            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{t('standards.comparison.region')}</td>
+            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{t('standards.comparison.eu')}</td>
+            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{t('standards.comparison.global')}</td>
+            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{t('standards.comparison.global')}</td>
           </tr>
           <tr>
-            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Type</td>
-            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Mandatory (EU)</td>
-            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Voluntary</td>
-            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Voluntary</td>
+            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{t('standards.comparison.typeLabel')}</td>
+            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{t('standards.comparison.mandatory')}</td>
+            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{t('standards.comparison.voluntary')}</td>
+            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{t('standards.comparison.voluntary')}</td>
           </tr>
           <tr>
-            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Scope 3 Required</td>
-            <td className="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-semibold">Yes</td>
-            <td className="px-6 py-4 whitespace-nowrap text-sm text-yellow-600">Optional</td>
-            <td className="px-6 py-4 whitespace-nowrap text-sm text-yellow-600">Partial</td>
+            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{t('standards.comparison.scope3Required')}</td>
+            <td className="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-semibold">{t('standards.comparison.yes')}</td>
+            <td className="px-6 py-4 whitespace-nowrap text-sm text-yellow-600">{t('standards.comparison.optional')}</td>
+            <td className="px-6 py-4 whitespace-nowrap text-sm text-yellow-600">{t('standards.comparison.partial')}</td>
           </tr>
           <tr>
-            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Assurance</td>
-            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Required</td>
-            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Optional</td>
-            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Recommended</td>
+            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{t('standards.comparison.assurance')}</td>
+            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{t('standards.comparison.required')}</td>
+            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{t('standards.comparison.optional')}</td>
+            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{t('standards.comparison.recommended')}</td>
           </tr>
           <tr>
-            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Best For</td>
-            <td className="px-6 py-4 text-sm text-gray-500">EU companies</td>
-            <td className="px-6 py-4 text-sm text-gray-500">Global reporting</td>
-            <td className="px-6 py-4 text-sm text-gray-500">ISO certification</td>
+            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{t('standards.comparison.bestFor')}</td>
+            <td className="px-6 py-4 text-sm text-gray-500">{t('standards.comparison.euCompanies')}</td>
+            <td className="px-6 py-4 text-sm text-gray-500">{t('standards.comparison.globalReporting')}</td>
+            <td className="px-6 py-4 text-sm text-gray-500">{t('standards.comparison.isoCert')}</td>
           </tr>
         </tbody>
       </table>
 
       <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-        <h4 className="font-semibold text-blue-900 mb-2">💡 Recommendation</h4>
+        <h4 className="font-semibold text-blue-900 mb-2">{t('standards.comparison.recommendation')}</h4>
         <p className="text-sm text-blue-800">
-          <strong>For EU SMEs:</strong> Start with CSRD as it will be mandatory. AURIXON is designed to meet CSRD requirements by default.
+          <strong>{t('standards.comparison.euSMEsTitle')}</strong> {t('standards.comparison.euSMEsText')}
         </p>
         <p className="text-sm text-blue-800 mt-2">
-          <strong>For global companies:</strong> GHG Protocol offers maximum flexibility and is widely recognized internationally.
+          <strong>{t('standards.comparison.globalTitle')}</strong> {t('standards.comparison.globalText')}
         </p>
       </div>
     </div>
@@ -194,6 +195,7 @@ function ComparisonTable({ standards }) {
 }
 
 function StandardDetail({ standard }) {
+  const { t } = useTranslation();
   if (!standard) return null;
 
   return (
@@ -205,14 +207,14 @@ function StandardDetail({ standard }) {
 
       {standard.longDescription && (
         <div>
-          <h4 className="font-semibold text-gray-900 mb-2">Overview</h4>
+          <h4 className="font-semibold text-gray-900 mb-2">{t('standards.comparison.overview')}</h4>
           <p className="text-gray-600">{standard.longDescription}</p>
         </div>
       )}
 
       {standard.whoMustComply && (
         <div>
-          <h4 className="font-semibold text-gray-900 mb-2">Who Must Comply</h4>
+          <h4 className="font-semibold text-gray-900 mb-2">{t('standards.comparison.whoMustComply')}</h4>
           <ul className="list-disc list-inside space-y-1 text-gray-600">
             {standard.whoMustComply.map((item, idx) => (
               <li key={idx}>{item}</li>
@@ -223,7 +225,7 @@ function StandardDetail({ standard }) {
 
       {standard.keyRequirements && (
         <div>
-          <h4 className="font-semibold text-gray-900 mb-2">Key Requirements</h4>
+          <h4 className="font-semibold text-gray-900 mb-2">{t('standards.comparison.keyRequirements')}</h4>
           <ul className="list-disc list-inside space-y-1 text-gray-600">
             {standard.keyRequirements.map((item, idx) => (
               <li key={idx}>{item}</li>
@@ -234,7 +236,7 @@ function StandardDetail({ standard }) {
 
       {standard.keyPrinciples && (
         <div>
-          <h4 className="font-semibold text-gray-900 mb-2">Key Principles</h4>
+          <h4 className="font-semibold text-gray-900 mb-2">{t('standards.comparison.keyPrinciples')}</h4>
           <ul className="list-disc list-inside space-y-1 text-gray-600">
             {standard.keyPrinciples.map((item, idx) => (
               <li key={idx}>{item}</li>
@@ -245,7 +247,7 @@ function StandardDetail({ standard }) {
 
       {standard.timeline && (
         <div className="p-4 bg-yellow-50 rounded-lg">
-          <h4 className="font-semibold text-yellow-900 mb-2">⏱️ Timeline</h4>
+          <h4 className="font-semibold text-yellow-900 mb-2">{t('standards.comparison.timeline')}</h4>
           <p className="text-sm text-yellow-800">{standard.timeline}</p>
         </div>
       )}

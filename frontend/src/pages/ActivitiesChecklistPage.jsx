@@ -163,7 +163,7 @@ const ActivitiesChecklistPage = () => {
             <div className="absolute inset-0 rounded-full border-4 border-cyan-mist/20"></div>
             <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-cyan-mist animate-spin"></div>
           </div>
-          <p className="text-gray-400">Loading activities...</p>
+          <p className="text-gray-400">{t('checklist.fetchError')}</p>
         </div>
       </div>
     );
@@ -180,7 +180,7 @@ const ActivitiesChecklistPage = () => {
           className="text-gray-400 hover:text-white flex items-center gap-2 transition-colors text-sm"
         >
           <ChevronRight className="w-4 h-4 rotate-180" />
-          Back to Active Reports
+          {t('checklist.backToReports')}
         </button>
       </div>
 
@@ -188,10 +188,10 @@ const ActivitiesChecklistPage = () => {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10 bg-white/5 backdrop-blur-sm p-6 rounded-2xl border border-white/10">
         <div>
           <h1 className="text-2xl font-bold text-white mb-2">
-            {periodInfo?.period_label || 'Report'} Activities
+            {periodInfo?.period_label || t('common.report', 'Report')} {t('checklist.activities')}
           </h1>
           <p className="text-gray-400">
-            Configure data for each enabled emission source below.
+            {t('checklist.configureSources')}
           </p>
         </div>
         <div className="flex gap-3">
@@ -202,14 +202,14 @@ const ActivitiesChecklistPage = () => {
                 className="flex items-center gap-2 px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-gray-300 hover:bg-white/10 hover:text-white transition-all"
               >
                 <Pencil className="h-4 w-4" />
-                <span className="hidden sm:inline">Edit Questions</span>
+                <span className="hidden sm:inline">{t('checklist.editQuestions')}</span>
               </Link>
               <Link
                 to={`/reports/generate?periodId=${periodId}`}
                 className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-cyan-mist to-growth-green text-midnight-navy font-semibold rounded-xl hover:shadow-lg hover:shadow-growth-green/20 transition-all"
               >
                 <FileBarChart className="h-5 w-5" />
-                <span className="hidden sm:inline">Generate Report</span>
+                <span className="hidden sm:inline">{t('checklist.generateReport')}</span>
               </Link>
             </>
           )}
@@ -223,10 +223,10 @@ const ActivitiesChecklistPage = () => {
             <div key={scope}>
               <div className="flex items-center gap-4 mb-5">
                 <h2 className={`text-lg font-bold uppercase tracking-wider ${SCOPE_COLORS[scope]?.text || 'text-cyan-mist'}`}>
-                  {scope}
+                  {t('scopes.' + scope.replace(/\s/g, ''), scope)}
                 </h2>
                 <div className={`flex-grow h-px bg-gradient-to-r ${SCOPE_COLORS[scope]?.gradient || 'from-cyan-mist'} opacity-30`}></div>
-                <span className="text-sm text-gray-500">{activities.length} sources</span>
+                <span className="text-sm text-gray-500">{activities.length} {t('checklist.sources')}</span>
               </div>
 
               <div className="grid gap-3">
@@ -245,9 +245,9 @@ const ActivitiesChecklistPage = () => {
                         </div>
                         <div>
                           <h3 className="text-base font-semibold text-white group-hover:text-cyan-mist transition-colors">
-                            {activity.label}
+                            {t('activityMetadata.' + activity.id + '.label', activity.label)}
                           </h3>
-                          <p className="text-sm text-gray-500">{activity.description}</p>
+                          <p className="text-sm text-gray-500">{t('activityMetadata.' + activity.id + '.description', activity.description)}</p>
                         </div>
                       </div>
 
@@ -269,15 +269,15 @@ const ActivitiesChecklistPage = () => {
           <div className="w-20 h-20 bg-amber-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
             <AlertCircle className="h-10 w-10 text-amber-400" />
           </div>
-          <h3 className="text-xl font-bold text-white mb-2">No activities enabled</h3>
+          <h3 className="text-xl font-bold text-white mb-2">{t('checklist.noActivitiesEnabled')}</h3>
           <p className="text-gray-400 mb-6 max-w-md mx-auto">
-            You need to answer the boundary questions to enable emission sources for tracking.
+            {t('checklist.noActivitiesDesc')}
           </p>
           <Link
             to={`/settings/boundary/${periodId}`}
             className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-mist to-growth-green text-midnight-navy font-semibold rounded-xl hover:shadow-lg hover:shadow-growth-green/20 transition-all"
           >
-            Go to Boundary Questions
+            {t('checklist.goToQuestions')}
             <ArrowRight className="w-5 h-5" />
           </Link>
         </div>
@@ -286,16 +286,16 @@ const ActivitiesChecklistPage = () => {
       {/* Footer CTA */}
       {enabledTypes.length > 0 && (
         <div className="mt-16 p-8 bg-gradient-to-br from-white/5 to-white/[0.02] border border-cyan-mist/20 rounded-2xl text-center">
-          <h3 className="text-2xl font-bold text-white mb-3">Ready to generate your report?</h3>
+          <h3 className="text-2xl font-bold text-white mb-3">{t('checklist.readyTitle')}</h3>
           <p className="text-gray-400 mb-6 max-w-xl mx-auto">
-            Review your entries and see your total carbon footprint before generating the final compliance report.
+            {t('checklist.readyDesc')}
           </p>
           <Link
             to={`/reports/generate?periodId=${periodId}`}
             className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-cyan-mist to-growth-green text-midnight-navy font-bold rounded-xl hover:shadow-lg hover:shadow-growth-green/30 transition-all"
           >
             <FileBarChart className="w-5 h-5" />
-            Generate Report
+            {t('checklist.generateReport')}
           </Link>
         </div>
       )}

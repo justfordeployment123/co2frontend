@@ -30,7 +30,7 @@ const BoundarySettingsPage = () => {
       setAnswers(answersMap);
     } catch (error) {
       console.error('Error loading boundary data:', error);
-      setMessage({ type: 'error', text: t('Failed to load boundary settings') });
+      setMessage({ type: 'error', text: t('boundary.loadError') });
     } finally {
       setLoading(false);
     }
@@ -52,11 +52,11 @@ const BoundarySettingsPage = () => {
       }));
 
       await boundariesAPI.saveCompanyBoundaryAnswers(answersArray);
-      setMessage({ type: 'success', text: t('Boundary settings saved successfully') });
+      setMessage({ type: 'success', text: t('boundary.saveSuccess') });
       setTimeout(() => setMessage(null), 3000);
     } catch (error) {
       console.error('Error saving boundary settings:', error);
-      setMessage({ type: 'error', text: t('Failed to save boundary settings') });
+      setMessage({ type: 'error', text: t('boundary.saveError') });
     } finally {
       setSaving(false);
     }
@@ -83,9 +83,9 @@ const BoundarySettingsPage = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-800 mb-2">{t('Organizational Boundary Settings')}</h1>
+        <h1 className="text-3xl font-bold text-gray-800 mb-2">{t('boundary.orgTitle')}</h1>
         <p className="text-gray-600 mb-6">
-          {t('Configure which emission categories are applicable to your organization. These settings will filter available activity types.')}
+          {t('boundary.orgDesc')}
         </p>
 
         {message && (
@@ -106,7 +106,7 @@ const BoundarySettingsPage = () => {
                       </span>
                       {question.is_required && (
                         <span className="px-2 py-1 bg-purple-100 text-purple-800 text-xs font-semibold rounded">
-                          Required
+                          {t('boundary.requiredLabel')}
                         </span>
                       )}
                     </div>
@@ -115,7 +115,7 @@ const BoundarySettingsPage = () => {
                     </h3>
                     <div className="text-sm text-gray-600">
                       <p className="mb-1">
-                        <span className="font-medium">Activity Type:</span> {question.activity_type_id.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                        <span className="font-medium">{t('boundary.activityTypeLabel')}</span> {question.activity_type_id.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
                       </p>
                       {question.notes && (
                         <p className="text-gray-500 italic">
@@ -141,7 +141,7 @@ const BoundarySettingsPage = () => {
                       />
                     </button>
                     <div className="text-xs text-center mt-1 text-gray-600">
-                      {answers[question.id] ? 'YES' : 'NO'}
+                      {answers[question.id] ? t('boundary.yes') : t('boundary.no')}
                     </div>
                   </div>
                 </div>
@@ -156,19 +156,19 @@ const BoundarySettingsPage = () => {
             disabled={saving}
             className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed font-semibold shadow-md transition-colors"
           >
-            {saving ? t('Saving...') : t('Save Boundary Settings')}
+            {saving ? t('boundary.saving') : t('boundary.saveBtn')}
           </button>
         </div>
 
         <div className="mt-8 p-6 bg-blue-50 border border-blue-200 rounded-lg">
           <h3 className="text-lg font-semibold text-blue-900 mb-2">
-            ℹ️ {t('How Boundary Settings Work')}
+            ℹ️ {t('boundary.howItWorks')}
           </h3>
           <ul className="text-sm text-blue-800 space-y-2 list-disc list-inside">
-            <li><strong>Required questions</strong> are always enabled and cannot be changed (Scope 1 & Scope 2)</li>
-            <li><strong>Scope 3 questions</strong> can be enabled/disabled based on your organizational boundary</li>
-            <li>Activities will only appear in the system if their corresponding boundary question is answered "YES"</li>
-            <li>Changes take effect immediately after saving</li>
+            <li><strong>{t('boundary.requiredLabel')}</strong> {t('boundary.howItem1')}</li>
+            <li><strong>Scope 3</strong> {t('boundary.howItem2')}</li>
+            <li>{t('boundary.howItem3')}</li>
+            <li>{t('boundary.howItem4')}</li>
           </ul>
         </div>
       </div>

@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthContext';
+import LanguageSwitcher from '../components/common/LanguageSwitcher';
 import { Menu, X, Shield, BarChart3, ArrowRight, Leaf, Globe } from 'lucide-react';
 
 const LandingPage = () => {
   const { isAuthenticated } = useAuth();
+  const { t } = useTranslation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -29,30 +32,32 @@ const LandingPage = () => {
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-3 group">
               <img
-                src="/CO2_logo.png"
-                alt="Aurixon"
-                className="h-20 md:h-24 lg:h-28 xl:h-32 w-auto transition-transform group-hover:scale-105"
+                src={import.meta.env.BASE_URL + 'aurixon_logo.png'}
+                alt="CalculateCO2"
+                className="h-10 w-auto transition-transform group-hover:scale-105"
               />
             </Link>
 
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center space-x-8">
-              <NavLink href="#features">Features</NavLink>
-              <NavLink href="#how-it-works">How it Works</NavLink>
-              <NavLink href="#about">About</NavLink>
+              <NavLink href="#features">{t('landing.footer.features')}</NavLink>
+              <NavLink href="#how-it-works">{t('landing.footer.howItWorks')}</NavLink>
+              <NavLink href="#about">{t('landing.footer.about')}</NavLink>
+
+              <LanguageSwitcher />
 
               {isAuthenticated ? (
                 <Link to="/dashboard" className="btn-primary px-6 py-2.5 rounded-full flex items-center gap-2 group">
-                  Dashboard
+                  {t('actions.viewReports')}
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </Link>
               ) : (
                 <div className="flex items-center space-x-4">
                   <Link to="/login" className="text-gray-300 hover:text-white font-medium transition-colors">
-                    Log In
+                    {t('auth.login')}
                   </Link>
                   <Link to="/register" className="btn-primary px-6 py-2.5 rounded-full flex items-center gap-2 group">
-                    Get Started
+                    {t('auth.register')}
                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                   </Link>
                 </div>
@@ -74,21 +79,24 @@ const LandingPage = () => {
           mobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
         }`}>
           <div className="bg-midnight-navy/95 backdrop-blur-lg border-t border-cyan-mist/10 px-4 py-6 space-y-4">
-            <MobileNavLink href="#features" onClick={() => setMobileMenuOpen(false)}>Features</MobileNavLink>
-            <MobileNavLink href="#how-it-works" onClick={() => setMobileMenuOpen(false)}>How it Works</MobileNavLink>
-            <MobileNavLink href="#about" onClick={() => setMobileMenuOpen(false)}>About</MobileNavLink>
+            <MobileNavLink href="#features" onClick={() => setMobileMenuOpen(false)}>{t('landing.footer.features')}</MobileNavLink>
+            <MobileNavLink href="#how-it-works" onClick={() => setMobileMenuOpen(false)}>{t('landing.footer.howItWorks')}</MobileNavLink>
+            <MobileNavLink href="#about" onClick={() => setMobileMenuOpen(false)}>{t('landing.footer.about')}</MobileNavLink>
+            <div className="pt-2">
+              <LanguageSwitcher />
+            </div>
             <div className="pt-4 space-y-3">
               {isAuthenticated ? (
                 <Link to="/dashboard" className="block w-full text-center btn-primary py-3 rounded-lg">
-                  Dashboard
+                  {t('nav.dashboard')}
                 </Link>
               ) : (
                 <>
                   <Link to="/login" className="block w-full text-center btn-secondary py-3 rounded-lg">
-                    Log In
+                    {t('auth.login')}
                   </Link>
                   <Link to="/register" className="block w-full text-center btn-primary py-3 rounded-lg">
-                    Get Started
+                    {t('auth.register')}
                   </Link>
                 </>
               )}
@@ -115,35 +123,35 @@ const LandingPage = () => {
             <div className="text-center lg:text-left">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-growth-green/10 border border-growth-green/20 mb-6 animate-fade-in-up">
                 <span className="w-2 h-2 rounded-full bg-growth-green animate-pulse" />
-                <span className="text-sm text-growth-green font-medium">CSRD & ESG Compliant</span>
+                <span className="text-sm text-growth-green font-medium">{t('landing.hero.badge')}</span>
               </div>
 
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-                AI-Powered
+                {t('landing.hero.title')}
                 <span className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-mist via-compliance-blue to-growth-green">
-                  ESG Compliance
+                  {t('landing.hero.subtitle')}
                 </span>
-                Made Simple
+                {t('landing.hero.titleSuffix')}
               </h1>
 
               <p className="text-lg text-gray-400 mb-8 max-w-xl mx-auto lg:mx-0 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-                Automate your carbon footprint calculations and ESG reporting with European Environment Agency accuracy. Built for SMEs navigating CSRD requirements.
+                {t('landing.hero.description')}
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
                 {isAuthenticated ? (
                   <Link to="/dashboard" className="btn-primary text-lg px-8 py-4 rounded-full shadow-lg shadow-growth-green/20 hover:shadow-growth-green/40 transition-all flex items-center justify-center gap-2 group">
-                    Go to Dashboard
+                    {t('landing.hero.ctaDashboard')}
                     <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
                   </Link>
                 ) : (
                   <>
                     <Link to="/register" className="btn-primary text-lg px-8 py-4 rounded-full shadow-lg shadow-growth-green/20 hover:shadow-growth-green/40 transition-all flex items-center justify-center gap-2 group">
-                      Start Free Trial
+                      {t('landing.hero.ctaStart')}
                       <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
                     </Link>
                     <Link to="/login" className="btn-secondary text-lg px-8 py-4 rounded-full flex items-center justify-center gap-2">
-                      View Demo
+                      {t('landing.hero.ctaDemo')}
                     </Link>
                   </>
                 )}
@@ -152,9 +160,9 @@ const LandingPage = () => {
               {/* Trust indicators */}
               <div className="mt-10 pt-8 border-t border-white/10 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
                 <div className="flex flex-wrap justify-center lg:justify-start gap-8">
-                  <TrustBadge number="500+" label="Companies" />
-                  <TrustBadge number="99.9%" label="Accuracy" />
-                  <TrustBadge number="24/7" label="Support" />
+                  <TrustBadge number="500+" label={t('landing.hero.trustCompanies')} />
+                  <TrustBadge number="99.9%" label={t('landing.hero.trustAccuracy')} />
+                  <TrustBadge number="24/7" label={t('landing.hero.trustSupport')} />
                 </div>
               </div>
             </div>
@@ -199,34 +207,34 @@ const LandingPage = () => {
         <div className="relative container-custom mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="inline-block px-4 py-1.5 rounded-full bg-cyan-mist/10 text-cyan-mist text-sm font-medium mb-4">
-              Platform Features
+              {t('landing.features.badge')}
             </span>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Everything You Need for
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-mist to-growth-green"> ESG Excellence</span>
+              {t('landing.features.title')}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-mist to-growth-green">{t('landing.features.titleHighlight')}</span>
             </h2>
             <p className="text-gray-400 text-lg">
-              Built specifically for European businesses to meet CSRD requirements efficiently and accurately.
+              {t('landing.features.description')}
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
             <FeatureCard
               icon={<BarChart3 className="w-6 h-6" />}
-              title="Automated Calculations"
-              description="Enter your activity data and our AI automatically calculates CO₂e using the latest EEA emission factors with precision."
+              title={t('landing.features.automated.title')}
+              description={t('landing.features.automated.desc')}
               gradient="from-cyan-mist to-compliance-blue"
             />
             <FeatureCard
               icon={<Shield className="w-6 h-6" />}
-              title="CSRD Compliant Reports"
-              description="Generate audit-ready reports aligned with Corporate Sustainability Reporting Directive standards instantly."
+              title={t('landing.features.csrd.title')}
+              description={t('landing.features.csrd.desc')}
               gradient="from-growth-green to-forest-shade"
             />
             <FeatureCard
               icon={<Globe className="w-6 h-6" />}
-              title="Complete Scope Coverage"
-              description="Comprehensive tracking of Scope 1, 2 & 3 emissions including supply chain calculation modules."
+              title={t('landing.features.scope.title')}
+              description={t('landing.features.scope.desc')}
               gradient="from-compliance-blue to-cyan-mist"
             />
           </div>
@@ -242,13 +250,13 @@ const LandingPage = () => {
         <div className="relative container-custom mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="inline-block px-4 py-1.5 rounded-full bg-growth-green/10 text-growth-green text-sm font-medium mb-4">
-              Simple Process
+              {t('landing.howItWorks.badge')}
             </span>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Get Started in <span className="text-growth-green">Three Steps</span>
+              {t('landing.howItWorks.title')}<span className="text-growth-green">{t('landing.howItWorks.titleHighlight')}</span>
             </h2>
             <p className="text-gray-400 text-lg">
-              From sign-up to compliance reports in minutes, not months.
+              {t('landing.howItWorks.description')}
             </p>
           </div>
 
@@ -256,21 +264,9 @@ const LandingPage = () => {
             {/* Connection line */}
             <div className="hidden md:block absolute top-16 left-1/6 right-1/6 h-0.5 bg-gradient-to-r from-transparent via-cyan-mist/30 to-transparent" />
 
-            <StepCard
-              number="01"
-              title="Create Account"
-              description="Sign up and set your company profile. Define reporting boundaries with our guided questionnaire."
-            />
-            <StepCard
-              number="02"
-              title="Enter Activities"
-              description="Log your business activities—energy, travel, waste. Our AI matches the right emission factors automatically."
-            />
-            <StepCard
-              number="03"
-              title="Generate Reports"
-              description="Get instant CSRD-compliant reports with actionable insights to reduce emissions and demonstrate compliance."
-            />
+            <StepCard number="01" title={t('landing.howItWorks.step1.title')} description={t('landing.howItWorks.step1.desc')} />
+            <StepCard number="02" title={t('landing.howItWorks.step2.title')} description={t('landing.howItWorks.step2.desc')} />
+            <StepCard number="03" title={t('landing.howItWorks.step3.title')} description={t('landing.howItWorks.step3.desc')} />
           </div>
         </div>
       </section>
@@ -281,24 +277,24 @@ const LandingPage = () => {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
               <span className="inline-block px-4 py-1.5 rounded-full bg-cyan-mist/10 text-cyan-mist text-sm font-medium mb-4">
-                About Aurixon
+                {t('landing.about.badge')}
               </span>
               <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                Empowering Sustainable
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-mist to-growth-green"> Business Decisions</span>
+                {t('landing.about.title')}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-mist to-growth-green">{t('landing.about.titleHighlight')}</span>
               </h2>
               <p className="text-gray-400 text-lg mb-6">
-                Aurixon is a climate-tech company on a mission to empower SMEs across Europe to take control of their carbon footprint. Our team combines expertise in sustainability, data science, and software engineering.
+                {t('landing.about.desc1')}
               </p>
               <p className="text-gray-400 text-lg mb-8">
-                We believe every business, regardless of size, deserves access to accurate tools for measuring, managing, and reducing environmental impact. Aurixon is committed to transparency, innovation, and supporting the transition to a low-carbon economy.
+                {t('landing.about.desc2')}
               </p>
 
               <div className="grid grid-cols-2 gap-6">
-                <StatCard number="10K+" label="Emissions Tracked" />
-                <StatCard number="98%" label="Customer Satisfaction" />
-                <StatCard number="15+" label="EU Countries" />
-                <StatCard number="50%" label="Avg. Cost Savings" />
+                <StatCard number="10K+" label={t('landing.about.stats.emissions')} />
+                <StatCard number="98%" label={t('landing.about.stats.satisfaction')} />
+                <StatCard number="15+" label={t('landing.about.stats.countries')} />
+                <StatCard number="50%" label={t('landing.about.stats.savings')} />
               </div>
             </div>
 
@@ -347,26 +343,26 @@ const LandingPage = () => {
         <div className="relative container-custom mx-auto text-center">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Ready to Simplify Your
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-mist to-growth-green"> ESG Compliance?</span>
+              {t('landing.cta.title')}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-mist to-growth-green">{t('landing.cta.titleHighlight')}</span>
             </h2>
             <p className="text-gray-400 text-lg mb-8">
-              Join hundreds of European SMEs already using Aurixon to automate their carbon footprint reporting and meet CSRD requirements with confidence.
+              {t('landing.cta.description')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               {isAuthenticated ? (
                 <Link to="/dashboard" className="btn-primary text-lg px-8 py-4 rounded-full shadow-lg shadow-growth-green/20 hover:shadow-growth-green/40 transition-all flex items-center justify-center gap-2 group">
-                  Go to Dashboard
+                  {t('landing.cta.ctaDashboard')}
                   <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
                 </Link>
               ) : (
                 <>
                   <Link to="/register" className="btn-primary text-lg px-8 py-4 rounded-full shadow-lg shadow-growth-green/20 hover:shadow-growth-green/40 transition-all flex items-center justify-center gap-2 group">
-                    Start Your Free Trial
+                    {t('landing.cta.ctaTrial')}
                     <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
                   </Link>
                   <Link to="/login" className="btn-secondary text-lg px-8 py-4 rounded-full flex items-center justify-center gap-2">
-                    Schedule a Demo
+                    {t('landing.cta.ctaDemo')}
                   </Link>
                 </>
               )}
@@ -376,66 +372,16 @@ const LandingPage = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-12 border-t border-white/10 mt-auto">
+      <footer className="py-8 border-t border-white/10 mt-auto">
         <div className="container-custom mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-500">
             <div className="flex items-center gap-3">
-              <img src="/CO2_logo.png" alt="Aurixon" className="h-8 w-auto" />
+              <img src={import.meta.env.BASE_URL + 'aurixon_logo.png'} alt="CalculateCO2" className="h-7 w-auto opacity-80" />
+              <span>© {new Date().getFullYear()} CalculateCO2</span>
             </div>
-
-            <div className="flex items-center gap-8 text-sm text-gray-400">
-              <a href="#features" className="hover:text-white transition-colors">Features</a>
-              <a href="#how-it-works" className="hover:text-white transition-colors">How it Works</a>
-              <a href="#about" className="hover:text-white transition-colors">About</a>
-            </div>
-
-            <div className="flex items-center gap-4">
-              <SocialIcon href="https://linkedin.com" label="LinkedIn">
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-              </SocialIcon>
-              <SocialIcon href="https://twitter.com" label="Twitter">
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
-              </SocialIcon>
-            </div>
-          </div>
-
-          <div className="mt-8 pt-8 border-t border-white/5">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-              {/* Copyright */}
-              <div className="text-center md:text-left text-sm text-gray-500">
-                <p>© {new Date().getFullYear()} Aurixon. All rights reserved.</p>
-                <p className="mt-2 text-xs">Dr. Slim Ben-Hassine • Am Bödinger Hof 15 • 53773 Hennef • Deutschland</p>
-              </div>
-
-              {/* Legal Links and SSL */}
-              <div className="flex flex-col md:flex-row items-center gap-4">
-                <div className="flex items-center gap-4 text-sm text-gray-400">
-                  <Link to="/impressum" className="hover:text-white transition-colors">
-                    Impressum
-                  </Link>
-                  <span className="text-gray-600">•</span>
-                  <a href="mailto:support@calculateco2.eu" className="hover:text-white transition-colors">
-                    support@calculateco2.eu
-                  </a>
-                  <span className="text-gray-600">•</span>
-                  <a href="tel:+491732727287" className="hover:text-white transition-colors">
-                    +49 173 2727287
-                  </a>
-                </div>
-                <a 
-                  href="https://www.checkdomain.de/unternehmen/garantie/ssl/popup/" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="hover:opacity-80 transition-opacity"
-                >
-                  <img 
-                    src="/image.png" 
-                    alt="SSL-Zertifikat" 
-                    className="h-20 w-20 object-contain"
-                  />
-                </a>
-              </div>
-            </div>
+            <a href="/imprint" className="hover:text-white transition-colors underline underline-offset-2">
+              Imprint
+            </a>
           </div>
         </div>
       </footer>
@@ -482,7 +428,7 @@ const DashboardCard = ({ label, value, variant }) => {
     <div className={`${styles.bg} rounded-lg p-3 text-center`}>
       <div className="text-xs text-gray-400 mb-1">{label}</div>
       <div className={`text-lg font-bold ${styles.text}`}>{value}</div>
-      <div className="text-xs text-gray-500">tCO₂e</div>
+      <div className="text-xs text-gray-500">tCOΓéée</div>
     </div>
   );
 };

@@ -144,7 +144,7 @@ const ReportViewerPage = () => {
                 {report.period_label || 'Report'}
               </h1>
               <p className="text-stone-gray text-sm sm:text-base">
-                CSRD Standard • {new Date(report.period_start_date).toLocaleDateString()} - {new Date(report.period_end_date).toLocaleDateString()}
+                {t('reports.standardLabel')} • {new Date(report.period_start_date).toLocaleDateString()} - {new Date(report.period_end_date).toLocaleDateString()}
               </p>
             </div>
             <div className="flex items-center gap-2 flex-wrap">
@@ -199,14 +199,14 @@ const ReportViewerPage = () => {
         {/* Activity Breakdown */}
         {report.activity_breakdown && (
           <div className="bg-midnight-navy-lighter border border-carbon-gray rounded-lg p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Emissions by Activity Type</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">{t('reports.activityBreakdown')}</h2>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-carbon-gray">
-                    <th className="text-left py-3 px-2 text-stone-gray">Activity Type</th>
-                    <th className="text-right py-3 px-2 text-stone-gray">Emissions (MT CO₂e)</th>
-                    <th className="text-right py-3 px-2 text-stone-gray">Count</th>
+                    <th className="text-left py-3 px-2 text-stone-gray">{t('reports.activityType')}</th>
+                    <th className="text-right py-3 px-2 text-stone-gray">{t('reports.emissionsCol')}</th>
+                    <th className="text-right py-3 px-2 text-stone-gray">{t('reports.countCol')}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -228,7 +228,7 @@ const ReportViewerPage = () => {
         {/* Traffic Light Score */}
         {report.traffic_light && (
           <div className="mt-6 bg-midnight-navy-lighter border border-carbon-gray rounded-lg p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Sustainability Score</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">{t('reports.sustainabilityScore')}</h2>
             <div className="flex items-center gap-4">
               <div className={`w-20 h-20 rounded-full flex items-center justify-center text-2xl font-bold ${
                 report.traffic_light === 'green' ? 'bg-green-500 text-white' :
@@ -238,12 +238,12 @@ const ReportViewerPage = () => {
                 {report.traffic_light === 'green' ? '✓' : report.traffic_light === 'yellow' ? '⚠' : '✗'}
               </div>
               <div>
-                <p className="text-stone-gray text-sm">Current Rating</p>
+                <p className="text-stone-gray text-sm">{t('reports.currentRating')}</p>
                 <p className="text-white text-lg font-semibold capitalize">{report.traffic_light}</p>
                 <p className="text-stone-gray text-xs mt-1 max-w-xs">
-                  {report.traffic_light === 'green' ? 'Good sustainability performance' :
-                   report.traffic_light === 'yellow' ? 'Room for improvement' :
-                   'Needs immediate attention'}
+                  {report.traffic_light === 'green' ? t('reports.goodPerformance') :
+                   report.traffic_light === 'yellow' ? t('reports.roomForImprovementText') :
+                   t('reports.needsAttention')}
                 </p>
               </div>
             </div>
@@ -253,7 +253,7 @@ const ReportViewerPage = () => {
         {/* Recommendations Section */}
         {report.recommendations && report.recommendations.length > 0 && (
           <div className="mt-6 bg-midnight-navy-lighter border border-carbon-gray rounded-lg p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Key Recommendations</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">{t('reports.keyRecommendations')}</h2>
             <ul className="list-disc pl-6 text-white text-sm">
               {report.recommendations.map((rec, idx) => (
                 <li key={idx} className="mb-2">{rec}</li>
@@ -265,7 +265,7 @@ const ReportViewerPage = () => {
         {/* Audit Trail Section */}
         {report.audit_trail && report.audit_trail.length > 0 && (
           <div className="mt-6 bg-midnight-navy-lighter border border-carbon-gray rounded-lg p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Audit Trail</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">{t('reports.auditTrail')}</h2>
             <ul className="list-disc pl-6 text-white text-sm">
               {report.audit_trail.map((entry, idx) => (
                 <li key={idx} className="mb-2">{entry}</li>
@@ -277,13 +277,13 @@ const ReportViewerPage = () => {
         {/* Certification Section */}
         {report.certification && (
           <div className="mt-6 bg-midnight-navy-lighter border border-carbon-gray rounded-lg p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Certification</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">{t('reports.certificationSection')}</h2>
             <p className="text-white text-sm mb-2">{report.certification.text}</p>
             {report.certification.signed_by && (
-              <div className="text-stone-gray text-xs">Signed by: {report.certification.signed_by}</div>
+              <div className="text-stone-gray text-xs">{t('reports.signedBy')} {report.certification.signed_by}</div>
             )}
             {report.certification.date && (
-              <div className="text-stone-gray text-xs">Date: {new Date(report.certification.date).toLocaleDateString()}</div>
+              <div className="text-stone-gray text-xs">{t('reports.reportDate')} {new Date(report.certification.date).toLocaleDateString()}</div>
             )}
           </div>
         )}

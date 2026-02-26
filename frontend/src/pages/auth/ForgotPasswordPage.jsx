@@ -1,6 +1,8 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import authAPI from '../../api/authAPI';
+import LanguageSwitcher from '../../components/common/LanguageSwitcher';
 import { Mail, ArrowRight, ArrowLeft, CheckCircle } from 'lucide-react';
 
 const ForgotPasswordPage = () => {
@@ -8,6 +10,7 @@ const ForgotPasswordPage = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { t } = useTranslation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,10 +37,14 @@ const ForgotPasswordPage = () => {
       </div>
 
       <div className="relative w-full max-w-md">
+        {/* Language Switcher */}
+        <div className="flex justify-end mb-4">
+          <LanguageSwitcher />
+        </div>
         {/* Logo */}
         <div className="text-center mb-8">
           <Link to="/">
-            <img src="/CO2_logo.png" alt="Aurixon" className="h-20 md:h-24 lg:h-28 w-auto mx-auto" />
+            <img src={import.meta.env.BASE_URL + 'aurixon_logo.png'} alt="CalculateCO2" className="h-12 w-auto mx-auto" />
           </Link>
         </div>
 
@@ -49,9 +56,9 @@ const ForgotPasswordPage = () => {
                 <div className="w-16 h-16 bg-cyan-mist/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
                   <Mail className="w-8 h-8 text-cyan-mist" />
                 </div>
-                <h2 className="text-2xl font-bold text-white mb-2">Reset your password</h2>
+                <h2 className="text-2xl font-bold text-white mb-2">{t('auth.resetPassword')}</h2>
                 <p className="text-gray-400">
-                  Enter your email and we'll send you instructions to reset your password.
+                  {t('auth.resetDescription')}
                 </p>
               </div>
 
@@ -64,7 +71,7 @@ const ForgotPasswordPage = () => {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Email Address
+                    {t('auth.email')}
                   </label>
                   <div className="relative">
                     <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
@@ -85,10 +92,10 @@ const ForgotPasswordPage = () => {
                   className="w-full py-3.5 bg-gradient-to-r from-cyan-mist to-growth-green text-midnight-navy font-semibold rounded-xl hover:shadow-lg hover:shadow-growth-green/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
                   {loading ? (
-                    <span>Sending...</span>
+                    <span>{t('auth.sending')}</span>
                   ) : (
                     <>
-                      <span>Send Reset Link</span>
+                      <span>{t('auth.sendResetLink')}</span>
                       <ArrowRight className="w-5 h-5" />
                     </>
                   )}
@@ -100,17 +107,17 @@ const ForgotPasswordPage = () => {
               <div className="w-16 h-16 bg-growth-green/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
                 <CheckCircle className="w-8 h-8 text-growth-green" />
               </div>
-              <h3 className="text-xl font-bold text-white mb-2">Check your email</h3>
+              <h3 className="text-xl font-bold text-white mb-2">{t('auth.checkEmail')}</h3>
               <p className="text-gray-400 mb-6">
-                We've sent a password reset link to <span className="text-cyan-mist">{email}</span>
+                {t('auth.resetLinkSent')} <span className="text-cyan-mist">{email}</span>
               </p>
               <p className="text-sm text-gray-500">
-                Didn't receive the email? Check your spam folder or{' '}
+                {t('auth.resetLinkNotReceived')}{' '}
                 <button
                   onClick={() => setSuccess(false)}
                   className="text-cyan-mist hover:text-growth-green transition-colors"
                 >
-                  try again
+                  {t('auth.tryAgain')}
                 </button>
               </p>
             </div>
@@ -122,7 +129,7 @@ const ForgotPasswordPage = () => {
               className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
-              <span>Back to login</span>
+              <span>{t('auth.backToLogin')}</span>
             </Link>
           </div>
         </div>

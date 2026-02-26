@@ -75,7 +75,7 @@ const ActivityDetailsPage = () => {
                <ArrowLeftIcon className="h-4 w-4 text-cyan-mist" />
             </button>
             <div>
-              <p className="text-[9px] uppercase font-bold tracking-widest text-cyan-mist/70 mb-0.5">Activity Record</p>
+              <p className="text-[9px] uppercase font-bold tracking-widest text-cyan-mist/70 mb-0.5">{t('activityDetails.activityRecord')}</p>
               <h1 className="text-xl font-bold tracking-tight">
                 {activityType.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
               </h1>
@@ -98,7 +98,7 @@ const ActivityDetailsPage = () => {
              <div className="bg-white/5 border border-white/10 rounded-xl p-5">
                 <h2 className="text-sm font-bold text-white mb-4 flex items-center gap-2">
                    <div className="w-1 h-4 bg-cyan-mist rounded-full"></div>
-                   Entry Details
+                   {t('activityDetails.entryDetails')}
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {Object.entries(activity).map(([key, value]) => {
@@ -125,7 +125,7 @@ const ActivityDetailsPage = () => {
           <div className="lg:col-span-1 space-y-4">
              {/* Emission Headliner */}
              <div className="bg-gradient-to-br from-cyan-mist/10 to-transparent border border-cyan-mist/20 rounded-xl p-5 text-center">
-                <p className="text-[9px] font-bold text-cyan-mist uppercase tracking-widest mb-2">Total Footprint</p>
+                <p className="text-[9px] font-bold text-cyan-mist uppercase tracking-widest mb-2">{t('activityDetails.totalFootprint')}</p>
                 <div className="text-4xl font-black text-white mb-1 tabular-nums">
                    {parseFloat(activity.co2e_kg || activity.co2e || 0).toFixed(2)}
                 </div>
@@ -159,13 +159,13 @@ const ActivityDetailsPage = () => {
              <div className="bg-white/5 border border-white/10 rounded-xl p-4">
                 <div className="space-y-3 text-xs">
                   <div>
-                    <p className="text-[9px] font-bold text-stone-gray uppercase tracking-wider mb-1">Created</p>
+                    <p className="text-[9px] font-bold text-stone-gray uppercase tracking-wider mb-1">{t('activityDetails.created')}</p>
                     <p className="text-gray-300">
                       {new Date(activity.created_at).toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short' })}
                     </p>
                   </div>
                   <div>
-                    <p className="text-[9px] font-bold text-stone-gray uppercase tracking-wider mb-1">Last Updated</p>
+                    <p className="text-[9px] font-bold text-stone-gray uppercase tracking-wider mb-1">{t('activityDetails.lastUpdated')}</p>
                     <p className="text-gray-300">
                       {new Date(activity.updated_at).toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short' })}
                     </p>

@@ -79,24 +79,24 @@ const DashboardPage = () => {
         glow: 'shadow-emerald-500/30',
         text: 'text-emerald-400',
         icon: '✓',
-        title: 'Excellent Performance',
-        description: 'Your emissions are well below the industry baseline'
+        title: t('dashboard.excellentPerformance'),
+        description: t('dashboard.excellentDescription')
       },
       yellow: {
         bg: 'from-amber-400 to-yellow-500',
         glow: 'shadow-amber-500/30',
         text: 'text-amber-400',
         icon: '!',
-        title: 'Room for Improvement',
-        description: 'Your emissions are near or slightly above industry baseline'
+        title: t('dashboard.roomForImprovement'),
+        description: t('dashboard.roomForImprovementDescription')
       },
       red: {
         bg: 'from-red-500 to-rose-600',
         glow: 'shadow-red-500/30',
         text: 'text-red-400',
         icon: '!',
-        title: 'Action Required',
-        description: 'Your emissions are significantly above industry baseline'
+        title: t('dashboard.actionRequired'),
+        description: t('dashboard.actionRequiredDescription')
       }
     };
     return styles[color] || styles.green;
@@ -110,7 +110,7 @@ const DashboardPage = () => {
             <div className="absolute inset-0 rounded-full border-4 border-cyan-mist/20"></div>
             <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-cyan-mist animate-spin"></div>
           </div>
-          <p className="text-gray-400 animate-pulse">Loading your carbon data...</p>
+          <p className="text-gray-400 animate-pulse">{t('dashboard.loading')}</p>
         </div>
       </div>
     );
@@ -141,7 +141,7 @@ const DashboardPage = () => {
                   className="group relative px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-xl font-semibold text-base md:text-lg shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50 transition-all hover:-translate-y-1"
                 >
                   <span className="relative z-10 flex items-center gap-2">
-                    <span>Create Your First Report</span>
+                    <span>{t('dashboard.createFirstReport')}</span>
                     <span className="group-hover:translate-x-1 transition-transform">→</span>
                   </span>
                 </button>
@@ -176,13 +176,13 @@ const DashboardPage = () => {
               <div>
                 <div className="flex items-center gap-3 mb-2 md:mb-3">
                   <div className="h-1 w-8 md:w-12 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full"></div>
-                  <span className="text-xs font-semibold tracking-wider text-cyan-400 uppercase">Carbon Dashboard</span>
+                  <span className="text-xs font-semibold tracking-wider text-cyan-400 uppercase">{t('dashboard.carbonDashboard')}</span>
                 </div>
                 <h1 className="text-2xl sm:text-3xl lg:text-5xl font-bold text-white mb-2 md:mb-3">
-                  Welcome back, <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">{user?.firstName || 'User'}</span>
+                  {t('dashboard.welcome')} <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">{user?.firstName || 'User'}</span>
                 </h1>
                 <p className="text-gray-400 text-sm md:text-lg max-w-xl">
-                  Your aggregated emissions overview across all reporting period(s)
+                  {t('dashboard.overview')}
                 </p>
               </div>
               
@@ -192,13 +192,13 @@ const DashboardPage = () => {
                     onClick={() => navigate('/reporting-periods')}
                     className="flex-1 lg:flex-initial px-3 md:px-5 py-2 md:py-3 bg-white/5 backdrop-blur-sm border border-white/10 text-white rounded-xl hover:bg-white/10 transition-all font-medium flex items-center justify-center gap-2 text-sm"
                   >
-                    <span>Active Reports</span>
+                    <span>{t('dashboard.activeReports')}</span>
                   </button>
                   <button 
                     onClick={() => setShowNewPeriodModal(true)}
                     className="flex-1 lg:flex-initial px-3 md:px-5 py-2 md:py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-xl hover:shadow-lg hover:shadow-cyan-500/30 transition-all font-medium flex items-center justify-center gap-2 text-sm"
                   >
-                    <span>+ New Report</span>
+                    <span>{t('dashboard.newReport')}</span>
                   </button>
                 </div>
               )}
@@ -214,8 +214,8 @@ const DashboardPage = () => {
                 </svg>
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-blue-200 font-medium text-sm md:text-base">Aggregated Data View</p>
-                <p className="text-blue-300/70 text-xs md:text-sm truncate md:whitespace-normal">This dashboard shows your total emissions combined across all reporting periods.</p>
+                <p className="text-blue-200 font-medium text-sm md:text-base">{t('dashboard.aggregatedView')}</p>
+                <p className="text-blue-300/70 text-xs md:text-sm truncate md:whitespace-normal">{t('dashboard.aggregatedDescription')}</p>
               </div>
             </div>
           </div>
@@ -253,7 +253,7 @@ const DashboardPage = () => {
                   <div className="h-full bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl md:rounded-3xl p-6 md:p-8">
                     <div className="flex items-center justify-between mb-4 md:mb-6">
                       <div>
-                        <h3 className="text-xs md:text-sm font-semibold text-gray-400 uppercase tracking-wider mb-1">Total Carbon Footprint</h3>
+                        <h3 className="text-xs md:text-sm font-semibold text-gray-400 uppercase tracking-wider mb-1">{t('dashboard.totalCarbonFootprint')}</h3>
                         <p className="text-3xl md:text-5xl font-bold text-white">
                           {(kpis.totalEmissions || 0).toFixed(2)}
                           <span className="text-lg md:text-2xl text-gray-400 ml-2">MT CO₂e</span>
@@ -270,7 +270,7 @@ const DashboardPage = () => {
                     <div className="space-y-3 md:space-y-4">
                       <div>
                         <div className="flex justify-between text-xs md:text-sm mb-1 md:mb-2">
-                          <span className="text-gray-400">Scope 1 (Direct)</span>
+                          <span className="text-gray-400">{t('dashboard.scope1')}</span>
                           <span className="text-white font-medium">{(kpis.scope1 || 0).toFixed(2)} MT</span>
                         </div>
                         <div className="h-2 md:h-3 bg-white/5 rounded-full overflow-hidden">
@@ -282,7 +282,7 @@ const DashboardPage = () => {
                       </div>
                       <div>
                         <div className="flex justify-between text-xs md:text-sm mb-1 md:mb-2">
-                          <span className="text-gray-400">Scope 2 (Energy)</span>
+                          <span className="text-gray-400">{t('dashboard.scope2')}</span>
                           <span className="text-white font-medium">{(kpis.scope2_market || kpis.scope2_location || 0).toFixed(2)} MT</span>
                         </div>
                         <div className="h-2 md:h-3 bg-white/5 rounded-full overflow-hidden">
@@ -294,7 +294,7 @@ const DashboardPage = () => {
                       </div>
                       <div>
                         <div className="flex justify-between text-xs md:text-sm mb-1 md:mb-2">
-                          <span className="text-gray-400">Scope 3 (Value Chain)</span>
+                          <span className="text-gray-400">{t('dashboard.scope3')}</span>
                           <span className="text-white font-medium">{(kpis.scope3 || 0).toFixed(2)} MT</span>
                         </div>
                         <div className="h-2 md:h-3 bg-white/5 rounded-full overflow-hidden">
@@ -310,7 +310,7 @@ const DashboardPage = () => {
               </div>
 
               {/* Scope Detail Cards - Equal Sizes */}
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
                 {/* Scope 1 */}
                 <div className="group relative">
                   <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-green-600/20 rounded-xl md:rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
@@ -321,7 +321,7 @@ const DashboardPage = () => {
                       </div>
                       <div className="min-w-0">
                         <h4 className="text-white font-semibold text-sm md:text-base">Scope 1</h4>
-                        <p className="text-xs text-gray-500 truncate">Direct</p>
+                        <p className="text-xs text-gray-500 truncate">{t('dashboard.direct')}</p>
                       </div>
                     </div>
                     <p className="text-2xl md:text-3xl font-bold text-white mb-1">{(kpis.scope1 || 0).toFixed(2)}</p>
@@ -339,7 +339,7 @@ const DashboardPage = () => {
                       </div>
                       <div className="min-w-0">
                         <h4 className="text-white font-semibold text-sm md:text-base">Scope 2</h4>
-                        <p className="text-xs text-gray-500 truncate">Location</p>
+                        <p className="text-xs text-gray-500 truncate">{t('dashboard.location')}</p>
                       </div>
                     </div>
                     <p className="text-2xl md:text-3xl font-bold text-white mb-1">{(kpis.scope2_location || 0).toFixed(2)}</p>
@@ -357,7 +357,7 @@ const DashboardPage = () => {
                       </div>
                       <div className="min-w-0">
                         <h4 className="text-white font-semibold text-sm md:text-base">Scope 2</h4>
-                        <p className="text-xs text-gray-500 truncate">Market</p>
+                        <p className="text-xs text-gray-500 truncate">{t('dashboard.market')}</p>
                       </div>
                     </div>
                     <p className="text-2xl md:text-3xl font-bold text-white mb-1">{(kpis.scope2_market || 0).toFixed(2)}</p>
@@ -375,7 +375,7 @@ const DashboardPage = () => {
                       </div>
                       <div className="min-w-0">
                         <h4 className="text-white font-semibold text-sm md:text-base">Scope 3</h4>
-                        <p className="text-xs text-gray-500 truncate">Supply Chain</p>
+                        <p className="text-xs text-gray-500 truncate">{t('dashboard.supplyChain')}</p>
                       </div>
                     </div>
                     <p className="text-2xl md:text-3xl font-bold text-white mb-1">{(kpis.scope3 || 0).toFixed(2)}</p>

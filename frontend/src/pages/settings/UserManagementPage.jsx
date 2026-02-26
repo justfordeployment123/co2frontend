@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { fetchUsers, registerUser, updateUserRole, removeUser } from '../../api/settingsApi';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -27,7 +28,7 @@ export default function UserManagementPage() {
       setUsers(data);
       setError(null);
     } catch (err) {
-      setError('Failed to load users');
+      setError(t('settings.failedLoadUsers'));
     }
     setLoading(false);
   }
@@ -37,11 +38,11 @@ export default function UserManagementPage() {
     setSuccess(null);
     try {
       await registerUser(newUser);
-      setSuccess('User registered and email sent!');
+      setSuccess(t('settings.userRegistered'));
       setNewUser({ first_name: '', last_name: '', email: '', password: '', role: 'viewer' });
       loadUsers();
     } catch (err) {
-      setError('Failed to add user');
+      setError(t('settings.failedAddUser'));
     }
   }
 
@@ -50,23 +51,23 @@ export default function UserManagementPage() {
       await updateUserRole(userId, newRole);
       loadUsers();
     } catch (err) {
-      setError('Failed to update role');
+      setError(t('settings.failedUpdateRole'));
     }
   }
 
   async function handleRemove(userId) {
-    if (!window.confirm('Remove this user?')) return;
+    if (!window.confirm(t('settings.removeUserConfirm'))) return;
     try {
       await removeUser(userId);
       loadUsers();
     } catch (err) {
-      setError('Failed to remove user');
+      setError(t('settings.failedRemoveUser'));
     }
   }
 
   return (
     <div>
-      <h2 className="text-xl font-semibold text-white mb-4">User Management</h2>
+      <h2 className="text-xl font-semibold text-white mb-4">{t('settings.userMgmtTitle')}</h2>
       {error && <div className="text-red-400 mb-2">{error}</div>}
       {success && <div className="text-green-400 mb-2">{success}</div>}
       <form onSubmit={handleAddUser} className="flex flex-wrap gap-2 mb-6 items-end">
@@ -78,16 +79,17 @@ export default function UserManagementPage() {
           {roles.map(r => <option key={r.value} value={r.value}>{r.label}</option>)}
         </select>
         <input type="text" value={user.companyName || ''} readOnly className="border rounded px-2 py-1 bg-gray-800 text-gray-400" title="Company" style={{ minWidth: 120 }} />
-        <button type="submit" className="bg-cyan-700 text-white px-4 py-1 rounded">Add User</button>
+        <button type="submit" className="bg-cyan-700 text-white px-4 py-1 rounded">{t('settings.addUserBtn')}</button>
       </form>
-      {loading ? <div className="text-gray-200">Loading...</div> : (
+      {loading ? <div className="text-gray-200">{t('settings.loadingText')}</div> : (
+        <div className="overflow-x-auto">
         <table className="min-w-full border text-gray-200 bg-gray-900 rounded-lg">
           <thead className="bg-gray-800">
             <tr>
-              <th className="border px-2 py-2">Name</th>
-              <th className="border px-2 py-2">Email</th>
-              <th className="border px-2 py-2">Role</th>
-              <th className="border px-2 py-2">Actions</th>
+              <th className="border px-2 py-2">{t('users.name')}</th>
+              <th className="border px-2 py-2">{t('users.email')}</th>
+              <th className="border px-2 py-2">{t('users.role')}</th>
+              <th className="border px-2 py-2">{t('reports.colActions')}</th>
             </tr>
           </thead>
           <tbody>
@@ -102,13 +104,14 @@ export default function UserManagementPage() {
                 </td>
                 <td className="border px-2 py-2">
                   {u.id !== user.userId && (
-                    <button onClick={() => handleRemove(u.id)} className="text-red-400 hover:underline">Remove</button>
+                    <button onClick={() => handleRemove(u.id)} className="text-red-400 hover:underline">{t('settings.removeBtn')}</button>
                   )}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+        </div>
       )}
     </div>
   );

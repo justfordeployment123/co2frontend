@@ -28,7 +28,7 @@ const ReportHistoryPage = () => {
       setReports(data || []);
     } catch (error) {
       console.error('Error fetching report history:', error);
-      toast.error('Failed to load report history');
+      toast.error(t('reports.loadingHistory'));
     } finally {
       setLoading(false);
     }
@@ -62,7 +62,7 @@ const ReportHistoryPage = () => {
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
 
-      toast.success('Report downloaded successfully');
+      toast.success(t('reports.download') + ' OK');
     } catch (error) {
       console.error('Error downloading report:', error);
       toast.error('Failed to download report');
@@ -70,13 +70,13 @@ const ReportHistoryPage = () => {
   };
 
   const handleDelete = async (reportId) => {
-    if (!window.confirm('Are you sure you want to delete this report?')) {
+    if (!window.confirm(t('reports.deleteConfirmMsg'))) {
       return;
     }
 
     try {
       await reportsAPI.deleteReport(reportId);
-      toast.success('Report deleted successfully');
+      toast.success(t('reports.deleteReport') + ' OK');
       fetchReportHistory();
     } catch (error) {
       console.error('Error deleting report:', error);
@@ -86,10 +86,10 @@ const ReportHistoryPage = () => {
 
   const getPaymentStatusBadge = (status) => {
     const statusConfig = {
-      succeeded: { color: 'bg-green-500/20 text-green-300', label: 'Paid' },
-      pending: { color: 'bg-yellow-500/20 text-yellow-300', label: 'Pending' },
-      failed: { color: 'bg-red-500/20 text-red-300', label: 'Failed' },
-      refunded: { color: 'bg-gray-500/20 text-gray-300', label: 'Refunded' }
+      succeeded: { color: 'bg-green-500/20 text-green-300', label: t('reports.statusPaid') },
+      pending: { color: 'bg-yellow-500/20 text-yellow-300', label: t('reports.statusPending') },
+      failed: { color: 'bg-red-500/20 text-red-300', label: t('reports.statusFailed') },
+      refunded: { color: 'bg-gray-500/20 text-gray-300', label: t('reports.statusRefunded') }
     };
 
     const config = statusConfig[status] || statusConfig.pending;
@@ -122,26 +122,26 @@ const ReportHistoryPage = () => {
   const columns = [
     {
       key: 'generated_at',
-      label: 'Generated Date',
+      label: t('reports.colGeneratedDate'),
       render: (value) => new Date(value).toLocaleString()
     },
     {
       key: 'period_label',
-      label: 'Reporting Period'
+      label: t('reports.colPeriod')
     },
     {
       key: 'report_type',
-      label: 'Type',
+      label: t('reports.colType'),
       render: (value) => getReportTypeBadge(value)
     },
     {
       key: 'payment_status',
-      label: 'Payment',
+      label: t('reports.colPayment'),
       render: (value) => getPaymentStatusBadge(value)
     },
     {
       key: 'amount_paid',
-      label: 'Amount',
+      label: t('reports.colAmount'),
       render: (value, row) => {
         if (row.payment_status === 'succeeded') {
           return `€${(value / 100).toFixed(2)}`;
@@ -151,7 +151,7 @@ const ReportHistoryPage = () => {
     },
     {
       key: 'actions',
-      label: 'Actions',
+      label: t('reports.colActions'),
       render: (_, row) => (
         <div className="flex gap-2">
           <button
@@ -174,7 +174,7 @@ const ReportHistoryPage = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="text-white text-xl">Loading report history...</div>
+        <div className="text-white text-xl">{t('reports.loadingHistory')}</div>
       </div>
     );
   }
@@ -183,8 +183,8 @@ const ReportHistoryPage = () => {
     <div className="p-6">
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-white mb-2">Report History</h1>
-          <p className="text-gray-300">View and download your generated reports</p>
+          <h1 className="text-3xl font-bold text-white mb-2">{t('reports.history')}</h1>
+          <p className="text-gray-300">{t('reports.historySubtitle')}</p>
         </div>
 
         <button
@@ -198,13 +198,13 @@ const ReportHistoryPage = () => {
       {/* Filters */}
       <div className="mb-6 bg-primary-light border border-gray-700 rounded-lg p-4">
         <div className="flex items-center gap-4">
-          <label className="text-white font-medium">Filter by Period:</label>
+          <label className="text-white font-medium">{t('reports.filterByPeriod')}</label>
           <select
             value={selectedPeriod}
             onChange={(e) => setSelectedPeriod(e.target.value)}
             className="px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-white"
           >
-            <option value="all">All Periods</option>
+            <option value="all">{t('reports.allPeriods')}</option>
             {periods.map(period => (
               <option key={period.id} value={period.id}>
                 {period.period_label}
@@ -219,7 +219,7 @@ const ReportHistoryPage = () => {
         {filteredReports.length === 0 ? (
           <div className="text-center py-12">
             <div className="text-6xl mb-4">📄</div>
-            <h3 className="text-xl font-semibold text-white mb-2">No Reports Found</h3>
+            <h3 className="text-xl font-semibold text-white mb-2">{t('reports.noReportsFound')}</h3>
             <p className="text-gray-400 mb-6">
               {selectedPeriod === 'all'
                 ? 'You haven\'t generated any reports yet.'
@@ -245,23 +245,23 @@ const ReportHistoryPage = () => {
       {reports.length > 0 && (
         <div className="mt-6 grid grid-cols-1 md:grid-cols-4 gap-4">
           <div className="bg-primary-light border border-gray-700 rounded-lg p-4">
-            <div className="text-gray-400 text-sm mb-1">Total Reports</div>
+            <div className="text-gray-400 text-sm mb-1">{t('reports.totalReports')}</div>
             <div className="text-2xl font-bold text-white">{reports.length}</div>
           </div>
           <div className="bg-primary-light border border-gray-700 rounded-lg p-4">
-            <div className="text-gray-400 text-sm mb-1">PDF Reports</div>
+            <div className="text-gray-400 text-sm mb-1">{t('reports.pdfReports')}</div>
             <div className="text-2xl font-bold text-white">
               {reports.filter(r => r.report_type === 'PDF').length}
             </div>
           </div>
           <div className="bg-primary-light border border-gray-700 rounded-lg p-4">
-            <div className="text-gray-400 text-sm mb-1">CSV/Excel Reports</div>
+            <div className="text-gray-400 text-sm mb-1">{t('reports.csvReports')}</div>
             <div className="text-2xl font-bold text-white">
               {reports.filter(r => r.report_type === 'CSV' || r.report_type === 'EXCEL').length}
             </div>
           </div>
           <div className="bg-primary-light border border-gray-700 rounded-lg p-4">
-            <div className="text-gray-400 text-sm mb-1">Total Spent</div>
+            <div className="text-gray-400 text-sm mb-1">{t('reports.totalSpent')}</div>
             <div className="text-2xl font-bold text-white">
               €{(reports.reduce((sum, r) => sum + (r.payment_status === 'succeeded' ? r.amount_paid : 0), 0) / 100).toFixed(2)}
             </div>

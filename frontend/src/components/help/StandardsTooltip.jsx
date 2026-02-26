@@ -7,7 +7,7 @@ const StandardsTooltip = ({ topic, children }) => {
   const [helpContent, setHelpContent] = useState(null);
   
   useEffect(() => {
-    fetch('/standards-help.json')
+    fetch(import.meta.env.BASE_URL + 'standards-help.json')
       .then(response => response.json())
       .then(data => setHelpContent(data))
       .catch(error => console.error('Error loading help content:', error));

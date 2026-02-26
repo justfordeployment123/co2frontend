@@ -97,6 +97,21 @@ async function ensureDraftReport(companyId, reportingPeriodId) {
  * @returns {Promise<object>} Checkout session with URL
  */
 export async function createCheckoutSession(companyId, reportingPeriodId, metadata = {}) {
+  // If paywall is disabled (price = 0), skip Stripe entirely
+  if (REPORT_PRICE_CENTS === 0) {
+    return {
+      session: {
+        id: 'free',
+        url: `${process.env.FRONTEND_URL || 'http://localhost:5173'}/staging/reports/generate?periodId=${reportingPeriodId}&payment_success=true`
+      },
+      paymentId: null,
+      amount: 0,
+      currency: CURRENCY,
+      paid: true,
+      skipped: true
+    };
+  }
+
   try {
     // Get company details
     const companyQuery = await pool.query(
@@ -395,6 +410,11 @@ async function handleRefund(charge) {
  * @returns {Promise<object>} Payment status
  */
 export async function verifyPaymentStatus(reportingPeriodId) {
+  // If paywall is disabled (price = 0), always return paid
+  if (REPORT_PRICE_CENTS === 0) {
+    return { paid: true, payment: null, free: true };
+  }
+
   // Join via reports table because payment_transactions links to report_id, not reporting_period_id directly
   const query = await pool.query(
     `SELECT pt.id, pt.payment_status as status, pt.completed_at as paid_at, pt.amount_cents, pt.currency

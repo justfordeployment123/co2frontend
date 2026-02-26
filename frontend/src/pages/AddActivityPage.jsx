@@ -679,10 +679,10 @@ const AddActivityPage = () => {
     // Validate required fields
     const missingFields = formFields
       .filter(field => field.required && !formData[field.name])
-      .map(field => field.label);
+      .map(field => t('fields.' + field.name, field.label));
 
     if (missingFields.length > 0) {
-      error(`Missing required fields: ${missingFields.join(', ')}`);
+      error(t('activities.missingFields', 'Missing required fields: {{fields}}', { fields: missingFields.join(', ') }));
       return;
     }
 
@@ -738,7 +738,7 @@ const AddActivityPage = () => {
         navigate(`/activities`);
       }
     } catch (err) {
-      error(err.response?.data?.message || `Failed to ${isEditMode ? 'update' : 'create'} activity`);
+      error(err.response?.data?.message || (isEditMode ? t('activities.updateFailed', 'Failed to update activity') : t('activities.createFailed', 'Failed to create activity')));
     } finally {
       setLoading(false);
     }
@@ -800,7 +800,7 @@ const AddActivityPage = () => {
               required={field.required}
               rows={4}
               className="w-full px-4 py-2 bg-midnight-navy border border-carbon-gray rounded-lg text-off-white focus:outline-none focus:border-cyan-mist"
-              placeholder={field.label}
+              placeholder={t('fields.' + field.name, field.label)}
             />
             {helpTexts[field.name] && (
               <p className="text-xs text-stone-gray mt-1">{helpTexts[field.name]}</p>
@@ -817,7 +817,7 @@ const AddActivityPage = () => {
               required={field.required}
               className="w-full px-4 py-2 bg-midnight-navy border border-carbon-gray rounded-lg text-off-white focus:outline-none focus:border-cyan-mist"
             >
-              <option value="">Select {field.label}</option>
+              <option value="">{t('common.select', 'Select')} {t('fields.' + field.name, field.label)}</option>
               {(field.name === 'units' && normalizedActivityType === 'mobile_sources'
                 ? getMobileUnits(formData.vehicle_type)
                 : (field.name === 'units' && normalizedActivityType === 'stationary_combustion'
@@ -849,7 +849,7 @@ const AddActivityPage = () => {
               onChange={handleChange}
               required={field.required}
               className="w-full px-4 py-2 bg-midnight-navy border border-carbon-gray rounded-lg text-off-white focus:outline-none focus:border-cyan-mist"
-              placeholder={field.label}
+              placeholder={t('fields.' + field.name, field.label)}
             />
             {helpTexts[field.name] && (
               <p className="text-xs text-stone-gray mt-1">{helpTexts[field.name]}</p>
@@ -866,7 +866,7 @@ const AddActivityPage = () => {
               value={formData[field.name] || ''}
               readOnly
               className="w-full px-4 py-2 bg-gray-800 text-gray-400 border border-carbon-gray rounded-lg"
-              placeholder={field.label}
+              placeholder={t('fields.' + field.name, field.label)}
             />
           );
         }
@@ -884,7 +884,7 @@ const AddActivityPage = () => {
                   ? 'bg-gray-800 text-gray-400 border-carbon-gray cursor-not-allowed' 
                   : 'bg-midnight-navy border-carbon-gray text-off-white focus:border-cyan-mist'
               }`}
-              placeholder={field.label}
+              placeholder={t('fields.' + field.name, field.label)}
             />
             {helpTexts[field.name] && (
               <p className="text-xs text-stone-gray mt-1">{helpTexts[field.name]}</p>
@@ -924,11 +924,11 @@ const AddActivityPage = () => {
              <div className="flex items-center gap-2 mb-1">
                 <SparklesIcon className="h-4 w-4 text-cyan-mist opacity-60" />
                 <span className="text-[10px] uppercase font-black tracking-[0.2em] text-cyan-mist opacity-80">
-                  {isEditMode ? 'Record Amendment' : 'New Environmental Entry'}
+                  {isEditMode ? t('activities.recordAmendment') : t('activities.newEnvironmentalEntry')}
                 </span>
              </div>
              <h1 className="text-4xl font-bold tracking-tight">
-               {normalizedActivityType.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
+               {t('activityTypes.' + normalizedActivityType, normalizedActivityType.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()))}
              </h1>
            </div>
         </div>
@@ -940,12 +940,12 @@ const AddActivityPage = () => {
              <div className="bg-white/5 border border-white/10 rounded-[2rem] p-8 shadow-xl">
                 <h3 className="text-xs font-black text-gray-400 uppercase tracking-[0.2em] mb-6 flex items-center gap-3">
                    <div className="w-6 h-px bg-gray-600"></div>
-                   Reporting Context
+                   {t('activities.reportingContext')}
                 </h3>
                 <div className="grid grid-cols-1 gap-6">
                   <div>
                     <label className="block text-sm font-bold text-gray-300 mb-3 ml-1">
-                      Target Audit Period
+                      {t('activities.targetAuditPeriod')}
                     </label>
                     {loadingPeriods ? (
                       <div className="h-14 w-full bg-white/5 animate-pulse rounded-2xl"></div>
@@ -957,7 +957,7 @@ const AddActivityPage = () => {
                         </div>
                         <div className="flex-1">
                           <p className="text-white font-medium">
-                            {reportingPeriods.find(p => p.id === activePeriodId)?.period_label || 'Selected Period'}
+                            {reportingPeriods.find(p => p.id === activePeriodId)?.period_label || t('activities.selectedPeriod', 'Selected Period')}
                           </p>
                           <p className="text-xs text-stone-gray">
                             {(() => {
@@ -969,12 +969,12 @@ const AddActivityPage = () => {
                             })()}
                           </p>
                         </div>
-                        <span className="text-[10px] text-stone-gray uppercase tracking-wider">Auto-assigned</span>
+                        <span className="text-[10px] text-stone-gray uppercase tracking-wider">{t('activities.autoAssigned')}</span>
                       </div>
                     ) : (
                       // Error state - no period context
                       <div className="w-full px-5 py-4 bg-red-500/10 border border-red-500/30 rounded-2xl text-red-400 text-sm">
-                        ⚠️ No reporting period specified. Please navigate from Active Reports to add activities.
+                        ⚠️ {t('activities.noReportingPeriodError')}
                       </div>
                     )}
                   </div>
@@ -988,14 +988,14 @@ const AddActivityPage = () => {
              
              <h3 className="text-xs font-black text-gray-400 uppercase tracking-[0.2em] mb-10 flex items-center gap-3">
                 <div className="w-6 h-px bg-gray-600"></div>
-                Primary Metric Data
+                {t('activities.primaryMetricData')}
              </h3>
 
              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-8">
                {formFields.map(field => (
                  <div key={field.name} className={field.type === 'textarea' ? 'md:col-span-2' : ''}>
                    <label className="block text-sm font-bold text-gray-300 mb-3 ml-1">
-                     {field.label} {field.required && <span className="text-cyan-mist">*</span>}
+                     {t('fields.' + field.name, field.label)} {field.required && <span className="text-cyan-mist">*</span>}
                    </label>
                    <div className="relative group">
                      {renderField({
@@ -1027,7 +1027,7 @@ const AddActivityPage = () => {
               ) : (
                  <CheckCircleIcon className="h-5 w-5" />
               )}
-              {loading ? t('common.saving') : isEditMode ? 'Commit Changes' : 'Persist Record'}
+              {loading ? t('common.saving') : isEditMode ? t('activities.commitChanges') : t('activities.persistRecord')}
             </button>
           </div>
         </form>

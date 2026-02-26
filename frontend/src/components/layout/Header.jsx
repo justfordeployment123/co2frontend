@@ -1,10 +1,12 @@
-import { Link, useNavigate } from 'react-router-dom';
+﻿import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from '../common/LanguageSwitcher';
 import { Menu, LogOut, ChevronDown } from 'lucide-react';
 
 const Header = ({ onMenuClick, showMenuButton }) => {
   const { isAuthenticated, user, logout } = useAuth();
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -31,9 +33,9 @@ const Header = ({ onMenuClick, showMenuButton }) => {
             {/* Logo */}
             <Link to="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
               <img
-                src="/CO2_logo.png"
-                alt="AURIXON"
-                className="h-16 sm:h-20 md:h-24 lg:h-28 w-auto object-contain"
+                src={import.meta.env.BASE_URL + 'aurixon_logo.png'}
+                alt="CalculateCO2"
+                className="h-10 sm:h-12 w-auto object-contain"
                 onError={(e) => {
                   e.target.style.display = 'none';
                 }}
@@ -55,13 +57,13 @@ const Header = ({ onMenuClick, showMenuButton }) => {
                   </div>
                   <div className="text-right">
                     <p className="text-sm font-medium text-white">{user?.firstName} {user?.lastName}</p>
-                    <p className="text-xs text-gray-400 capitalize">{user?.role?.replace('_', ' ')}</p>
+                    <p className="text-xs text-gray-400 capitalize">{t(`users.roles.${user?.role}`, user?.role?.replace('_', ' '))}</p>
                   </div>
                 </div>
                 <button
                   onClick={handleLogout}
                   className="p-2 text-gray-400 hover:text-white hover:bg-white/10 rounded-lg transition-all"
-                  title="Logout"
+                  title={t('nav.logout')}
                 >
                   <LogOut className="w-5 h-5" />
                 </button>
@@ -79,13 +81,13 @@ const Header = ({ onMenuClick, showMenuButton }) => {
                 to="/login"
                 className="text-sm font-medium text-gray-300 hover:text-white transition-colors"
               >
-                Login
+                {t('auth.login')}
               </Link>
               <Link
                 to="/register"
                 className="px-5 py-2 bg-gradient-to-r from-cyan-mist to-growth-green text-midnight-navy text-sm font-semibold rounded-lg hover:shadow-lg hover:shadow-growth-green/20 transition-all"
               >
-                Get Started
+                {t('auth.register')}
               </Link>
             </div>
           )}

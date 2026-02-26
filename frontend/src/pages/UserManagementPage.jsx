@@ -35,7 +35,7 @@ const UserManagementPage = () => {
       const data = await userAPI.getCompanyUsers(user.companyId);
       setUsers(data || []);
     } catch (err) {
-      error(err.response?.data?.message || 'Failed to load users');
+      error(err.response?.data?.message || t('users.failedLoad', 'Failed to load users'));
     } finally {
       setLoading(false);
     }
@@ -47,7 +47,7 @@ const UserManagementPage = () => {
     
     try {
       await userAPI.addUser(user.companyId, addUserData);
-      success('User added and credentials sent via email');
+      success(t('users.userAddedSuccess', 'User added and credentials sent via email'));
       setShowAddUserModal(false);
       setAddUserData({ 
         firstName: '',
@@ -58,7 +58,7 @@ const UserManagementPage = () => {
       });
       fetchUsers();
     } catch (err) {
-      error(err.response?.data?.message || 'Failed to add user');
+      error(err.response?.data?.message || t('users.failedAdd', 'Failed to add user'));
     } finally {
       setIsAdding(false);
     }
@@ -70,7 +70,7 @@ const UserManagementPage = () => {
       success(t('users.roleUpdateSuccess', 'User role updated successfully'));
       fetchUsers();
     } catch (err) {
-      error(err.response?.data?.message || 'Failed to update role');
+      error(err.response?.data?.message || t('users.failedUpdateRole', 'Failed to update role'));
     }
   };
 
@@ -82,7 +82,7 @@ const UserManagementPage = () => {
       success(t('users.deactivateSuccess', 'User deactivated successfully'));
       fetchUsers();
     } catch (err) {
-      error(err.response?.data?.message || 'Failed to deactivate user');
+      error(err.response?.data?.message || t('users.failedDeactivate', 'Failed to deactivate user'));
     }
   };
 
@@ -94,7 +94,7 @@ const UserManagementPage = () => {
       success(t('users.deleteSuccess', 'User removed successfully'));
       fetchUsers();
     } catch (err) {
-      error(err.response?.data?.message || 'Failed to delete user');
+      error(err.response?.data?.message || t('users.failedDelete', 'Failed to delete user'));
     }
   };
 
@@ -104,7 +104,7 @@ const UserManagementPage = () => {
       success(t('users.reactivateSuccess', 'User reactivated successfully'));
       fetchUsers();
     } catch (err) {
-      error(err.response?.data?.message || 'Failed to reactivate user');
+      error(err.response?.data?.message || t('users.failedReactivate', 'Failed to reactivate user'));
     }
   };
 
@@ -145,7 +145,7 @@ const UserManagementPage = () => {
       key: 'last_login',
       header: t('users.lastLogin', 'Last Login'),
       sortable: true,
-      accessor: (row) => row.last_login ? new Date(row.last_login).toLocaleDateString() : 'Never',
+      accessor: (row) => row.last_login ? new Date(row.last_login).toLocaleDateString() : t('common.never', 'Never'),
     },
     {
       key: 'actions',
@@ -312,7 +312,7 @@ const UserManagementPage = () => {
               className="w-full px-4 py-2 bg-midnight-navy border border-carbon-gray rounded-lg text-off-white focus:outline-none focus:border-cyan-mist"
               placeholder="********"
             />
-            <p className="text-xs text-stone-gray mt-1">Min. 8 characters</p>
+            <p className="text-xs text-stone-gray mt-1">{t('users.minPassword', 'Min. 8 characters')}</p>
           </div>
 
           <div>
@@ -336,9 +336,9 @@ const UserManagementPage = () => {
               onChange={(e) => setAddUserData(prev => ({ ...prev, role: e.target.value }))}
               className="w-full px-4 py-2 bg-midnight-navy border border-carbon-gray rounded-lg text-off-white focus:outline-none focus:border-cyan-mist"
             >
-              <option value="viewer">Viewer - Read only access</option>
-              <option value="editor">Editor - Can add/edit data</option>
-              <option value="company_admin">Admin - Full access</option>
+              <option value="viewer">{t('users.roleViewer', 'Viewer - Read only access')}</option>
+              <option value="editor">{t('users.roleEditor', 'Editor - Can add/edit data')}</option>
+              <option value="company_admin">{t('users.roleAdmin', 'Admin - Full access')}</option>
             </select>
           </div>
 

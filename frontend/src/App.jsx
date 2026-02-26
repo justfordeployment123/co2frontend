@@ -367,7 +367,7 @@ function AnimatedRoutes() {
 
 function App() {
   return (
-    <Router>
+    <Router basename="/staging">
       <AuthProvider>
         <Toaster
           position="top-right"

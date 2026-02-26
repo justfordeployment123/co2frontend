@@ -260,10 +260,10 @@ const BoundaryQuestionsWizard = () => {
       );
 
       if (!response.ok) {
-        throw new Error('Failed to save boundary questions');
+        throw new Error(t('boundary.saving'));
       }
 
-      toast.success('Boundary questions saved successfully!');
+      toast.success(t('boundary.saveFinish') + '!');
       navigate(`/settings/periods`);
     } catch (error) {
       console.error('Error saving boundary questions:', error);
@@ -279,7 +279,7 @@ const BoundaryQuestionsWizard = () => {
         return (
           <div className="space-y-6">
             <div className="text-center mb-8">
-              <h2 className="text-2xl font-bold text-white mb-2">Welcome to Boundary Setting</h2>
+              <h2 className="text-2xl font-bold text-white mb-2">{t('boundary.welcomeTitle')}</h2>
               <p className="text-gray-300">
                 Let's determine which emissions sources are relevant for your organization.
                 This helps us tailor the platform to your specific needs.
@@ -287,9 +287,9 @@ const BoundaryQuestionsWizard = () => {
             </div>
 
             <div className="bg-white/5 border border-cyan-mist/30 rounded-lg p-6">
-              <h3 className="text-xl font-semibold text-white mb-4">Choose Your Industry (Optional)</h3>
+              <h3 className="text-xl font-semibold text-white mb-4">{t('boundary.chooseIndustry')}</h3>
               <p className="text-gray-300 mb-6">
-                Select your industry for recommended settings, or skip and customize manually.
+                {t('boundary.chooseIndustryDesc')}
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -323,9 +323,9 @@ const BoundaryQuestionsWizard = () => {
         return (
           <div className="space-y-6">
             <div className="mb-6">
-              <h2 className="text-2xl font-bold text-white mb-2">Scope 1: Direct Emissions</h2>
+              <h2 className="text-2xl font-bold text-white mb-2">{t('boundary.scope1Title')}</h2>
               <p className="text-gray-300">
-                Emissions from sources owned or controlled by your organization.
+                {t('boundary.scope1Desc')}
               </p>
             </div>
 
@@ -355,7 +355,7 @@ const BoundaryQuestionsWizard = () => {
                         </div>
                         <p className="text-sm text-gray-300 mb-2 ml-7">{info.description}</p>
                         <div className="text-xs text-gray-400 ml-7">
-                          <span className="font-semibold">Examples: </span>
+                          <span className="font-semibold">{t('boundary.examples')} </span>
                           {info.examples.join(', ')}
                         </div>
                       </div>
@@ -371,14 +371,14 @@ const BoundaryQuestionsWizard = () => {
         return (
           <div className="space-y-6">
             <div className="mb-6">
-              <h2 className="text-2xl font-bold text-white mb-2">Scope 2 & 3: Indirect Emissions</h2>
+              <h2 className="text-2xl font-bold text-white mb-2">{t('boundary.scope23Title')}</h2>
               <p className="text-gray-300">
-                Emissions from purchased energy and your value chain.
+                {t('boundary.scope23Desc')}
               </p>
             </div>
 
             <div className="bg-white/5 border border-cyan-mist/30 rounded-lg p-4 mb-6">
-              <h3 className="text-lg font-semibold text-cyan-mist mb-2">Scope 2: Energy Indirect</h3>
+              <h3 className="text-lg font-semibold text-cyan-mist mb-2">{t('boundary.scope2SectionTitle')}</h3>
             </div>
 
             <div className="space-y-4 mb-8">
@@ -407,7 +407,7 @@ const BoundaryQuestionsWizard = () => {
                         </div>
                         <p className="text-sm text-gray-300 mb-2 ml-7">{info.description}</p>
                         <div className="text-xs text-gray-400 ml-7">
-                          <span className="font-semibold">Examples: </span>
+                          <span className="font-semibold">{t('boundary.examples')} </span>
                           {info.examples.join(', ')}
                         </div>
                       </div>
@@ -418,7 +418,7 @@ const BoundaryQuestionsWizard = () => {
             </div>
 
             <div className="bg-white/5 border border-cyan-mist/30 rounded-lg p-4 mb-6">
-              <h3 className="text-lg font-semibold text-cyan-mist mb-2">Scope 3: Value Chain</h3>
+              <h3 className="text-lg font-semibold text-cyan-mist mb-2">{t('boundary.scope3SectionTitle')}</h3>
             </div>
 
             <div className="space-y-4">
@@ -447,7 +447,7 @@ const BoundaryQuestionsWizard = () => {
                         </div>
                         <p className="text-sm text-gray-300 mb-2 ml-7">{info.description}</p>
                         <div className="text-xs text-gray-400 ml-7">
-                          <span className="font-semibold">Examples: </span>
+                          <span className="font-semibold">{t('boundary.examples')} </span>
                           {info.examples.join(', ')}
                         </div>
                       </div>
@@ -458,7 +458,7 @@ const BoundaryQuestionsWizard = () => {
             </div>
 
             <div className="bg-white/5 border border-cyan-mist/30 rounded-lg p-4 mt-6">
-              <h3 className="text-lg font-semibold text-cyan-mist mb-2">Carbon Offsets</h3>
+              <h3 className="text-lg font-semibold text-cyan-mist mb-2">{t('boundary.offsetsSectionTitle')}</h3>
             </div>
 
             <div className="space-y-4">
@@ -487,7 +487,7 @@ const BoundaryQuestionsWizard = () => {
                         </div>
                         <p className="text-sm text-gray-300 mb-2 ml-7">{info.description}</p>
                         <div className="text-xs text-gray-400 ml-7">
-                          <span className="font-semibold">Examples: </span>
+                          <span className="font-semibold">{t('boundary.examples')} </span>
                           {info.examples.join(', ')}
                         </div>
                       </div>
@@ -520,15 +520,15 @@ const BoundaryQuestionsWizard = () => {
         return (
           <div className="space-y-6">
             <div className="text-center mb-8">
-              <h2 className="text-2xl font-bold text-white mb-2">Review Your Selection</h2>
+              <h2 className="text-2xl font-bold text-white mb-2">{t('boundary.reviewTitle')}</h2>
               <p className="text-gray-300">
-                Here's a summary of your organizational boundaries. You can go back to make changes.
+                {t('boundary.reviewDesc')}
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="bg-white/5 border border-cyan-mist/30 rounded-lg p-6">
-                <h3 className="text-lg font-semibold text-cyan-mist mb-4">Scope 1: Direct Emissions</h3>
+                <h3 className="text-lg font-semibold text-cyan-mist mb-4">{t('boundary.scope1Title')}</h3>
                 {enabledScope1.length > 0 ? (
                   <ul className="space-y-2">
                     {enabledScope1.map(name => (
@@ -538,12 +538,12 @@ const BoundaryQuestionsWizard = () => {
                     ))}
                   </ul>
                 ) : (
-                  <p className="text-gray-400 italic">No Scope 1 modules selected</p>
+                  <p className="text-gray-400 italic">{t('boundary.noScope1')}</p>
                 )}
               </div>
 
               <div className="bg-white/5 border border-cyan-mist/30 rounded-lg p-6">
-                <h3 className="text-lg font-semibold text-cyan-mist mb-4">Scope 2: Energy Indirect</h3>
+                <h3 className="text-lg font-semibold text-cyan-mist mb-4">{t('boundary.scope2SectionTitle')}</h3>
                 {enabledScope2.length > 0 ? (
                   <ul className="space-y-2">
                     {enabledScope2.map(name => (
@@ -553,12 +553,12 @@ const BoundaryQuestionsWizard = () => {
                     ))}
                   </ul>
                 ) : (
-                  <p className="text-gray-400 italic">No Scope 2 modules selected</p>
+                  <p className="text-gray-400 italic">{t('boundary.noScope2')}</p>
                 )}
               </div>
 
               <div className="bg-white/5 border border-cyan-mist/30 rounded-lg p-6">
-                <h3 className="text-lg font-semibold text-cyan-mist mb-4">Scope 3: Value Chain</h3>
+                <h3 className="text-lg font-semibold text-cyan-mist mb-4">{t('boundary.scope3SectionTitle')}</h3>
                 {enabledScope3.length > 0 ? (
                   <ul className="space-y-2">
                     {enabledScope3.map(name => (
@@ -568,25 +568,25 @@ const BoundaryQuestionsWizard = () => {
                     ))}
                   </ul>
                 ) : (
-                  <p className="text-gray-400 italic">No Scope 3 modules selected</p>
+                  <p className="text-gray-400 italic">{t('boundary.noScope3')}</p>
                 )}
               </div>
 
               <div className="bg-white/5 border border-cyan-mist/30 rounded-lg p-6">
-                <h3 className="text-lg font-semibold text-cyan-mist mb-4">Carbon Offsets</h3>
+                <h3 className="text-lg font-semibold text-cyan-mist mb-4">{t('boundary.offsetsSectionTitle')}</h3>
                 {enabledOffsets ? (
                   <p className="text-white flex items-center gap-2">
-                    <span className="text-green-500">✓</span> Offset tracking enabled
+                    <span className="text-green-500">✓</span> {t('boundary.offsetEnabled')}
                   </p>
                 ) : (
-                  <p className="text-gray-400 italic">Offset tracking disabled</p>
+                  <p className="text-gray-400 italic">{t('boundary.offsetDisabled')}</p>
                 )}
               </div>
             </div>
 
             <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4 mt-6">
               <p className="text-yellow-200 text-sm">
-                <span className="font-semibold">Note:</span> You can always update these settings later from the Reporting Periods page.
+                <span className="font-semibold">{t('boundary.noteUpdate')}</span>
               </p>
             </div>
           </div>
@@ -625,10 +625,10 @@ const BoundaryQuestionsWizard = () => {
             ))}
           </div>
           <div className="flex justify-between text-xs text-gray-400">
-            <span>Industry</span>
-            <span>Scope 1</span>
-            <span>Scope 2 & 3</span>
-            <span>Review</span>
+            <span>{t('boundary.stepIndustry')}</span>
+            <span>{t('boundary.stepScope1')}</span>
+            <span>{t('boundary.stepScope23')}</span>
+            <span>{t('boundary.stepReview')}</span>
           </div>
         </div>
 
@@ -663,7 +663,7 @@ const BoundaryQuestionsWizard = () => {
                 disabled={loading}
                 className="py-2 px-6 rounded-lg font-semibold bg-cyan-mist text-midnight-navy hover:bg-cyan-mist/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {loading ? 'Saving...' : 'Save and Finish'}
+                {loading ? t('boundary.saving') : t('boundary.saveFinish')}
               </button>
             )}
           </div>

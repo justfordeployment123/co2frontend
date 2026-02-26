@@ -95,7 +95,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
           {/* User Info */}
           <div className="mb-6 pb-6 border-b border-white/10 px-2">
             <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-cyan-mist to-growth-green text-midnight-navy flex items-center justify-center font-bold text-sm">
+              <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-cyan-mist to-growth-green text-midnight-navy flex items-center justify-center font-bold text-sm flex-shrink-0">
                 {user?.firstName?.charAt(0)}
                 {user?.lastName?.charAt(0)}
               </div>
@@ -103,10 +103,20 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                 <p className="text-sm font-semibold text-white truncate">
                   {user?.firstName} {user?.lastName}
                 </p>
-                <p className="text-xs text-gray-400 truncate capitalize">
-                  {user?.role?.replace('_', ' ')}
+                <p className="text-xs text-gray-400 truncate">
+                  {t(`users.roles.${user?.role}`, user?.role?.replace('_', ' '))}
                 </p>
               </div>
+              {/* Close button — mobile only */}
+              <button
+                onClick={() => setIsOpen(false)}
+                aria-label="Close menu"
+                className="lg:hidden flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-colors"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
             </div>
           </div>
 

@@ -77,13 +77,13 @@ const GenerateReportPage = () => {
     if (searchParams.get('payment_success') === 'true') {
       setIsPaid(true);
       setReportGenerated(true);
-      success('Payment successful! Your report is ready.');
+      success(t('reports.paymentSuccess'));
       // Clear params to avoid repeat toasts
       const newParams = new URLSearchParams(searchParams);
       newParams.delete('payment_success');
       setSearchParams(newParams, { replace: true });
     } else if (searchParams.get('payment_cancelled') === 'true') {
-      error('Payment was cancelled.');
+      error(t('reports.paymentCancelled'));
       const newParams = new URLSearchParams(searchParams);
       newParams.delete('payment_cancelled');
       setSearchParams(newParams, { replace: true });
@@ -247,7 +247,7 @@ const GenerateReportPage = () => {
       });
 
       if (response.status === 402) {
-         error('Payment required to download this report');
+         error(t('reports.paymentRequired'));
          setIsPaid(false);
          setReportGenerated(true);
          return;
@@ -266,7 +266,7 @@ const GenerateReportPage = () => {
       a.click();
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
-      success(`${format.toUpperCase()} downloaded successfully`);
+      success(t('reports.downloadSuccess', { format: format.toUpperCase() }));
     } catch (err) {
       error(err.message || `Failed to download ${format.toUpperCase()}`);
     }
@@ -294,15 +294,15 @@ const GenerateReportPage = () => {
 
         {!periodId ? (
           <div className="bg-midnight-navy-lighter border border-carbon-gray rounded-lg p-6 max-w-2xl mx-auto shadow-2xl">
-            <h2 className="text-xl font-semibold text-white mb-4">Select Reporting Period</h2>
+            <h2 className="text-xl font-semibold text-white mb-4">{t('reports.selectPeriod')}</h2>
             {loadingPeriods ? (
               <div className="text-cyan-mist flex items-center gap-2">
                 <div className="animate-spin rounded-full h-4 w-4 border-2 border-cyan-mist border-t-transparent"></div>
-                Loading periods...
+                {t('reports.loadingPeriods')}
               </div>
             ) : periods.length > 0 ? (
               <div className="space-y-4">
-                <p className="text-stone-gray mb-4">Please select a reporting period to generate a report for.</p>
+                <p className="text-stone-gray mb-4">{t('reports.selectPeriodHint')}</p>
                 <div className="grid gap-4">
                   {periods.map(period => (
                     <button
@@ -325,12 +325,12 @@ const GenerateReportPage = () => {
               </div>
             ) : (
               <div className="text-center py-8">
-                <p className="text-stone-gray mb-4">No reporting periods found.</p>
+                <p className="text-stone-gray mb-4">{t('reports.noPeriods')}</p>
                 <button
                    onClick={() => navigate('/settings/reporting-periods')}
                    className="px-4 py-2 bg-cyan-mist text-midnight-navy rounded-lg hover:bg-growth-green transition-colors font-bold"
                 >
-                  Manage Reporting Periods
+                  {t('reports.managePeriods')}
                 </button>
               </div>
             )}
@@ -344,26 +344,26 @@ const GenerateReportPage = () => {
                 <div className="absolute top-0 right-0 p-3">
                   {isPaid ? (
                     <span className="px-3 py-1 bg-growth-green text-midnight-navy text-xs font-black rounded-full uppercase tracking-tighter shadow-lg">
-                      Paid
+                      {t('reports.paid')}
                     </span>
                   ) : (
                     <span className="px-3 py-1 bg-yellow-500 text-midnight-navy text-xs font-black rounded-full uppercase tracking-tighter shadow-lg">
-                      Generated
+                      {t('reports.generatedStatus')}
                     </span>
                   )}
                 </div>
                 <h2 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
                    <div className={`w-2 h-2 rounded-full ${isPaid ? 'bg-growth-green animate-pulse' : 'bg-yellow-500'}`}></div>
-                   Report Status
+                   {t('reports.reportStatus')}
                 </h2>
                 
                 <div className="space-y-4">
                   <div className="p-3 bg-midnight-navy/50 rounded-xl border border-carbon-gray/50">
-                    <p className="text-xs text-stone-gray uppercase font-bold tracking-widest mb-1">Company</p>
+                    <p className="text-xs text-stone-gray uppercase font-bold tracking-widest mb-1">{t('reports.company')}</p>
                     <p className="text-white font-medium">{user?.companyName || 'Your Company'}</p>
                   </div>
                   <div className="p-3 bg-midnight-navy/50 rounded-xl border border-carbon-gray/50">
-                    <p className="text-xs text-stone-gray uppercase font-bold tracking-widest mb-1">Report Period</p>
+                    <p className="text-xs text-stone-gray uppercase font-bold tracking-widest mb-1">{t('reports.reportPeriodLabel')}</p>
                     {loadingPeriods ? (
                       <div className="h-5 w-32 bg-white/10 animate-pulse rounded"></div>
                     ) : selectedPeriod ? (
@@ -373,7 +373,7 @@ const GenerateReportPage = () => {
                     )}
                   </div>
                   <div className="p-3 bg-midnight-navy/50 rounded-xl border border-carbon-gray/50">
-                    <p className="text-xs text-stone-gray uppercase font-bold tracking-widest mb-1">Timeline</p>
+                    <p className="text-xs text-stone-gray uppercase font-bold tracking-widest mb-1">{t('reports.timeline')}</p>
                     {loadingPeriods ? (
                       <div className="h-5 w-40 bg-white/10 animate-pulse rounded"></div>
                     ) : selectedPeriod ? (
@@ -390,18 +390,18 @@ const GenerateReportPage = () => {
                   <div className="mt-8 space-y-4">
                     <div className="p-4 bg-growth-green/5 border border-growth-green/20 rounded-xl">
                       <div className="flex justify-between items-center mb-1">
-                        <span className="text-stone-gray text-sm">Full PDF Export</span>
+                        <span className="text-stone-gray text-sm">{t('reports.fullPdfExport')}</span>
                         <span className="text-white font-bold">€49.00</span>
                       </div>
-                      <p className="text-xs text-stone-gray">Includes CSRD compliance, audit trails, and multi-format exports.</p>
+                      <p className="text-xs text-stone-gray">{t('reports.pdfExportDesc')}</p>
                     </div>
                     <button
                       onClick={handleProceedToPayment}
                       className="w-full py-4 bg-cyan-mist text-midnight-navy font-black rounded-xl hover:bg-growth-green transition-all shadow-[0_0_20px_rgba(34,211,238,0.2)]"
                     >
-                      Unlock Full Access →
+                      {t('reports.unlockAccess')}
                     </button>
-                    <p className="text-[10px] text-center text-stone-gray">One-time payment. Multi-user access included.</p>
+                    <p className="text-[10px] text-center text-stone-gray">{t('reports.oneTimePayment')}</p>
                   </div>
                 )}
 
@@ -411,13 +411,13 @@ const GenerateReportPage = () => {
                       onClick={() => handleDownload('pdf')}
                       className="w-full py-3 bg-midnight-navy border border-cyan-mist/30 text-cyan-mist font-bold rounded-xl hover:bg-cyan-mist hover:text-midnight-navy transition-all flex items-center justify-center gap-2"
                     >
-                      <ArrowDownTrayIcon className="h-5 w-5" /> Download PDF
+                      <ArrowDownTrayIcon className="h-5 w-5" /> {t('reports.downloadPdf')}
                     </button>
                     <button
                       onClick={() => handleDownload('csv')}
                       className="w-full py-3 bg-midnight-navy border border-carbon-gray text-off-white font-bold rounded-xl hover:bg-midnight-navy-lighter transition-all flex items-center justify-center gap-2"
                     >
-                      <TableCellsIcon className="h-5 w-5" /> Download CSV
+                      <TableCellsIcon className="h-5 w-5" /> {t('reports.downloadCsv')}
                     </button>
                   </div>
                 )}
@@ -426,10 +426,10 @@ const GenerateReportPage = () => {
               {/* Configuration Card */}
               {!isPaid && (
                 <div className="bg-midnight-navy-lighter border border-carbon-gray rounded-2xl p-6 shadow-xl">
-                  <h2 className="text-lg font-bold text-white mb-4">Report Details</h2>
+                  <h2 className="text-lg font-bold text-white mb-4">{t('reports.reportDetails')}</h2>
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-xs font-bold text-stone-gray uppercase tracking-widest mb-2">Standard</label>
+                      <label className="block text-xs font-bold text-stone-gray uppercase tracking-widest mb-2">{t('reports.standardLabel')}</label>
                       <select
                         name="reportType"
                         value={formData.reportType}
@@ -450,7 +450,7 @@ const GenerateReportPage = () => {
                           onChange={handleChange}
                           className="w-4 h-4 rounded border-carbon-gray bg-midnight-navy text-cyan-mist focus:ring-cyan-mist"
                         />
-                        <span className="text-sm text-off-white group-hover:text-cyan-mist transition-colors">Include Charts</span>
+                        <span className="text-sm text-off-white group-hover:text-cyan-mist transition-colors">{t('reports.includeCharts')}</span>
                       </label>
                       <label className="flex items-center gap-3 cursor-pointer group">
                         <input
@@ -460,7 +460,7 @@ const GenerateReportPage = () => {
                           onChange={handleChange}
                           className="w-4 h-4 rounded border-carbon-gray bg-midnight-navy text-cyan-mist focus:ring-cyan-mist"
                         />
-                        <span className="text-sm text-off-white group-hover:text-cyan-mist transition-colors">Detailed Breakdown</span>
+                        <span className="text-sm text-off-white group-hover:text-cyan-mist transition-colors">{t('reports.detailedBreakdown')}</span>
                       </label>
                     </div>
                   </div>
@@ -476,12 +476,12 @@ const GenerateReportPage = () => {
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 bg-gradient-to-br from-cyan-mist to-growth-green rounded-lg flex items-center justify-center text-midnight-navy text-[10px] font-black">AX</div>
                     <div>
-                      <span className="font-bold text-lg text-white">Aurixon.ai</span>
-                      <p className="text-[9px] text-stone-gray uppercase tracking-wider">Emissions Report</p>
+                      <span className="font-bold text-lg text-white">CalculateCO2</span>
+                      <p className="text-[9px] text-stone-gray uppercase tracking-wider">{t('reports.emissionsReport')}</p>
                     </div>
                   </div>
                   <div className="text-right">
-                    <span className="px-2 py-0.5 bg-cyan-mist/20 text-cyan-mist text-[9px] font-bold rounded uppercase">Confidential</span>
+                    <span className="px-2 py-0.5 bg-cyan-mist/20 text-cyan-mist text-[9px] font-bold rounded uppercase">{t('reports.confidential')}</span>
                     <p className="text-[10px] text-stone-gray mt-1">{new Date().toLocaleDateString('en-GB')}</p>
                   </div>
                 </div>
@@ -489,7 +489,7 @@ const GenerateReportPage = () => {
                 {loadingSummary ? (
                   <div className="flex flex-col items-center justify-center py-12 space-y-3">
                     <div className="w-8 h-8 border-2 border-cyan-mist border-t-transparent rounded-full animate-spin"></div>
-                    <p className="text-xs text-stone-gray uppercase tracking-wider">Loading data...</p>
+                    <p className="text-xs text-stone-gray uppercase tracking-wider">{t('reports.loadingData')}</p>
                   </div>
                 ) : summaryData ? (
                   <div className="space-y-6">
@@ -500,7 +500,7 @@ const GenerateReportPage = () => {
                         <div className="flex justify-between items-start">
                           <div>
                             <p className="text-sm font-bold text-white">Scope 01</p>
-                            <p className="text-[9px] text-stone-gray uppercase tracking-wider">Direct</p>
+                            <p className="text-[9px] text-stone-gray uppercase tracking-wider">{t('reports.directLabel')}</p>
                           </div>
                           <div className="text-right">
                             <span className="text-2xl font-black text-white tabular-nums">{parseFloat(summaryData.scope1 || 0).toFixed(2)}</span>
@@ -516,7 +516,7 @@ const GenerateReportPage = () => {
                             <p className="text-sm font-bold text-white flex items-center gap-1">
                               Scope 02 <span className="px-1 py-0.5 text-[8px] bg-stone-gray/30 text-stone-gray rounded">LOC</span>
                             </p>
-                            <p className="text-[9px] text-stone-gray uppercase tracking-wider">Indirect Energy</p>
+                            <p className="text-[9px] text-stone-gray uppercase tracking-wider">{t('reports.indirectEnergy')}</p>
                           </div>
                           <div className="text-right">
                             <span className="text-2xl font-black text-white tabular-nums">{parseFloat(summaryData.scope2_location || summaryData.scope2 || 0).toFixed(2)}</span>
@@ -532,7 +532,7 @@ const GenerateReportPage = () => {
                             <p className="text-sm font-bold text-white flex items-center gap-1">
                               Scope 02 <span className="px-1 py-0.5 text-[8px] bg-cyan-mist/20 text-cyan-mist rounded">MKT</span>
                             </p>
-                            <p className="text-[9px] text-stone-gray uppercase tracking-wider">Contractual</p>
+                            <p className="text-[9px] text-stone-gray uppercase tracking-wider">{t('reports.contractual')}</p>
                           </div>
                           <div className="text-right">
                             <span className="text-2xl font-black text-cyan-mist tabular-nums">{parseFloat(summaryData.scope2_market || 0).toFixed(2)}</span>
@@ -546,7 +546,7 @@ const GenerateReportPage = () => {
                         <div className="flex justify-between items-start">
                           <div>
                             <p className="text-sm font-bold text-white">Scope 03</p>
-                            <p className="text-[9px] text-stone-gray uppercase tracking-wider">Supply Chain</p>
+                            <p className="text-[9px] text-stone-gray uppercase tracking-wider">{t('reports.supplyChainLabel')}</p>
                           </div>
                           <div className="text-right">
                             <span className="text-2xl font-black text-white tabular-nums">{parseFloat(summaryData.scope3 || 0).toFixed(2)}</span>
@@ -560,7 +560,7 @@ const GenerateReportPage = () => {
                     <div className="bg-gradient-to-r from-cyan-mist/10 to-growth-green/10 border border-cyan-mist/20 rounded-lg p-4">
                       <div className="flex justify-between items-center">
                         <div>
-                          <p className="text-xs text-stone-gray uppercase tracking-wider mb-1">Total Impact</p>
+                          <p className="text-xs text-stone-gray uppercase tracking-wider mb-1">{t('reports.totalImpact')}</p>
                           <p className="text-[9px] text-cyan-mist">GHG Protocol Standard</p>
                         </div>
                         <div className="text-right">
@@ -574,7 +574,7 @@ const GenerateReportPage = () => {
                     <div className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
                       <div className="flex items-center gap-2">
                         <div className="w-2 h-2 rounded-full bg-growth-green animate-pulse"></div>
-                        <span className="text-[9px] text-stone-gray uppercase tracking-wider">Live Draft</span>
+                        <span className="text-[9px] text-stone-gray uppercase tracking-wider">{t('reports.liveDraft')}</span>
                       </div>
                       <span className="text-[9px] text-stone-gray">ID: {periodId?.substring(0,8).toUpperCase() || '7074C6F5'}</span>
                     </div>
@@ -582,8 +582,8 @@ const GenerateReportPage = () => {
                 ) : (
                   <div className="flex flex-col items-center justify-center py-12 text-center">
                     <ExclamationTriangleIcon className="h-12 w-12 text-stone-gray/50 mb-4" />
-                    <h3 className="text-sm font-bold text-white mb-1">Awaiting Data</h3>
-                    <p className="text-xs text-stone-gray max-w-xs">Add activities to generate your emissions summary.</p>
+                    <h3 className="text-sm font-bold text-white mb-1">{t('reports.awaitingData')}</h3>
+                    <p className="text-xs text-stone-gray max-w-xs">{t('reports.addActivitiesHint')}</p>
                   </div>
                 )}
               </div>

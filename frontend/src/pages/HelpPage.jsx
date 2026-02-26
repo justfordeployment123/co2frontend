@@ -11,7 +11,7 @@ const HelpPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/standards-help.json')
+    fetch(import.meta.env.BASE_URL + 'standards-help.json')
       .then(response => response.json())
       .then(data => {
         setHelpContent(data);
@@ -26,7 +26,7 @@ const HelpPage = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="text-gray-400">Loading help content...</div>
+        <div className="text-gray-400">{t('help.loadingContent')}</div>
       </div>
     );
   }
@@ -34,7 +34,7 @@ const HelpPage = () => {
   if (!helpContent) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="text-red-400">Failed to load help content</div>
+        <div className="text-red-400">{t('help.failedLoad')}</div>
       </div>
     );
   }
@@ -54,7 +54,7 @@ const HelpPage = () => {
     <div className="min-h-screen bg-midnight-navy p-6">
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-white mb-2">Help & Documentation</h1>
+          <h1 className="text-3xl font-bold text-white mb-2">{t('help.title')}</h1>
           <p className="text-gray-300">
             Learn about emissions reporting standards, terminology, and best practices
           </p>
@@ -64,7 +64,7 @@ const HelpPage = () => {
           {/* Sidebar Navigation */}
           <div className="lg:col-span-1">
             <div className="bg-primary-light border border-gray-700 rounded-lg p-4 sticky top-6">
-              <h2 className="text-lg font-semibold text-white mb-4">Topics</h2>
+              <h2 className="text-lg font-semibold text-white mb-4">{t('help.topics')}</h2>
               <nav className="space-y-2">
                 {sections.map(section => (
                   <button
@@ -91,7 +91,7 @@ const HelpPage = () => {
               {/* Standards Section */}
               {activeSection === 'standards' && (
                 <div>
-                  <h2 className="text-2xl font-bold text-white mb-6">Reporting Standards & Frameworks</h2>
+                  <h2 className="text-2xl font-bold text-white mb-6">{t('help.standardsTitle')}</h2>
                   
                   <div className="flex gap-2 mb-6">
                     {Object.keys(content.standards).map(key => (
@@ -126,7 +126,7 @@ const HelpPage = () => {
                       
                       {content.standards[activeStandard].whoMustComply && (
                         <div>
-                          <h4 className="text-lg font-semibold text-white mb-3">Who Must Comply?</h4>
+                          <h4 className="text-lg font-semibold text-white mb-3">{t('help.whoMustComply')}</h4>
                           <ul className="space-y-2">
                             {content.standards[activeStandard].whoMustComply.map((item, idx) => (
                               <li key={idx} className="flex items-start gap-2 text-gray-300">
@@ -140,7 +140,7 @@ const HelpPage = () => {
                       
                       {content.standards[activeStandard].keyRequirements && (
                         <div>
-                          <h4 className="text-lg font-semibold text-white mb-3">Key Requirements</h4>
+                          <h4 className="text-lg font-semibold text-white mb-3">{t('help.keyRequirements')}</h4>
                           <ul className="space-y-2">
                             {content.standards[activeStandard].keyRequirements.map((item, idx) => (
                               <li key={idx} className="flex items-start gap-2 text-gray-300">
@@ -154,7 +154,7 @@ const HelpPage = () => {
                       
                       {content.standards[activeStandard].keyPrinciples && (
                         <div>
-                          <h4 className="text-lg font-semibold text-white mb-3">Key Principles</h4>
+                          <h4 className="text-lg font-semibold text-white mb-3">{t('help.keyPrinciples')}</h4>
                           <ul className="space-y-2">
                             {content.standards[activeStandard].keyPrinciples.map((item, idx) => (
                               <li key={idx} className="flex items-start gap-2 text-gray-300">
@@ -169,7 +169,7 @@ const HelpPage = () => {
                       {content.standards[activeStandard].timeline && (
                         <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4">
                           <p className="text-yellow-200">
-                            <span className="font-semibold">Timeline: </span>
+                            {t('help.timelineLabel')} 
                             {content.standards[activeStandard].timeline}
                           </p>
                         </div>
@@ -182,7 +182,7 @@ const HelpPage = () => {
               {/* Scopes Section */}
               {activeSection === 'scopes' && (
                 <div>
-                  <h2 className="text-2xl font-bold text-white mb-6">Emission Scopes Explained</h2>
+                  <h2 className="text-2xl font-bold text-white mb-6">{t('help.scopesTitle')}</h2>
                   
                   <div className="flex gap-2 mb-6">
                     {Object.keys(content.scopes).map(key => (
@@ -211,7 +211,7 @@ const HelpPage = () => {
                       
                       {content.scopes[activeScope].categories && (
                         <div>
-                          <h4 className="text-lg font-semibold text-white mb-3">Categories</h4>
+                          <h4 className="text-lg font-semibold text-white mb-3">{t('help.categories')}</h4>
                           <ul className="space-y-2">
                             {content.scopes[activeScope].categories.map((item, idx) => (
                               <li key={idx} className="flex items-start gap-2 text-gray-300">
@@ -225,7 +225,7 @@ const HelpPage = () => {
                       
                       {content.scopes[activeScope].examples && (
                         <div className="bg-white/5 border border-cyan-mist/30 rounded-lg p-4">
-                          <h4 className="text-lg font-semibold text-white mb-3">Common Examples</h4>
+                          <h4 className="text-lg font-semibold text-white mb-3">{t('help.commonExamples')}</h4>
                           <ul className="space-y-2">
                             {content.scopes[activeScope].examples.map((item, idx) => (
                               <li key={idx} className="flex items-start gap-2 text-gray-300">
@@ -239,7 +239,7 @@ const HelpPage = () => {
                       
                       {content.scopes[activeScope].whyImportant && (
                         <div className="bg-cyan-mist/10 border border-cyan-mist/30 rounded-lg p-4">
-                          <h4 className="text-lg font-semibold text-cyan-mist mb-2">Why It Matters</h4>
+                          <h4 className="text-lg font-semibold text-cyan-mist mb-2">{t('help.whyItMatters')}</h4>
                           <p className="text-gray-300">{content.scopes[activeScope].whyImportant}</p>
                         </div>
                       )}
@@ -251,7 +251,7 @@ const HelpPage = () => {
               {/* Glossary Section */}
               {activeSection === 'terms' && (
                 <div>
-                  <h2 className="text-2xl font-bold text-white mb-6">Glossary of Terms</h2>
+                  <h2 className="text-2xl font-bold text-white mb-6">{t('help.glossaryTitle')}</h2>
                   
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mb-6">
                     {Object.keys(content.terms).map(key => (
@@ -286,7 +286,7 @@ const HelpPage = () => {
                       
                       {content.terms[activeTerm].values && (
                         <div>
-                          <h4 className="text-lg font-semibold text-white mb-3">Common GWP Values (100-year)</h4>
+                          <h4 className="text-lg font-semibold text-white mb-3">{t('help.gwpValues')}</h4>
                           <div className="bg-gray-800 rounded-lg p-4">
                             {Object.entries(content.terms[activeTerm].values).map(([gas, value]) => (
                               <div key={gas} className="flex justify-between items-center py-2 border-b border-gray-700 last:border-0">
@@ -300,7 +300,7 @@ const HelpPage = () => {
                       
                       {content.terms[activeTerm].sources && (
                         <div>
-                          <h4 className="text-lg font-semibold text-white mb-3">Trusted Sources</h4>
+                          <h4 className="text-lg font-semibold text-white mb-3">{t('help.trustedSources')}</h4>
                           <ul className="space-y-2">
                             {content.terms[activeTerm].sources.map((source, idx) => (
                               <li key={idx} className="flex items-start gap-2 text-gray-300">
@@ -319,7 +319,7 @@ const HelpPage = () => {
               {/* Activity Types Section */}
               {activeSection === 'activities' && content.activityTypes && (
                 <div>
-                  <h2 className="text-2xl font-bold text-white mb-6">Activity Types Guide</h2>
+                  <h2 className="text-2xl font-bold text-white mb-6">{t('help.activityGuide')}</h2>
                   
                   <div className="space-y-6">
                     {Object.entries(content.activityTypes).map(([key, activity]) => (
@@ -339,7 +339,7 @@ const HelpPage = () => {
                         
                         {activity.dataNeeded && (
                           <div className="mb-4">
-                            <h4 className="text-sm font-semibold text-cyan-mist mb-2">Data Needed:</h4>
+                            <h4 className="text-sm font-semibold text-cyan-mist mb-2">{t('help.dataNeed')}</h4>
                             <ul className="space-y-1">
                               {activity.dataNeeded.map((item, idx) => (
                                 <li key={idx} className="text-gray-400 text-sm flex items-start gap-2">
@@ -353,7 +353,7 @@ const HelpPage = () => {
                         
                         {activity.tips && (
                           <div className="bg-cyan-mist/10 border border-cyan-mist/30 rounded-lg p-3">
-                            <h4 className="text-sm font-semibold text-cyan-mist mb-2">Tips:</h4>
+                            <h4 className="text-sm font-semibold text-cyan-mist mb-2">{t('help.tipsLabel')}</h4>
                             <ul className="space-y-1">
                               {activity.tips.map((tip, idx) => (
                                 <li key={idx} className="text-gray-300 text-sm flex items-start gap-2">
@@ -377,7 +377,7 @@ const HelpPage = () => {
                   <p className="text-gray-300 mb-6 text-lg">{content.dataQuality.description}</p>
                   
                   <div className="space-y-6">
-                    <h3 className="text-xl font-semibold text-white">Data Quality Levels</h3>
+                    <h3 className="text-xl font-semibold text-white">{t('help.dataQualityLevels')}</h3>
                     
                     {Object.entries(content.dataQuality.levels).map(([key, level]) => (
                       <div key={key} className="bg-white/5 border border-gray-700 rounded-lg p-6">
@@ -395,7 +395,7 @@ const HelpPage = () => {
                         <p className="text-gray-300 mb-3">{level.description}</p>
                         
                         <div>
-                          <p className="text-sm font-semibold text-cyan-mist mb-2">Examples:</p>
+                          <p className="text-sm font-semibold text-cyan-mist mb-2">{t('help.examplesLabel')}</p>
                           <ul className="space-y-1">
                             {level.examples.map((example, idx) => (
                               <li key={idx} className="text-gray-400 text-sm flex items-start gap-2">
@@ -409,7 +409,7 @@ const HelpPage = () => {
                     ))}
                     
                     <div className="bg-cyan-mist/10 border border-cyan-mist/30 rounded-lg p-6 mt-8">
-                      <h3 className="text-xl font-semibold text-white mb-4">Tips for Improving Data Quality</h3>
+                      <h3 className="text-xl font-semibold text-white mb-4">{t('help.improveTips')}</h3>
                       <ul className="space-y-3">
                         {content.dataQuality.improvementTips.map((tip, idx) => (
                           <li key={idx} className="flex items-start gap-3 text-gray-300">

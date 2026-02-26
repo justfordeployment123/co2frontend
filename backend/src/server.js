@@ -135,7 +135,7 @@ if (process.env.NODE_ENV !== 'test') {
   server = app.listen(PORT, () => {
     console.log(`
 ╔════════════════════════════════════════════════════════════════╗
-║                  AURIXON BACKEND API                          ║
+║                  CalculateCO2 BACKEND API                     ║
 ║                                                                ║
 ║  Environment:        ${NODE_ENV.padEnd(39)}║
 ║  Port:               ${String(PORT).padEnd(39)}║
