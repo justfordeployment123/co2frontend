@@ -23,6 +23,12 @@ apiClient.interceptors.request.use(
   }
 );
 
+// Helper to determine current base path (root vs /staging)
+const getBasePath = () => {
+  if (typeof window === 'undefined') return '/';
+  return window.location.pathname.startsWith('/staging') ? '/staging/' : '/';
+};
+
 // Response interceptor to handle errors
 apiClient.interceptors.response.use(
   (response) => {
@@ -31,10 +37,10 @@ apiClient.interceptors.response.use(
   (error) => {
     if (error.response) {
       // Extract error message from various possible response structures
-      const errorMessage = 
-        error.response.data?.message || 
-        error.response.data?.error || 
-        error.response.statusText || 
+      const errorMessage =
+        error.response.data?.message ||
+        error.response.data?.error ||
+        error.response.statusText ||
         'An error occurred';
 
       // Handle specific error codes
@@ -43,7 +49,7 @@ apiClient.interceptors.response.use(
           // Unauthorized - clear token and redirect to login
           localStorage.removeItem('token');
           localStorage.removeItem('user');
-          window.location.href = import.meta.env.BASE_URL + 'login';
+          window.location.href = getBasePath() + 'login';
           break;
         case 403:
           // Forbidden
