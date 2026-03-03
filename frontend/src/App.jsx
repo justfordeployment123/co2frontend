@@ -366,8 +366,13 @@ function AnimatedRoutes() {
 }
 
 function App() {
+  const basename =
+    typeof window !== 'undefined' && window.location.pathname.startsWith('/staging')
+      ? '/staging'
+      : '/';
+
   return (
-    <Router basename="/staging">
+    <Router basename={basename}>
       <AuthProvider>
         <Toaster
           position="top-right"
