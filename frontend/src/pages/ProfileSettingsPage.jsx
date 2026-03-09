@@ -5,7 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 import Loading from '../components/common/Loading';
 
 const ProfileSettingsPage = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { success, error } = useToast();
   const { user } = useAuth();
   
@@ -49,6 +49,11 @@ const ProfileSettingsPage = () => {
         email: data.email || user.email || '',
         language: data.language_preference || 'en'
       });
+
+      if (data.language_preference) {
+        i18n.changeLanguage(data.language_preference);
+        localStorage.setItem('i18nextLng', data.language_preference);
+      }
     } catch (err) {
       setFormData({
         firstName: user.firstName || '',
@@ -91,6 +96,10 @@ const ProfileSettingsPage = () => {
       if (!response.ok) {
         throw new Error('Failed to update profile');
       }
+
+      // Apply and persist updated language preference immediately
+      i18n.changeLanguage(formData.language);
+      localStorage.setItem('i18nextLng', formData.language);
 
       success('Profile updated successfully');
     } catch (err) {

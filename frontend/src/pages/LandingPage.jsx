@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthContext';
@@ -27,15 +27,17 @@ const LandingPage = () => {
           ? 'bg-midnight-navy/95 backdrop-blur-lg shadow-lg border-b border-cyan-mist/10'
           : 'bg-transparent'
       }`}>
-        <div className="container-custom mx-auto">
+            <div className="container-custom mx-auto">
           <div className="flex justify-between items-center h-20">
-            {/* Logo */}
+            {/* Logo with light background for contrast */}
             <Link to="/" className="flex items-center space-x-3 group">
-              <img
-                src={import.meta.env.BASE_URL + 'aurixon_logo.png'}
-                alt="CalculateCO2"
-                className="h-10 w-auto transition-transform group-hover:scale-105"
-              />
+              <div className="bg-white/10 rounded-xl px-3 py-1">
+                <img
+                  src={import.meta.env.BASE_URL + 'aurixon_logo.png'}
+                  alt="CalculateCO2"
+                  className="h-10 w-auto transition-transform group-hover:scale-105"
+                />
+              </div>
             </Link>
 
             {/* Desktop Menu */}
@@ -376,12 +378,19 @@ const LandingPage = () => {
         <div className="container-custom mx-auto">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-500">
             <div className="flex items-center gap-3">
-              <img src={import.meta.env.BASE_URL + 'aurixon_logo.png'} alt="CalculateCO2" className="h-7 w-auto opacity-80" />
+              <div className="bg-white/10 rounded-xl px-3 py-1">
+                <img src={import.meta.env.BASE_URL + 'aurixon_logo.png'} alt="CalculateCO2" className="h-7 w-auto opacity-90" />
+              </div>
               <span>© {new Date().getFullYear()} CalculateCO2</span>
             </div>
-            <a href="/imprint" className="hover:text-white transition-colors underline underline-offset-2">
-              Imprint
-            </a>
+            <div className="flex items-center gap-4">
+              <Link to="/impressum" className="hover:text-white transition-colors underline underline-offset-2">
+                Imprint
+              </Link>
+              <Link to="/terms" className="hover:text-white transition-colors underline underline-offset-2">
+                Terms of Service
+              </Link>
+            </div>
           </div>
         </div>
       </footer>

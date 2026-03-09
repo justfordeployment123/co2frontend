@@ -24,6 +24,18 @@ if (!fs.existsSync(EXPORTS_DIR)) {
   fs.mkdirSync(EXPORTS_DIR, { recursive: true });
 }
 
+// Helper: should this user bypass the paywall?
+function hasPaywallBypassForUser(req) {
+  const list = process.env.PAYWALL_BYPASS_EMAILS;
+  const email = (req.user?.email || '').toLowerCase();
+  if (!list || !email) return false;
+  return list
+    .split(',')
+    .map((e) => e.trim().toLowerCase())
+    .filter(Boolean)
+    .includes(email);
+}
+
 /**
  * Generate and download PDF report
  * GET /api/exports/pdf/:periodId
@@ -35,14 +47,17 @@ export async function exportPDF(req, res) {
 
     console.log(`[ExportController] Generating PDF for period ${periodId} in ${lang || 'en'}`);
 
-    // Verify payment before generating report
-    const paymentStatus = await paymentService.verifyPaymentStatus(periodId);
-    if (!paymentStatus.paid) {
-      return res.status(402).json({
-        success: false,
-        error: 'Payment required',
-        message: 'Please complete payment before generating the report'
-      });
+    // Verify payment before generating report (unless bypass flags are set)
+    const bypassPaywall = process.env.BYPASS_PAYWALL === 'true' || hasPaywallBypassForUser(req);
+    if (!bypassPaywall) {
+      const paymentStatus = await paymentService.verifyPaymentStatus(periodId);
+      if (!paymentStatus.paid) {
+        return res.status(402).json({
+          success: false,
+          error: 'Payment required',
+          message: 'Please complete payment before generating the report'
+        });
+      }
     }
 
     const options = {
@@ -140,14 +155,17 @@ export async function exportCSV(req, res) {
   try {
     const { periodId } = req.params;
 
-    // Verify payment before generating export
-    const paymentStatus = await paymentService.verifyPaymentStatus(periodId);
-    if (!paymentStatus.paid) {
-      return res.status(402).json({
-        success: false,
-        error: 'Payment required',
-        message: 'Please complete payment before exporting data'
-      });
+    // Verify payment before generating export (unless bypass flags are set)
+    const bypassPaywall = process.env.BYPASS_PAYWALL === 'true' || hasPaywallBypassForUser(req);
+    if (!bypassPaywall) {
+      const paymentStatus = await paymentService.verifyPaymentStatus(periodId);
+      if (!paymentStatus.paid) {
+        return res.status(402).json({
+          success: false,
+          error: 'Payment required',
+          message: 'Please complete payment before exporting data'
+        });
+      }
     }
 
     const filename = `emissions_export_${periodId}_${Date.now()}.csv`;
@@ -183,14 +201,17 @@ export async function exportExcel(req, res) {
   try {
     const { periodId } = req.params;
 
-    // Verify payment before generating export
-    const paymentStatus = await paymentService.verifyPaymentStatus(periodId);
-    if (!paymentStatus.paid) {
-      return res.status(402).json({
-        success: false,
-        error: 'Payment required',
-        message: 'Please complete payment before exporting data'
-      });
+    // Verify payment before generating export (unless bypass flags are set)
+    const bypassPaywall = process.env.BYPASS_PAYWALL === 'true' || hasPaywallBypassForUser(req);
+    if (!bypassPaywall) {
+      const paymentStatus = await paymentService.verifyPaymentStatus(periodId);
+      if (!paymentStatus.paid) {
+        return res.status(402).json({
+          success: false,
+          error: 'Payment required',
+          message: 'Please complete payment before exporting data'
+        });
+      }
     }
 
     const filename = `emissions_report_${periodId}_${Date.now()}.xlsx`;
@@ -228,14 +249,17 @@ export async function emailExport(req, res) {
     const { periodId } = req.params;
     const { recipientEmail, format = 'pdf' } = req.body;
 
-    // Verify payment before generating/sending report
-    const paymentStatus = await paymentService.verifyPaymentStatus(periodId);
-    if (!paymentStatus.paid) {
-      return res.status(402).json({
-        success: false,
-        error: 'Payment required',
-        message: 'Please complete payment before generating the report'
-      });
+    // Verify payment before generating/sending report (unless bypass flags are set)
+    const bypassPaywall = process.env.BYPASS_PAYWALL === 'true' || hasPaywallBypassForUser(req);
+    if (!bypassPaywall) {
+      const paymentStatus = await paymentService.verifyPaymentStatus(periodId);
+      if (!paymentStatus.paid) {
+        return res.status(402).json({
+          success: false,
+          error: 'Payment required',
+          message: 'Please complete payment before generating the report'
+        });
+      }
     }
 
     if (!recipientEmail) {

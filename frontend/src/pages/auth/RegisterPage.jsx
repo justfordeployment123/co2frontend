@@ -1,4 +1,4 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
@@ -342,7 +342,7 @@ const RegisterPage = () => {
 
           <div className="mt-8 text-center">
             <Link to="/" className="text-sm text-gray-500 hover:text-gray-300 transition-colors">
-              ΓåÉ {t('auth.backToHome')}
+              ← {t('auth.backToHome')}
             </Link>
           </div>
         </div>

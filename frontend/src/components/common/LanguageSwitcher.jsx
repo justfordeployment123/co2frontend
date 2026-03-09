@@ -17,7 +17,8 @@ const LanguageSwitcher = () => {
     const newLang = currentLang === 'en' ? 'de' : 'en';
     i18n.changeLanguage(newLang);
     setCurrentLang(newLang);
-    localStorage.setItem('language', newLang);
+    // Persist language so it is remembered across visits
+    localStorage.setItem('i18nextLng', newLang);
   };
 
   return (

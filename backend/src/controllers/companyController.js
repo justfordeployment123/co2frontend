@@ -19,7 +19,21 @@ export async function getCompany(req, res, next) {
 
     // Get company info
     const company = await queryOne(
-      'SELECT id, name, country_code, industry, created_at FROM companies WHERE id = $1',
+      `SELECT 
+         id,
+         name,
+         country_code,
+         industry,
+         address,
+         city,
+         postal_code,
+         website,
+         contact_email,
+         contact_phone,
+         created_at,
+         updated_at
+       FROM companies 
+       WHERE id = $1`,
       [companyId]
     );
 
@@ -27,22 +41,7 @@ export async function getCompany(req, res, next) {
       return res.status(404).json({ error: 'Company not found' });
     }
 
-    // Get company users
-    const users = await query(
-      `SELECT u.id, u.email, u.first_name, u.last_name, ucr.role, ucr.created_at
-       FROM user_company_roles ucr
-       JOIN users u ON ucr.user_id = u.id
-       WHERE ucr.company_id = $1
-       ORDER BY u.email`,
-      [companyId]
-    );
-
-    res.json({
-      company: {
-        ...company,
-        users: users.rows,
-      },
-    });
+    res.json(company);
   } catch (error) {
     next(error);
   }
@@ -56,7 +55,17 @@ export async function getCompany(req, res, next) {
 export async function updateCompany(req, res, next) {
   try {
     const { companyId } = req.params;
-    const { name, country_code, industry } = req.body;
+    const {
+      name,
+      country_code,
+      industry,
+      address,
+      city,
+      postal_code,
+      website,
+      contact_email,
+      contact_phone,
+    } = req.body;
     const now = new Date();
 
     // Build dynamic UPDATE query
@@ -77,6 +86,36 @@ export async function updateCompany(req, res, next) {
     if (industry !== undefined) {
       updates.push(`industry = $${paramIndex}`);
       values.push(industry);
+      paramIndex++;
+    }
+    if (address !== undefined) {
+      updates.push(`address = $${paramIndex}`);
+      values.push(address);
+      paramIndex++;
+    }
+    if (city !== undefined) {
+      updates.push(`city = $${paramIndex}`);
+      values.push(city);
+      paramIndex++;
+    }
+    if (postal_code !== undefined) {
+      updates.push(`postal_code = $${paramIndex}`);
+      values.push(postal_code);
+      paramIndex++;
+    }
+    if (website !== undefined) {
+      updates.push(`website = $${paramIndex}`);
+      values.push(website);
+      paramIndex++;
+    }
+    if (contact_email !== undefined) {
+      updates.push(`contact_email = $${paramIndex}`);
+      values.push(contact_email);
+      paramIndex++;
+    }
+    if (contact_phone !== undefined) {
+      updates.push(`contact_phone = $${paramIndex}`);
+      values.push(contact_phone);
       paramIndex++;
     }
 

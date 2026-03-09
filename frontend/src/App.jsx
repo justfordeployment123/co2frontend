@@ -30,6 +30,7 @@ import ActivitiesChecklistPage from './pages/ActivitiesChecklistPage';
 import Loading from './components/common/Loading';
 import RBAC from './components/RBAC';
 import SettingsDashboard from './pages/settings/SettingsDashboard.jsx';
+import TermsOfServicePage from './pages/TermsOfServicePage.jsx';
 
 /**
  * Protected Route Component
@@ -84,11 +85,25 @@ if (typeof window !== 'undefined') {
 
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import './pageTransitions.css';
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
+import CookieConsentBanner from './components/common/CookieConsentBanner';
 
 function AnimatedRoutes() {
   const location = useLocation();
   const nodeRef = useRef(null);
+
+  // Send page_view events to Google Analytics on route change
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.gtag) {
+      const consent = window.localStorage?.getItem('cookieConsent');
+      if (consent === 'accepted') {
+        window.gtag('event', 'page_view', {
+          page_path: location.pathname + location.search,
+          page_title: document.title,
+        });
+      }
+    }
+  }, [location]);
   return (
     <TransitionGroup component={null}>
       <CSSTransition
@@ -343,6 +358,26 @@ function AnimatedRoutes() {
               }
             />
 
+            {/* Imprint alias for English URL */}
+            <Route
+              path="/imprint"
+              element={
+                <PublicRoute>
+                  <ImpressumPage />
+                </PublicRoute>
+              }
+            />
+
+            {/* Terms of Service */}
+            <Route
+              path="/terms"
+              element={
+                <PublicRoute>
+                  <TermsOfServicePage />
+                </PublicRoute>
+              }
+            />
+
             {/* 404 Route */}
             <Route
               path="*"
@@ -399,6 +434,7 @@ function App() {
         />
         <ToastProvider>
           <AnimatedRoutes />
+          <CookieConsentBanner />
         </ToastProvider>
       </AuthProvider>
     </Router>

@@ -8,6 +8,18 @@
 
 import * as paymentService from '../services/paymentService.js';
 
+// Helper: should this user bypass the paywall?
+function hasPaywallBypassForUser(req) {
+  const list = process.env.PAYWALL_BYPASS_EMAILS;
+  const email = (req.user?.email || '').toLowerCase();
+  if (!list || !email) return false;
+  return list
+    .split(',')
+    .map((e) => e.trim().toLowerCase())
+    .filter(Boolean)
+    .includes(email);
+}
+
 /**
  * Create Stripe checkout session
  * POST /api/payments/create-checkout-session
@@ -100,6 +112,8 @@ export async function handleWebhook(req, res) {
 export async function verifyPayment(req, res) {
   try {
     const { reportingPeriodId } = req.params;
+    const bypassPaywall =
+      process.env.BYPASS_PAYWALL === 'true' || hasPaywallBypassForUser(req);
     // Verify user has access to this reporting period
     const { rows } = await req.db.query(
       'SELECT id, company_id FROM reporting_periods WHERE id = $1',
@@ -124,6 +138,14 @@ export async function verifyPayment(req, res) {
       return res.status(403).json({
          success: false,
          error: 'Access denied'
+      });
+    }
+
+    if (bypassPaywall) {
+      return res.json({
+        success: true,
+        paid: true,
+        reason: 'paywall bypass enabled for this user',
       });
     }
 

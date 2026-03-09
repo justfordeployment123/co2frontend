@@ -1,4 +1,4 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import authAPI from '../../api/authAPI';
@@ -44,7 +44,9 @@ const ForgotPasswordPage = () => {
         {/* Logo */}
         <div className="text-center mb-8">
           <Link to="/">
-            <img src={import.meta.env.BASE_URL + 'aurixon_logo.png'} alt="CalculateCO2" className="h-12 w-auto mx-auto" />
+            <div className="inline-block bg-white/10 rounded-xl px-3 py-1">
+              <img src={import.meta.env.BASE_URL + 'aurixon_logo.png'} alt="CalculateCO2" className="h-12 w-auto mx-auto" />
+            </div>
           </Link>
         </div>
 
