@@ -218,8 +218,25 @@ export async function getBoundaryQuestions(req, res, next) {
       [periodId]
     );
 
+    // Return default (all false) when no period-specific boundaries yet, so frontend doesn't 404
+    const defaultBoundary = {
+      stationary_combustion: false,
+      mobile_sources: false,
+      refrigeration_ac: false,
+      fire_suppression: false,
+      purchased_gases: false,
+      electricity: false,
+      steam: false,
+      market_based_factors: false,
+      business_travel: false,
+      commuting: false,
+      transportation_distribution: false,
+      waste: false,
+      offsets: false,
+    };
+
     if (!questions) {
-      return res.status(404).json({ error: 'Boundary questions not found' });
+      return res.json({ boundaryQuestions: defaultBoundary });
     }
 
     // Convert back to API format (remove 'has_' prefix)

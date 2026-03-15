@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useToast } from '../components/common/Toast';
 import { useAuth } from '../contexts/AuthContext';
+import apiClient from '../api/apiClient';
 import { reportingPeriodsAPI } from '../api/reportingPeriodsAPI';
 import { dashboardAPI } from '../api/dashboardAPI';
 import { 
@@ -91,18 +92,9 @@ const GenerateReportPage = () => {
 
     const checkPaymentStatus = async () => {
       try {
-        const token = localStorage.getItem('token');
-        const response = await fetch(`/api/payments/verify/${periodId}`, {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-        
-        if (response.ok) {
-          const data = await response.json();
-          if (data.paid) {
-            setIsPaid(true);
-          }
+        const response = await apiClient.get(`/payments/verify/${periodId}`);
+        if (response.data?.paid) {
+          setIsPaid(true);
         }
       } catch (err) {
         console.error('Failed to check payment status', err);
@@ -138,9 +130,7 @@ const GenerateReportPage = () => {
     setGenerating(true);
 
     try {
-      const token = localStorage.getItem('token');
-      
-      // Attempt to generate/download report logic
+      // apiClient adds Authorization via interceptor
       // Note: The backend exportPDF endpoint checks for payment.
       // If paid, it returns the PDF. If not, it returns 402.
       
@@ -152,23 +142,19 @@ const GenerateReportPage = () => {
         reportType: formData.reportType
       }).toString();
 
-      const generateResponse = await fetch(`/api/exports/pdf/${periodId}?${queryParams}`, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
+      const generateResponse = await apiClient.get(`/exports/pdf/${periodId}?${queryParams}`, {
+        responseType: 'blob',
+        validateStatus: (status) => (status >= 200 && status < 300) || status === 402,
       });
 
       if (generateResponse.status === 402) {
         // Payment required
         setReportGenerated(true); // Switch to "Result/Payment" view
         setIsPaid(false); // Ensure we show payment button
-        // Don't show success toast yet, maybe an info toast
-        return; 
+        return;
       }
 
-      if (!generateResponse.ok) {
+      if (generateResponse.status < 200 || generateResponse.status >= 300) {
         throw new Error('Failed to generate report');
       }
 
@@ -190,28 +176,14 @@ const GenerateReportPage = () => {
 
   const handleProceedToPayment = async () => {
     try {
-      const token = localStorage.getItem('token');
-      
-      // Create Stripe checkout session
-      const response = await fetch('/api/payments/create-checkout-session', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          reportingPeriodId: periodId,
-          metadata: {
-            reportType: formData.reportType,
-          }
-        })
+      const response = await apiClient.post('/payments/create-checkout-session', {
+        reportingPeriodId: periodId,
+        metadata: {
+          reportType: formData.reportType,
+        }
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to create checkout session');
-      }
-
-      const data = await response.json();
+      const data = response.data;
       
       if (data.session?.url) {
         // Redirect to Stripe checkout
@@ -226,7 +198,6 @@ const GenerateReportPage = () => {
 
   const handleDownload = async (format) => {
     try {
-      const token = localStorage.getItem('token');
       const queryParams = new URLSearchParams({
         lang: formData.language || 'en',
         includeDetails: formData.includeDetails,
@@ -235,29 +206,28 @@ const GenerateReportPage = () => {
         reportType: formData.reportType
       }).toString();
 
-      let endpoint = '';
-      if (format === 'pdf') endpoint = `/api/exports/pdf/${periodId}?${queryParams}`;
-      else if (format === 'csv') endpoint = `/api/exports/csv/${periodId}?${queryParams}`;
-      else if (format === 'excel') endpoint = `/api/exports/excel/${periodId}?${queryParams}`;
-      
-      const response = await fetch(endpoint, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
+      let path = '';
+      if (format === 'pdf') path = `/exports/pdf/${periodId}?${queryParams}`;
+      else if (format === 'csv') path = `/exports/csv/${periodId}?${queryParams}`;
+      else if (format === 'excel') path = `/exports/excel/${periodId}?${queryParams}`;
+
+      const response = await apiClient.get(path, {
+        responseType: 'blob',
+        validateStatus: (status) => (status >= 200 && status < 300) || status === 402,
       });
 
       if (response.status === 402) {
-         error(t('reports.paymentRequired'));
-         setIsPaid(false);
-         setReportGenerated(true);
-         return;
+        error(t('reports.paymentRequired'));
+        setIsPaid(false);
+        setReportGenerated(true);
+        return;
       }
 
-      if (!response.ok) {
+      if (response.status < 200 || response.status >= 300) {
         throw new Error(`Failed to download ${format.toUpperCase()}`);
       }
 
-      const blob = await response.blob();
+      const blob = response.data;
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;

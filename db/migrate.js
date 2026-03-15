@@ -40,6 +40,7 @@ const MIGRATIONS = [
   '23_allow_negative_emissions.sql',
   '24_fix_waste_units.sql',
   '25_default_calc_method.sql',
+  '26_add_company_contact_columns.sql',
 ];
 
 async function migrate() {

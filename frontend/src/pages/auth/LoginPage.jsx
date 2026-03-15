@@ -55,7 +55,9 @@ const LoginPage = () => {
 
         <div className="relative z-10 flex flex-col justify-center px-16 w-full">
           <Link to="/" className="mb-12">
-            <img src={import.meta.env.BASE_URL + 'aurixon_logo.png'} alt="CalculateCO2" className="h-14 w-auto" />
+            <div className="inline-block bg-white/10 rounded-xl px-3 py-1">
+              <img src={import.meta.env.BASE_URL + 'aurixon_logo.png'} alt="CalculateCO2" className="h-14 w-auto" />
+            </div>
           </Link>
 
           <h1 className="text-4xl font-bold text-white mb-4">
@@ -87,7 +89,9 @@ const LoginPage = () => {
           {/* Mobile Logo */}
           <div className="lg:hidden text-center mb-8">
             <Link to="/">
-              <img src={import.meta.env.BASE_URL + 'aurixon_logo.png'} alt="CalculateCO2" className="h-12 w-auto mx-auto mb-4" />
+              <div className="inline-block bg-white/10 rounded-xl px-3 py-1">
+                <img src={import.meta.env.BASE_URL + 'aurixon_logo.png'} alt="CalculateCO2" className="h-12 w-auto mx-auto mb-4" />
+              </div>
             </Link>
           </div>
 
