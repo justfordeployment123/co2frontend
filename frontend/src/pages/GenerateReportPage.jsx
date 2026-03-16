@@ -148,9 +148,14 @@ const GenerateReportPage = () => {
       });
 
       if (generateResponse.status === 402) {
-        // Payment required
-        setReportGenerated(true); // Switch to "Result/Payment" view
-        setIsPaid(false); // Ensure we show payment button
+        // Payment required or still processing
+        if (isPaid) {
+          // User just paid but webhook may not have completed yet
+          error(t('reports.paymentProcessingRetry') || 'Payment may still be processing. Please try again in a moment.');
+        } else {
+          setReportGenerated(true); // Switch to "Result/Payment" view
+          setIsPaid(false); // Show payment button for unpaid users
+        }
         return;
       }
 
