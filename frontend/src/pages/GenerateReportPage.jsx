@@ -217,9 +217,14 @@ const GenerateReportPage = () => {
       });
 
       if (response.status === 402) {
-        error(t('reports.paymentRequired'));
-        setIsPaid(false);
-        setReportGenerated(true);
+        // Don't reset isPaid: user may have just paid and webhook not processed yet
+        if (isPaid) {
+          error(t('reports.paymentProcessingRetry') || 'Payment may still be processing. Please try again in a moment.');
+        } else {
+          error(t('reports.paymentRequired'));
+          setIsPaid(false);
+          setReportGenerated(true);
+        }
         return;
       }
 

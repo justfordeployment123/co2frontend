@@ -1,4 +1,4 @@
-﻿import i18n from 'i18next';
+import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
@@ -817,6 +817,7 @@ const resources = {
         paymentCancelled: 'Payment was cancelled.',
         downloadSuccess: '{{format}} downloaded successfully',
         paymentRequired: 'Payment required to download this report',
+        paymentProcessingRetry: 'Payment may still be processing. Please try again in a moment.',
       },
       messages: {
         success: 'Success!',
@@ -1794,6 +1795,7 @@ const resources = {
         paymentCancelled: 'Zahlung wurde abgebrochen.',
         downloadSuccess: '{{format}} erfolgreich heruntergeladen',
         paymentRequired: 'Zahlung erforderlich, um diesen Bericht herunterzuladen',
+        paymentProcessingRetry: 'Die Zahlung wird möglicherweise noch verarbeitet. Bitte versuchen Sie es in Kürze erneut.',
       },
       messages: {
         success: 'Erfolgreich!',
