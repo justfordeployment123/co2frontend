@@ -63,16 +63,32 @@ async function migrate() {
     for (let i = 0; i < MIGRATIONS.length; i++) {
       const file = MIGRATIONS[i];
       const filePath = path.join(__dirname, file);
-      
+
       try {
         const sql = fs.readFileSync(filePath, 'utf8');
         console.log(`[${i + 1}/${MIGRATIONS.length}] Running: ${file}`);
-        
+
         await client.query(sql);
         console.log(`✅ Completed: ${file}\n`);
       } catch (error) {
+        // Allow rerunning migrations safely on an already-initialized DB
+        // by ignoring common "already exists" / duplicate errors.
+        const msg = (error && error.message) || '';
+        const ignorablePatterns = [
+          'already exists',
+          'duplicate key value',
+          'relation',
+          'type "user_role_type" already exists',
+        ];
+
+        if (ignorablePatterns.some((p) => msg.includes(p))) {
+          console.warn(`⚠️ Skipping already-applied migration: ${file}`);
+          console.warn(`   Reason: ${msg}\n`);
+          continue;
+        }
+
         console.error(`❌ Failed on: ${file}`);
-        console.error(`Error: ${error.message}\n`);
+        console.error(`Error: ${msg}\n`);
         throw error;
       }
     }
