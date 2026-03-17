@@ -30,18 +30,15 @@ const Header = ({ onMenuClick, showMenuButton }) => {
               </button>
             )}
 
-            {/* Logo with light background for contrast */}
             <Link to="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
-              <div className="bg-white/10 rounded-xl px-3 py-1">
-                <img
-                  src={import.meta.env.BASE_URL + 'aurixon_logo.png'}
-                  alt="CalculateCO2"
-                  className="h-10 sm:h-12 w-auto object-contain"
-                  onError={(e) => {
-                    e.target.style.display = 'none';
-                  }}
-                />
-              </div>
+              <img
+                src={import.meta.env.BASE_URL + 'aurixon_logo.png'}
+                alt="CalculateCO2"
+                className="h-10 sm:h-12 w-auto object-contain"
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                }}
+              />
             </Link>
           </div>
 
