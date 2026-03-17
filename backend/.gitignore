@@ -16,6 +16,4 @@ build
 .idea
 test_api.js
 tests/
-db/
 scripts/
-final_db/
