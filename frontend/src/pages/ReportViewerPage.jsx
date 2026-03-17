@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useToast } from '../components/common/Toast';
 import { useAuth } from "../contexts/AuthContext";
+import apiClient from '../api/apiClient';
 
 const ReportViewerPage = () => {
   const { t } = useTranslation();
@@ -20,18 +21,8 @@ const ReportViewerPage = () => {
 
   const fetchReport = async () => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await fetch(`/api/reports/history/details/${reportId}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-      
-      if (!response.ok) {
-        throw new Error('Failed to fetch report');
-      }
-      
-      const data = await response.json();
+      const response = await apiClient.get(`/reports/history/details/${reportId}`);
+      const data = response.data;
       setReport(data.report || data);
     } catch (err) {
       showError(err.message || 'Failed to load report');
@@ -44,19 +35,15 @@ const ReportViewerPage = () => {
   const handleDownloadPDF = async () => {
     if (!report) return;
     try {
-      const token = localStorage.getItem('token');
-      // Use export endpoint with periodId to force PDF generation/retrieval
-      const response = await fetch(`/api/exports/pdf/${report.reporting_period_id}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
+      const response = await apiClient.get(`/exports/pdf/${report.reporting_period_id}`, {
+        responseType: 'blob',
       });
-      
-      if (!response.ok) {
+
+      if (response.status < 200 || response.status >= 300) {
         throw new Error('Failed to download PDF');
       }
-      
-      const blob = await response.blob();
+
+      const blob = response.data;
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
@@ -73,18 +60,15 @@ const ReportViewerPage = () => {
   const handleDownloadCSV = async () => {
     if (!report) return;
     try {
-      const token = localStorage.getItem('token');
-      const response = await fetch(`/api/exports/csv/${report.reporting_period_id}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
+      const response = await apiClient.get(`/exports/csv/${report.reporting_period_id}`, {
+        responseType: 'blob',
       });
-      
-      if (!response.ok) {
+
+      if (response.status < 200 || response.status >= 300) {
         throw new Error('Failed to download CSV');
       }
-      
-      const blob = await response.blob();
+
+      const blob = response.data;
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
