@@ -34,7 +34,7 @@ const Header = ({ onMenuClick, showMenuButton }) => {
               <img
                 src={import.meta.env.BASE_URL + 'aurixon_logo.png'}
                 alt="CalculateCO2"
-                className="h-10 sm:h-12 w-auto object-contain"
+                className="h-20 sm:h-24 w-auto object-contain"
                 onError={(e) => {
                   e.target.style.display = 'none';
                 }}

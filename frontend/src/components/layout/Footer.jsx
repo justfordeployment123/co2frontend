@@ -1,4 +1,4 @@
-﻿import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 /**
@@ -21,7 +21,7 @@ const Footer = () => {
             <img 
               src={import.meta.env.BASE_URL + 'aurixon_logo.png'} 
               alt="CalculateCO2" 
-              className="h-10 w-auto object-contain brightness-110"
+              className="h-12 w-auto object-contain brightness-110"
             />
             <span className="text-2xl font-heading font-black tracking-tighter uppercase">
               Calculate<span className="text-growth-green">CO2</span>

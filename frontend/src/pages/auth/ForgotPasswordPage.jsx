@@ -44,7 +44,7 @@ const ForgotPasswordPage = () => {
         {/* Logo */}
         <div className="text-center mb-8">
           <Link to="/">
-            <img src={import.meta.env.BASE_URL + 'aurixon_logo.png'} alt="CalculateCO2" className="h-12 w-auto mx-auto" />
+            <img src={import.meta.env.BASE_URL + 'aurixon_logo.png'} alt="CalculateCO2" className="h-14 w-auto mx-auto" />
           </Link>
         </div>
 

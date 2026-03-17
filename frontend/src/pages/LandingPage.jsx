@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthContext';
@@ -33,7 +33,7 @@ const LandingPage = () => {
               <img
                 src={import.meta.env.BASE_URL + 'aurixon_logo.png'}
                 alt="CalculateCO2"
-                className="h-10 w-auto transition-transform group-hover:scale-105"
+                className="h-12 w-auto transition-transform group-hover:scale-105"
               />
             </Link>
 
@@ -375,7 +375,7 @@ const LandingPage = () => {
         <div className="container-custom mx-auto">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-500">
             <div className="flex items-center gap-3">
-              <img src={import.meta.env.BASE_URL + 'aurixon_logo.png'} alt="CalculateCO2" className="h-7 w-auto opacity-90" />
+              <img src={import.meta.env.BASE_URL + 'aurixon_logo.png'} alt="CalculateCO2" className="h-9 w-auto opacity-90" />
               <span>© {new Date().getFullYear()} CalculateCO2</span>
             </div>
             <div className="flex items-center gap-4">
