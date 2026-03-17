@@ -44,9 +44,7 @@ const ForgotPasswordPage = () => {
         {/* Logo */}
         <div className="text-center mb-8">
           <Link to="/">
-            <div className="inline-block bg-white/10 rounded-xl px-3 py-1">
-              <img src={import.meta.env.BASE_URL + 'aurixon_logo.png'} alt="CalculateCO2" className="h-12 w-auto mx-auto" />
-            </div>
+            <img src={import.meta.env.BASE_URL + 'aurixon_logo.png'} alt="CalculateCO2" className="h-12 w-auto mx-auto" />
           </Link>
         </div>
 
