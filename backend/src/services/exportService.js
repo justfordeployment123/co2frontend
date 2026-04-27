@@ -190,20 +190,28 @@ export async function generatePDFReport(periodId, options = {}) {
     // Use async IIFE to allow await inside Promise
     (async () => {
       try {
+        // Resolve logo path: backend/src/services → frontend/public
+    const logoPath = path.join(__dirname, '../../../frontend/public/aurixon_logo.png');
+    const logoExists = fs.existsSync(logoPath);
+
         // --- Header Structure ---
     const drawHeader = () => {
       // Top Bar
-      doc.rect(0, 0, 595.28, 60).fill(COLORS.primary); // Full width header
-      
-      // Logo / Company Name
-      if (companyLogo) {
-          // doc.image(companyLogo, 50, 15, { height: 30 }); // Placeholder for logical logo logic
+      doc.rect(0, 0, 595.28, 60).fill(COLORS.primary);
+
+      // Logo image left side — fallback to text if file missing
+      if (logoExists) {
+        try {
+          doc.image(logoPath, 50, 12, { height: 36, fit: [120, 36] });
+        } catch (_) {
+          doc.fontSize(18).fillColor('white').font('Helvetica-Bold').text('CALCULATECO2', 50, 22);
+        }
+      } else {
+        doc.fontSize(18).fillColor('white').font('Helvetica-Bold').text('CALCULATECO2', 50, 22);
       }
-      doc.fontSize(18).fillColor('white').font('Helvetica-Bold')
-         .text('AURIXON', 50, 22);
-      
+
       // Report Title (Right aligned)
-      doc.fontSize(12).font('Helvetica')
+      doc.fontSize(12).fillColor('white').font('Helvetica')
          .text(text.reportTitle, 400, 25, { width: 145, align: 'right' });
     };
 
@@ -806,7 +814,7 @@ export async function generateCSVExport(periodId, exportPath) {
  */
 export async function generateExcelExport(periodId, exportPath) {
   const workbook = new ExcelJS.Workbook();
-  workbook.creator = 'AURIXON';
+  workbook.creator = 'CALCULATECO2';
   workbook.created = new Date();
 
   // Fetch period data

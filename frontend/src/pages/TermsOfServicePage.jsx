@@ -1,8 +1,24 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const TermsOfServicePage = () => {
   return (
     <div className="min-h-screen bg-midnight-navy text-white">
+      {/* Navigation */}
+      <nav className="border-b border-white/10 bg-midnight-navy/80 backdrop-blur-sm sticky top-0 z-10">
+        <div className="container-custom mx-auto px-4 py-4 max-w-3xl flex items-center gap-4">
+          <Link
+            to="/"
+            className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm font-medium"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            Back to Home
+          </Link>
+        </div>
+      </nav>
+
       <div className="container-custom mx-auto py-16 max-w-3xl">
         <h1 className="text-4xl font-bold mb-6">Terms of Service</h1>
         <p className="text-sm text-gray-400 mb-10">Last Updated: March 2026</p>
@@ -58,11 +74,6 @@ const TermsOfServicePage = () => {
             </p>
           </section>
 
-          <section className="pt-4 text-sm text-gray-400">
-            <p>
-              This is interim wording and may be replaced by a more detailed version in the future.
-            </p>
-          </section>
         </div>
       </div>
     </div>

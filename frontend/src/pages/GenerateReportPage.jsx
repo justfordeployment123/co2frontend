@@ -454,7 +454,7 @@ const GenerateReportPage = () => {
                 {/* Report Header */}
                 <div className="flex justify-between items-start mb-6 pb-4 border-b border-white/10">
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-gradient-to-br from-cyan-mist to-growth-green rounded-lg flex items-center justify-center text-midnight-navy text-[10px] font-black">AX</div>
+                    <div className="w-8 h-8 bg-gradient-to-br from-cyan-mist to-growth-green rounded-lg flex items-center justify-center text-midnight-navy text-[10px] font-black">CO₂</div>
                     <div>
                       <span className="font-bold text-lg text-white">CalculateCO2</span>
                       <p className="text-[9px] text-stone-gray uppercase tracking-wider">{t('reports.emissionsReport')}</p>

@@ -6,6 +6,7 @@ import { dashboardAPI } from '../../api/dashboardAPI';
 import { useToast } from '../../components/common/Toast';
 import NewReportingPeriodModal from '../../components/forms/NewReportingPeriodModal';
 import { reportingPeriodsAPI } from '../../api/reportingPeriodsAPI';
+import { DoughnutChart, BarChart } from '../../components/common/Charts';
 
 /**
  * Dashboard Page - Premium Redesign
@@ -238,12 +239,6 @@ const DashboardPage = () => {
                       <h3 className="text-xl md:text-2xl font-bold text-white mb-2">{trafficStyles.title}</h3>
                       <p className="text-gray-400 text-xs md:text-sm">{trafficStyles.description}</p>
                       
-                      {/* Mini Traffic Light Visual */}
-                      <div className="flex gap-2 mt-4 md:mt-6">
-                        <div className={`w-3 h-3 md:w-4 md:h-4 rounded-full ${trafficLight === 'red' ? 'bg-red-500 shadow-lg shadow-red-500/50' : 'bg-gray-700'}`}></div>
-                        <div className={`w-3 h-3 md:w-4 md:h-4 rounded-full ${trafficLight === 'yellow' ? 'bg-yellow-500 shadow-lg shadow-yellow-500/50' : 'bg-gray-700'}`}></div>
-                        <div className={`w-3 h-3 md:w-4 md:h-4 rounded-full ${trafficLight === 'green' ? 'bg-green-500 shadow-lg shadow-green-500/50' : 'bg-gray-700'}`}></div>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -381,6 +376,81 @@ const DashboardPage = () => {
                     <p className="text-2xl md:text-3xl font-bold text-white mb-1">{(kpis.scope3 || 0).toFixed(2)}</p>
                     <p className="text-xs text-gray-500">MT CO₂e</p>
                   </div>
+                </div>
+              </div>
+
+              {/* Overview Charts */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 mt-4 md:mt-6">
+                {/* Doughnut — Scope Distribution */}
+                <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl md:rounded-3xl p-5 md:p-7">
+                  <h4 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">
+                    {t('dashboard.emissionsByScope', 'Emissions by Scope')}
+                  </h4>
+                  <DoughnutChart
+                    height={220}
+                    data={{
+                      labels: [
+                        t('dashboard.scope1', 'Scope 1'),
+                        `${t('dashboard.scope2', 'Scope 2')} (Market)`,
+                        t('dashboard.scope3', 'Scope 3'),
+                      ],
+                      datasets: [{
+                        data: [
+                          kpis.scope1 || 0,
+                          kpis.scope2_market || kpis.scope2_location || 0,
+                          kpis.scope3 || 0,
+                        ],
+                        backgroundColor: ['#10b981', '#06b6d4', '#8b5cf6'],
+                        borderWidth: 0,
+                        hoverOffset: 6,
+                      }],
+                    }}
+                    options={{
+                      plugins: {
+                        tooltip: {
+                          callbacks: {
+                            label: (ctx) => ` ${ctx.parsed.toFixed(2)} MT CO₂e`,
+                          },
+                        },
+                      },
+                    }}
+                  />
+                </div>
+
+                {/* Bar — Scope Comparison */}
+                <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl md:rounded-3xl p-5 md:p-7">
+                  <h4 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">
+                    {t('dashboard.scopeComparison', 'Scope Comparison (MT CO₂e)')}
+                  </h4>
+                  <BarChart
+                    height={220}
+                    data={{
+                      labels: [
+                        t('dashboard.scope1', 'Scope 1'),
+                        `${t('dashboard.scope2', 'Scope 2')} Loc.`,
+                        `${t('dashboard.scope2', 'Scope 2')} Mkt.`,
+                        t('dashboard.scope3', 'Scope 3'),
+                      ],
+                      datasets: [{
+                        label: 'MT CO₂e',
+                        data: [
+                          kpis.scope1 || 0,
+                          kpis.scope2_location || 0,
+                          kpis.scope2_market || 0,
+                          kpis.scope3 || 0,
+                        ],
+                        backgroundColor: ['#10b981', '#06b6d4', '#3b82f6', '#8b5cf6'],
+                        borderRadius: 6,
+                        borderWidth: 0,
+                      }],
+                    }}
+                    options={{
+                      plugins: { legend: { display: false } },
+                      scales: {
+                        y: { beginAtZero: true },
+                      },
+                    }}
+                  />
                 </div>
               </div>
             </>
