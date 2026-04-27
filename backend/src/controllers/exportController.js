@@ -186,9 +186,22 @@ export async function exportCSV(req, res) {
     });
   } catch (error) {
     console.error('[ExportController] Error generating CSV:', error);
+
+    const message = error?.message || '';
+    if (message.includes('No calculations found for this period')) {
+      // Gracefully handle case where no emission_calculations exist yet
+      return res.status(404).json({
+        success: false,
+        code: 'NO_CALCULATIONS_FOR_PERIOD',
+        error: 'No emission calculations found for this reporting period.',
+        message:
+          'We could not find any saved emission calculations for this reporting period. Please add activities and ensure calculations are saved before exporting.'
+      });
+    }
+
     res.status(500).json({
       success: false,
-      error: error.message || 'Failed to generate CSV export'
+      error: message || 'Failed to generate CSV export'
     });
   }
 }
